@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .hamburger{
     display: flex;
     flex-direction: column;
@@ -252,6 +253,11 @@
     font-size: 1.25rem;
     cursor: pointer;
 }
+
+/* ==================================================================
+ESTILOS RECETAS
+================================================================== */
+
 
 @media (max-width: 600px){
     .historia-page header{

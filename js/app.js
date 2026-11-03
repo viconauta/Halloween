@@ -1,5 +1,9 @@
-import { historias } from "./datos.js";
-import { numeroAleatorio, cargarHistoria } from "./funciones.js";
+import { historias, recetas } from "./datos.js";
+import { numeroAleatorio, cargarHistoria, recetasTop, recetasSaladas, recetasDulces } from "./funciones.js";
+
+/* ==============================================================================
+DESPLEGABLES
+================================================================================*/
 
 //aparece la barra de navegacion
 const btnMenuLateral = document.querySelector(".hamburger");
@@ -48,6 +52,27 @@ document.querySelectorAll(".cerrar-ventana").forEach((btn) => {
     });
 });
 
+/* ==============================================================================
+HISTORIA
+================================================================================*/
+
 //cargar historia diaria
-    const num = numeroAleatorio(historias.length);
-    cargarHistoria(historias, num);
+const num = numeroAleatorio(historias.length);
+cargarHistoria(historias, num);
+
+/* ==============================================================================
+RECETAS
+================================================================================*/
+
+//obtener recetas top
+recetasTop(recetas);
+
+//obtener aperitivos salados
+let tipo = "salado";
+recetasSaladas(recetas, tipo);
+
+//obtener dulces y pasteles
+tipo = "dulce";
+recetasDulces(recetas, tipo);
+
+//eventos para la tarjeta reversible
