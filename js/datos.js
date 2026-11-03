@@ -201,7 +201,7 @@ export const recetas = [
     nombre: "Trufas de Chocolate Murciélago",
     descripcion: "Bocaditos intensos de chocolate con alas de galleta crujiente.",
     puntuacion: 4.7,
-    imagen: "./img/trufas.jpg",
+    imagen: "./img/recetas/trufas.jpg",
     tipo: "dulce",
     ingredientes: [
       "200g de chocolate negro 70%",
@@ -215,6 +215,51 @@ export const recetas = [
 
 export const audios = [
   {
-    nombre: ""
-  }
+    descripcion: "Efecto de sonido",
+    nombre: "Momento de Terror",
+    imagen: "./img/imgAudios/castillo.png",
+    audio: "./audios/efectos/suspense.mp3"
+  },
+  {
+    descripcion: "Efecto de sonido",
+    nombre: "¿Quién te está hablando?",
+    imagen: "./img/imgAudios/payaso.jpeg",
+    audio: "./audios/efectos/susurroEco.mp3"
+  },
+  {
+    descripcion: "Efecto de sonido",
+    nombre: "!SOCORRO!",
+    imagen: "./img/imgAudios/freedyCrugger.jpg",
+    audio: "./audios/efectos/gritoMiedo.mp3"
+  },
+  {
+    descripcion: "Efecto de sonido",
+    nombre: "¡¿Qué es esto?!!",
+    imagen: "./img/imgAudios/payaso.jpeg",
+    audio: "./audios/efectos/noseDescribirlo.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "HalloWeen",
+    imagen: "./img/imgAudios/michaelMers.webp",
+    audio: "./audios/temas/michaelMyers.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "Saw",
+    imagen: "./img/imgAudios/saw.jpg",
+    audio: "./audios/temas/saw.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "The Exorcist",
+    imagen: "./img/imgAudios/theExorcist.jpg",
+    audio: "./audios/temas/exorcist.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "It",
+    imagen: "./img/imgAudios/itPayaso.webp",
+    audio: "./audios/temas/itPayaso.mp3"
+  },
 ]
