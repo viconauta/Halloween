@@ -1,5 +1,5 @@
 import { historias } from "./datos.js";
-import { comprobarFecha, numeroAleatorio, cargarHistoria } from "./funciones.js";
+import { numeroAleatorio, cargarHistoria } from "./funciones.js";
 
 //aparece la barra de navegacion
 const btnMenuLateral = document.querySelector(".hamburger");
