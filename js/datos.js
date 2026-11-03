@@ -212,3 +212,9 @@ export const recetas = [
     ]
   }
 ];
+
+export const audios = [
+  {
+    nombre: ""
+  }
+]
