@@ -1,5 +1,5 @@
-import { historias } from "./datos.js";
-import { numeroAleatorio, cargarHistoria } from "./funciones.js";
+import { historias, audios } from "./datos.js";
+import { numeroAleatorio, cargarHistoria, crearBtn } from "./funciones.js";
 
 //aparece la barra de navegacion
 const btnMenuLateral = document.querySelector(".hamburger");
@@ -49,5 +49,18 @@ document.querySelectorAll(".cerrar-ventana").forEach((btn) => {
 });
 
 //cargar historia diaria
-    const num = numeroAleatorio(historias.length);
-    cargarHistoria(historias, num);
+const num = numeroAleatorio(historias.length);
+cargarHistoria(historias, num);
+
+
+const contenedorEfectos = document.getElementById("efectos-sonido");
+const contenedorTemas = document.getElementById("temas-musicales");
+
+// Separamos los efectos de los temas musicales
+const efectos = audios.filter(sonido => sonido.descripcion === "Efecto de sonido");
+
+const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
+
+// Creamos los botones
+crearBtn(efectos, contenedorEfectos);
+crearBtn(temas, contenedorTemas);
