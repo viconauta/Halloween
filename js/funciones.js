@@ -75,6 +75,9 @@ export function recetasDulces(recetas, tipo) {
         const contenido = recetaDulce.map(a => mostrarTarjeta(a)).join("");
         seccionDulce.innerHTML += contenido;
     }
+
+    let numero;
+    return numero = Math.floor(Math.random() * num) + 1;
 }
 
 /* ========================================================================
@@ -134,12 +137,59 @@ export function crearBtn(datos, contenedor) {
             });
 
             reproducirAudio(audio, btn);
+
+        btn.title = sonido.nombre;
+        btn.setAttribute("aria-label", sonido.nombre);
+
+        btn.addEventListener("click", () => {
+
+            // Si pulsamos el mismo botón, pausamos el audio
+            if (btnActual === btn && audioActual && !audioActual.paused) {
+
+                audioActual.pause();
+                btn.classList.remove("sonando");
+
+                return;
+            }
+
+            // Detenemos el audio anterior
+            if (audioActual !== null) {
+
+                audioActual.pause();
+                audioActual.currentTime = 0;
+
+                btnActual.classList.remove("sonando");
+            }
+
+            // Creamos el nuevo audio
+            audioActual = new Audio(sonido.audio);
+            btnActual = btn;
+
+            // Reproducimos el audio
+            audioActual.play()
+                .then(() => {
+                    btn.classList.add("sonando");
+                })
+                .catch(() => {
+                    btn.classList.remove("sonando");
+                    alert("No se ha podido reproducir el audio.");
+                });
+
+            // Cuando termina el audio
+            audioActual.addEventListener("ended", () => {
+
+                btn.classList.remove("sonando");
+                audioActual = null;
+                btnActual = null;
+
+            });
+
         });
 
         contenedor.appendChild(btn);
 
     });
-}
+})
 
 function reproducirAudio(audio, btn) {
     audio.play()
@@ -162,4 +212,5 @@ function reproducirAudio(audio, btn) {
             btnActual = null;
             alert("No se ha podido reproducir el audio.");
         });
-}
+    }
+};

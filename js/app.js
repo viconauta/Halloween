@@ -5,6 +5,7 @@ import { numeroAleatorio, cargarHistoria, crearBtn, recetasTop, recetasSaladas, 
 DESPLEGABLES
 ================================================================================*/
 
+
 //aparece la barra de navegacion
 const btnMenuLateral = document.querySelector(".hamburger");
 const menuDesplegable = document.getElementById("menu-desplegable");
@@ -93,6 +94,8 @@ window.addEventListener("scroll", () => {
     header.classList.toggle("header-oculto", posicionActual > ultimaPosicion && posicionActual > header.offsetHeight);
     ultimaPosicion = posicionActual;
 }, { passive: true });
+const num = numeroAleatorio(historias.length);
+cargarHistoria(historias, num);
 
 
 const contenedorEfectos = document.getElementById("efectos-sonido");
@@ -102,6 +105,9 @@ if (contenedorEfectos) {
     const efectos = audios.filter(sonido => sonido.descripcion === "Efecto de sonido");
     crearBtn(efectos, contenedorEfectos);
 }
+
+// Separamos los efectos de los temas musicales
+const efectos = audios.filter(sonido => sonido.descripcion === "Efecto de sonido");
 
 const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
 
@@ -113,3 +119,5 @@ if (contenedorTemas) {
     const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
     crearBtn(temas, contenedorTemas);
 }
+
+crearBtn(temas, contenedorTemas);

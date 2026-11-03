@@ -223,7 +223,11 @@ export const audios = [
   {
     descripcion: "Efecto de sonido",
     nombre: "¿Quién te está hablando?",
+<<<<<<< HEAD
     imagen: "./img/imgAudios/exorcist.webp",
+=======
+    imagen: "./img/imgAudios/payaso.jpeg",
+>>>>>>> 80dbcbc (Comienzo de la pestaña sonidos.html y su js)
     audio: "./audios/efectos/susurroEco.mp3"
   },
   {
@@ -239,6 +243,7 @@ export const audios = [
     audio: "./audios/efectos/noseDescribirlo.mp3"
   },
   {
+<<<<<<< HEAD
     descripcion: "Efecto de sonido",
     nombre: "Mommy",
     imagen: "./img/imgAudios/mommy.jpeg",
@@ -266,6 +271,11 @@ export const audios = [
     descripcion: "Tema musical de Película",
     nombre: "HalloWeen",
     imagen: "./img/imgAudios/michaelMyers.webp",
+=======
+    descripcion: "Tema musical de Película",
+    nombre: "HalloWeen",
+    imagen: "./img/imgAudios/michaelMers.webp",
+>>>>>>> 80dbcbc (Comienzo de la pestaña sonidos.html y su js)
     audio: "./audios/temas/michaelMyers.mp3"
   },
   {
@@ -286,6 +296,7 @@ export const audios = [
     imagen: "./img/imgAudios/itPayaso.webp",
     audio: "./audios/temas/itPayaso.mp3"
   },
+<<<<<<< HEAD
   {
     descripcion: "Tema musical de Película",
     nombre: "Daisy Bell",
@@ -310,4 +321,6 @@ export const audios = [
     imagen: "./img/imgAudios/purgatorioIV.jpg",
     audio: "./audios/temas/elPurgatorio.mp3"
   },
+=======
+>>>>>>> 80dbcbc (Comienzo de la pestaña sonidos.html y su js)
 ]
