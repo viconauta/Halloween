@@ -1,76 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GranaWeen</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Página principal GranaWeen</title>
 </head>
-<body>
-    
-    <header class="cabecera">
-        <button class="btn-menu" aria-label="Abrir menú" aria-expanded="false">☰</button>
-        <a class="logo" href="index.html">GranaWeen</a>
-        <nav class="acciones">
-            <a href="#inicio">Iniciar sesión</a>
+<body class="historia-page">
+    <header>
+        <button class="hamburger" aria-label="Menu">
+            <span class="barMenu"></span>
+            <span class="barMenu"></span>
+            <span class="barMenu"></span>
+        </button>
+        <nav id="menu-desplegable" class="oculto">
+            <ul>
+                <li><a href="#">Recetas</a></li>
+                <li><a href="./historia.html">Historias de miedo</a></li>
+                <li><a href="./sonidos.html">Musica y tonos</a></li>
+                <li><a href="./enGranada.html">Granada</a></li>
+                <li><a href="./juego.html">Juego</a></li>
+            </ul>
         </nav>
+        <a class="logo" href="./index.html">GranaWeen</a>
+        <button class="login btn">Iniciar Sesion</button>
     </header>
-
-    <div class="distribucion">
-        <aside class="menu-lateral" id="menuLateral">
-            <a href="./pages/recetas.html">Recetas</a>
-            <a href="./pages/historiaMiedo.html">Historias de miedo</a>
-            <a href="./pages/sonidosTerror.html">Música y tonos</a>
-            <a href="./pages/halloweenGranada.html">Granada</a>
-            <a href="./pages/juego.html">Juego</a>
-            <a href="./pages/sobreNosotros.html">Sobre nosotros</a>
-        </aside>
-
-        <main class="contenido" id="inicio">
-            <section class="tarjetas" aria-label="Secciones de GranaWeen">
-                <a class="tarjeta" href="#jack">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Formulario para enviar Email a “Jack Skellington”</span>
-                </a>
-                <a class="tarjeta" href="#juego">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información del Juego</span>
-                </a>
-                <a class="tarjeta" href="#granada">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información halloween en Granada</span>
-                </a>
-                <a class="tarjeta" href="#historias">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información Historias de Miedo</span>
-                </a>
-                <a class="tarjeta" href="#recetas">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Mundillo de recetas</span>
-                </a>
-                <a class="tarjeta" href="#musica">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Variedad de notas musicales y audios de miedo</span>
-                </a>
-                <a class="tarjeta" href="#nosotros">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información sobre nosotros</span>
-                </a>
-            </section>
-        </main>
-    </div>
-
-    <footer class="pie" >
-        <a class="piePagina" href="index.html">GranaWeen</a>
-        <span class="sobre">Sobre nosotros</span>
-        <div class="contacto">
-            Contacto<br>
-            <a href="mailto:info@granaween.es">info@granaween.es</a><br>
-            Avda. Halloween, Granada
+    <main>
+        <section>
+            <div class="titulo">
+                <h1>GranaWeen</h1>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div>
+            <a href="./index.html" class="logo">GranaWeed</a>
         </div>
+        <div class="us">
+            <a href="./aboutus.html">Sobre nosotros</a>
+        </div>
+        <div class="contacto">
+            <h2>Contacto</h2>
+            <p>Tel: 691264860</p>
+            <p>emai: granaween@gmail.es</p>
+            <p>Direccion: Avda. Halloween, Granada</p> 
+        </div>
+        <script type="module" src="./js/app.js"></script>
     </footer>
 
-    <script type="module" src="/Halloween/js/app.js"></script>
-    </script>
+    <!-- ventana emergente de login -->
+    <div id="ventana-login" class="oculto">
+        <button class="cerrar-ventana">X</button>
+        <form action="./php/login.php" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre aqui" required>
 
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" id="password" placeholder="Escribe aqui tu contraseña" required>
+
+            <button type="submit" class="btn">Iniciar sesion</button>
+            <button type="button" class="registro">¿No tienes cuenta? | Registrate</button>
+            <button type="button" class="recuperar-contraseña">He olvidado mi contraseña</button>
+        </form>
+    </div>
+
+    <!-- ventana emergente de registro -->
+    <div id="ventana-registro" class="oculto">
+        <button class="cerrar-ventana">X</button>
+        <form action="./php/altaUsuario.php" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre aqui" required>
+
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" id="password" placeholder="Escribe aqui tu contraseña" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="tuEmail@ejemplo.com" required>
+
+            <label for="pregunta">Pregunta de seguridad:</label>
+            <input type="text" name="pregunta" id="pregunta" placeholder="¿Nombre de mi primera mascota?" required></input>
+
+            <label for="respuesta"></label>
+            <input type="text" name="respuesta" id="respuesta" placeholder="Firulais" required>
+
+            <button type="submit" class="btn">Registrarse</button>
+        </form>
+    </div>
+
+    <!-- ventana emergente de recuperar contraseña -->
+    <div id="ventana-recuperacion" class="oculto">
+            <button class="cerrar-ventana">X</button>
+            <p>PREGUNTA DE SEGURIDAD</p>
+            <form action="./php/cambioPass.php">
+                <label for="respuesta">Respuesta</label>
+                <input type="text" name="respuesta" id="respuesta">
+
+                <button type="submit" class="btn">Enviar respuesta</button>
+            </form>
+        </div>
 </body>
 </html>
