@@ -1,5 +1,5 @@
-import { historias, recetas } from "./datos.js";
-import { numeroAleatorio, cargarHistoria, recetasTop, recetasSaladas, recetasDulces } from "./funciones.js";
+import { historias, recetas, audios } from "./datos.js";
+import { numeroAleatorio, cargarHistoria, crearBtn, recetasTop, recetasSaladas, recetasDulces } from "./funciones.js";
 
 /* ==============================================================================
 DESPLEGABLES
@@ -91,3 +91,16 @@ window.addEventListener("scroll", () => {
     header.classList.toggle("header-oculto", posicionActual > ultimaPosicion && posicionActual > header.offsetHeight);
     ultimaPosicion = posicionActual;
 }, { passive: true });
+
+
+const contenedorEfectos = document.getElementById("efectos-sonido");
+const contenedorTemas = document.getElementById("temas-musicales");
+
+// Separamos los efectos de los temas musicales
+const efectos = audios.filter(sonido => sonido.descripcion === "Efecto de sonido");
+
+const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
+
+// Creamos los botones
+crearBtn(efectos, contenedorEfectos);
+crearBtn(temas, contenedorTemas);

@@ -24,6 +24,7 @@ export function numeroAleatorio(num) {
     return numero = Math.floor(Math.random() * num) + 1;
 }
 
+
 /* ==============================================================================
 RECETAS
 ================================================================================*/
@@ -75,4 +76,75 @@ export function recetasDulces(recetas, tipo) {
         const contenido = recetaDulce.map(a => mostrarTarjeta(a)).join("");
         seccionDulce.innerHTML += contenido;
     }
+}
+
+/* ========================================================================
+AUDIOS DE TERROR
+=========================================================================== */
+
+
+// Variables para controlar el audio actual
+let audioActual = null;
+let btnActual = null;
+
+export function crearBtn(datos, contenedor) {
+
+    datos.forEach(sonido => {
+
+        const btn = document.createElement("button");
+
+        btn.type = "button";
+        btn.classList.add("circulo-sonido");
+
+        btn.title = sonido.nombre;
+        btn.setAttribute("aria-label", sonido.nombre);
+
+        btn.addEventListener("click", () => {
+
+            // Si pulsamos el mismo botón, pausamos el audio
+            if (btnActual === btn && audioActual && !audioActual.paused) {
+
+                audioActual.pause();
+                btn.classList.remove("sonando");
+
+                return;
+            }
+
+            // Detenemos el audio anterior
+            if (audioActual !== null) {
+
+                audioActual.pause();
+                audioActual.currentTime = 0;
+
+                btnActual.classList.remove("sonando");
+            }
+
+            // Creamos el nuevo audio
+            audioActual = new Audio(sonido.audio);
+            btnActual = btn;
+
+            // Reproducimos el audio
+            audioActual.play()
+                .then(() => {
+                    btn.classList.add("sonando");
+                })
+                .catch(() => {
+                    btn.classList.remove("sonando");
+                    alert("No se ha podido reproducir el audio.");
+                });
+
+            // Cuando termina el audio
+            audioActual.addEventListener("ended", () => {
+
+                btn.classList.remove("sonando");
+                audioActual = null;
+                btnActual = null;
+
+            });
+
+        });
+
+        contenedor.appendChild(btn);
+
+    });
 }
