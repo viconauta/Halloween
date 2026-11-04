@@ -1,5 +1,15 @@
-import { historias, recetas, audios } from "./datos.js";
-import { numeroAleatorio, cargarHistoria, crearBtn, recetasTop, recetasSaladas, recetasDulces } from "./funciones.js";
+import { historias, recetas, audios, granada } from "./datos.js";
+
+import {
+    numeroAleatorio,
+    cargarHistoria,
+    crearBtn,
+    recetasTop,
+    recetasSaladas,
+    recetasDulces,
+    mostrarLugares,
+    cerrarMapa
+} from "./funciones.js";
 
 /* ==============================================================================
 DESPLEGABLES
@@ -16,39 +26,41 @@ btnMenuLateral.addEventListener("click", () => {
 //para que aparezca la ventana del inicio de sesion
 const btnLogin = document.querySelector(".login");
 const ventanaLogin = document.getElementById("ventana-login");
-
-btnLogin.addEventListener("click", () => {
-    ventanaRegistro.classList.add("oculto");
-    ventanaRecuperacion.classList.add("oculto");
-    ventanaLogin.classList.remove("oculto");
-});
-
-//aparece la ventana de registro de nuevo usuario
 const btnRegistro = document.querySelector(".registro");
 const ventanaRegistro = document.getElementById("ventana-registro");
-
-btnRegistro.addEventListener("click", () => {
-    ventanaLogin.classList.add("oculto");
-    ventanaRecuperacion.classList.add("oculto");
-    ventanaRegistro.classList.remove("oculto");
-});
-
-//aparece la ventana de recuperar contraseña
 const btnRecuperarContraseña = document.querySelector(".recuperar-contraseña");
 const ventanaRecuperacion = document.getElementById("ventana-recuperacion");
 
-btnRecuperarContraseña.addEventListener("click", () => {
-    ventanaRegistro.classList.add("oculto");
-    ventanaLogin.classList.add("oculto");
-    ventanaRecuperacion.classList.remove("oculto");
-});
+if (btnLogin && ventanaLogin) {
+    btnLogin.addEventListener("click", () => {
+        ventanaRegistro?.classList.add("oculto");
+        ventanaRecuperacion?.classList.add("oculto");
+        ventanaLogin.classList.remove("oculto");
+    });
+}
+
+if (btnRegistro && ventanaRegistro) {
+    btnRegistro.addEventListener("click", () => {
+        ventanaLogin?.classList.add("oculto");
+        ventanaRecuperacion?.classList.add("oculto");
+        ventanaRegistro.classList.remove("oculto");
+    });
+}
+
+if (btnRecuperarContraseña && ventanaRecuperacion) {
+    btnRecuperarContraseña.addEventListener("click", () => {
+        ventanaRegistro?.classList.add("oculto");
+        ventanaLogin?.classList.add("oculto");
+        ventanaRecuperacion.classList.remove("oculto");
+    });
+}
 
 //cerrar ventanas
 document.querySelectorAll(".cerrar-ventana").forEach((btn) => {
     btn.addEventListener("click", () => {
-        ventanaRegistro.classList.add("oculto");
-        ventanaLogin.classList.add("oculto");
-        ventanaRecuperacion.classList.add("oculto");
+        ventanaRegistro?.classList.add("oculto");
+        ventanaLogin?.classList.add("oculto");
+        ventanaRecuperacion?.classList.add("oculto");
     });
 });
 
@@ -93,9 +105,6 @@ window.addEventListener("scroll", () => {
     header.classList.toggle("header-oculto", posicionActual > ultimaPosicion && posicionActual > header.offsetHeight);
     ultimaPosicion = posicionActual;
 }, { passive: true });
-const num = numeroAleatorio(historias.length);
-cargarHistoria(historias, num);
-
 
 const contenedorEfectos = document.getElementById("efectos-sonido");
 const contenedorTemas = document.getElementById("temas-musicales");
@@ -105,28 +114,17 @@ if (contenedorEfectos) {
     crearBtn(efectos, contenedorEfectos);
 }
 
-// Separamos los efectos de los temas musicales
-const efectos = audios.filter(sonido => sonido.descripcion === "Efecto de sonido");
-
-const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
-
-// Creamos los botones
-crearBtn(efectos, contenedorEfectos);
-crearBtn(temas, contenedorTemas);
-
 if (contenedorTemas) {
     const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
     crearBtn(temas, contenedorTemas);
 }
 
-crearBtn(temas, contenedorTemas);
+/* ==============================================================================
+LUGARES DE GRANADA
+================================================================================*/
 
-if (contenedorTemas) {
-    const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
-    crearBtn(temas, contenedorTemas);
-}
+if (document.getElementById("lugares")) {
+    mostrarLugares(granada);
 
-if (contenedorTemas) {
-    const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
-    crearBtn(temas, contenedorTemas);
+    cerrarMapa();
 }

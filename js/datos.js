@@ -224,9 +224,6 @@ export const audios = [
     descripcion: "Efecto de sonido",
     nombre: "¿Quién te está hablando?",
     imagen: "./img/imgAudios/exorcist.webp",
-    imagen: "./img/imgAudios/payaso.jpeg",
-    imagen: "./img/imgAudios/exorcist.webp",
-    imagen: "./img/imgAudios/exorcist.webp",
     audio: "./audios/efectos/susurroEco.mp3"
   },
   {
@@ -269,15 +266,6 @@ export const audios = [
     descripcion: "Tema musical de Película",
     nombre: "HalloWeen",
     imagen: "./img/imgAudios/michaelMyers.webp",
-    descripcion: "Tema musical de Película",
-    nombre: "HalloWeen",
-    imagen: "./img/imgAudios/michaelMers.webp",
-   descripcion: "Tema musical de Película",
-    nombre: "HalloWeen",
-    imagen: "./img/imgAudios/michaelMyers.webp",
-    descripcion: "Tema musical de Película",
-    nombre: "HalloWeen",
-    imagen: "./img/imgAudios/michaelMyers.webp",
     audio: "./audios/temas/michaelMyers.mp3"
   },
   {
@@ -285,18 +273,19 @@ export const audios = [
     nombre: "Saw",
     imagen: "./img/imgAudios/saw.jpg",
     audio: "./audios/temas/saw.mp3"
-  },
-  {
-    descripcion: "Tema musical de Película",
-    nombre: "The Exorcist",
-    imagen: "./img/imgAudios/theExorcist.jpg",
-    audio: "./audios/temas/exorcist.mp3"
+
   },
   {
     descripcion: "Tema musical de Película",
     nombre: "It",
     imagen: "./img/imgAudios/itPayaso.webp",
     audio: "./audios/temas/itPayaso.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "The Exorcist",
+    imagen: "./img/imgAudios/theExorcist.jpg",
+    audio: "./audios/temas/exorcist.mp3"
   },
   {
     descripcion: "Tema musical de Película",
@@ -323,3 +312,72 @@ export const audios = [
     audio: "./audios/temas/elPurgatorio.mp3"
   },
 ]
+
+export const granada = [
+  {
+    nombre: "Antiguo sanatorio de la Alfaguara",
+    descripcion: "Antiguo sanatorio para enfermos de tuberculosis, actualmente en ruinas. Tiene una historia bastante oscura y un aspecto muy tétrico.",
+    imagen: "./img/lugaresGranada/alfaguara.jpg",
+    enlace: "https://www.google.com/maps/search/?api=1&query=Sanatorio+de+Tuberculosis+de+la+Alfaguara"
+  },
+  {
+    nombre: "Hotel Reúma",
+    descripcion: "Antiguo edificio situado junto a la Alhambra. Su aspecto deteriorado y las leyendas que lo rodean lo convierten en uno de los lugares más misteriosos de Granada.",
+    imagen: "./img/lugaresGranada/hotelReuma.jpg",
+    enlace: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3178.9222903033096!2d-3.5900364999999996!3d37.1783177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fd31d978d805%3A0x312c8c11cdc0ca44!2sHotel%20%22Reuma%22!5e0!3m2!1ses!2ses!4v1793817027745!5m2!1ses!2ses" 
+  },
+  {
+    nombre: "Casa de Castril",
+    descripcion: "Edificio histórico de Granada relacionado con la leyenda de la Dama Blanca, una historia de amor, tragedia y supuestas apariciones fantasmales.",
+    imagen: "./img/lugaresGranada/casaCastril.jpg",
+    enlace: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3178.907431601407!2d-3.5916103!3d37.1786708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fde4584630dd%3A0xd08a4d81b33d7883!2sCasa%20de%20Castril!5e0!3m2!1ses!2ses!4v1793817055017!5m2!1ses!2ses"
+  },
+  {
+    nombre: "Cementerio de San José",
+    descripcion: "Cementerio histórico situado junto a la Alhambra. Sus antiguas tumbas, mausoleos y caminos crean un ambiente especialmente inquietante.",
+    imagen: "./img/lugaresGranada/cementerioSanJose.jpg",
+    enlace: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50827.62121254458!2d-3.6887082513671805!3d37.230471200000025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fd006bbb64bf%3A0x253a7bbbd315f805!2sCementerio%20Municipal%20de%20San%20Jos%C3%A9!5e0!3m2!1ses!2ses!4v1793817090295!5m2!1ses!2ses"
+  },
+  {
+    nombre: "Cuesta de los Chinos",
+    descripcion: "Antiguo camino empedrado rodeado de vegetación que conecta la zona de la Alhambra con el Paseo de los Tristes. Su ambiente oscuro y silencioso lo hace perfecto para una historia de miedo.",
+    imagen: "./img/lugaresGranada/cuestaChinos.jpg",
+    enlace: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3178.7481989978255!2d-3.5890100999999994!3d37.1824546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fcc8e2612ef5%3A0x24e2c90cec7ae59f!2sCta.%20de%20los%20Chinos%2C%20Albaic%C3%ADn%2C%2018010%20Granada!5e0!3m2!1ses!2ses!4v1793817106342!5m2!1ses!2ses"
+  },
+  {
+    nombre: "Purgatorium Escape Room",
+    descripcion: "Escape room de terror situado en Alhendín. Ofrece una experiencia inmersiva con ambientación oscura, suspense y situaciones diseñadas para provocar miedo.",
+    imagen: "./img/lugaresGranada/purgatorium.webp",
+    enlace: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3181.625445281051!2d-3.6360486!3d37.1140325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fbea46e2f631%3A0x6bc078b57aa024a9!2sPurgatorium%20Escape%20Room!5e0!3m2!1ses!2ses!4v1793817125276!5m2!1ses!2ses"
+  },
+  {
+    nombre: "El Duelo Escape Room",
+    descripcion: "Experiencia de escape room situada en La Zubia, centrada en el misterio, el suspense y las temáticas de terror.",
+    imagen: "./img/lugaresGranada/elDuelo.webp",
+    enlace: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3181.591515211459!2d-3.5957356999999996!3d37.11484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fb70a4a24f45%3A0x5b503a3f1baed765!2sEl%20Duelo%20-%20Escape%20Room%20en%20Granada!5e0!3m2!1ses!2ses!4v1793817154107!5m2!1ses!2ses"
+  },
+  {
+    nombre: "Villa Amparo Escape Room",
+    descripcion: "Experiencia inmersiva situada en Cájar, ambientada en una antigua villa donde el misterio, el suspense y el terror son los protagonistas.",
+    imagen: "./img/lugaresGranada/villaAmparo.jpg",
+    enlace: "https://www.google.com/maps/search/?api=1&query=Villa+Amparo+Escape+Room+Cajar"
+  },
+  {
+    nombre: "Raven's Manor",
+    descripcion: "Escape room de terror situado en Armilla, con temática de mansión misteriosa, pruebas contrarreloj y una ambientación inquietante.",
+    imagen: "./img/lugaresGranada/raven.jpg",
+    enlace: "https://www.google.com/maps/search/?api=1&query=Raven%27s+Manor+Armilla+Granada"
+  },
+  {
+    nombre: "Granada Secreta",
+    descripcion: "Rutas guiadas por Granada que permiten descubrir leyendas, sucesos misteriosos, historias oscuras y enigmas relacionados con la ciudad.",
+    imagen: "./img/lugaresGranada/granSecreta.webp",
+    enlace: "https://www.google.com/maps/search/?api=1&query=Granada+Secreta+Granada"
+  },
+  {
+    nombre: "Granaita - Runas del Abismo",
+    descripcion: "Pasaje del terror organizado en el centro comercial Granaita, en Pulianas. Una experiencia de Halloween con decorados, personajes terroríficos y ambientación de miedo.",
+    imagen: "./img/lugaresGranada/granaitaRunas.jpg",
+    enlace: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3177.42321337881!2d-3.6176103!3d37.2139271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fd0eeba40209%3A0xa1ca6e1896a8023c!2sCentro%20Comercial%20Granaita!5e0!3m2!1ses!2ses!4v1793817286165!5m2!1ses!2ses"
+  }
+];

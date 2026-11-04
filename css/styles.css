@@ -416,16 +416,6 @@ img {
 /* Distribución de los círculos */
 #efectos-sonido,
 #temas-musicales {
-    margin:auto;
-    display: grid;
-    grid-template-columns: repeat(5, 70px);
-    gap: 24px;
-}
-
-/* Distribución de los círculos */
-#efectos-sonido,
-#temas-musicales {
-    margin:auto;
     display: grid;
     grid-template-columns: repeat(5, 70px);
     gap: 24px;
@@ -436,8 +426,6 @@ img {
 .circulo-sonido {
     width: 70px;
     height: 70px;
-    width: 50px;
-    height: 50px;
     border: none;
     border-radius: 50%;
     background-color: #d9d9d9;
@@ -463,6 +451,192 @@ img {
 /* Efecto mientras suena */
 .circulo-sonido.sonando {
     box-shadow: 0 0 0 3px #00e676, 0 0 15px #00e676;
-    background-color: #00e676;
-    box-shadow: 0 0 15px #00e676;
+}
+
+/* ==================================================================
+LUGARES DE GRANADA
+================================================================== */
+.granada-page main{
+    width: min(100% - 2rem, 1200px);
+}
+
+.granada-page #lugares{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+    align-items: stretch;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.granada-page .tarjeta-lugar{
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, .55);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(38, 25, 51, .98), var(--terror-surface));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.granada-page .tarjeta-lugar:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, .48);
+}
+
+.granada-page .imagen-lugar{
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #08060b;
+}
+
+.granada-page .imagen-lugar img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .35s ease;
+}
+
+.granada-page .tarjeta-lugar:hover .imagen-lugar img{
+    transform: scale(1.04);
+}
+
+.granada-page .boton-mapa{
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .55rem .75rem;
+    border: 1px solid rgba(184, 242, 58, .75);
+    border-radius: 999px;
+    color: #fff;
+    background: rgba(16, 11, 24, .88);
+    font: inherit;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.granada-page .boton-mapa span:first-child{
+    color: var(--terror-toxic);
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.granada-page .boton-mapa::after{
+    content: "Ver mapa";
+}
+
+.granada-page .boton-mapa:hover,
+.granada-page .boton-mapa:focus-visible{
+    color: var(--terror-bg);
+    background: var(--terror-toxic);
+    transform: translateY(-1px);
+}
+
+.granada-page .boton-mapa:hover span:first-child,
+.granada-page .boton-mapa:focus-visible span:first-child{
+    color: var(--terror-bg);
+}
+
+.granada-page .informacion-lugar{
+    padding: 1.1rem 1.2rem 1.3rem;
+}
+
+.granada-page .informacion-lugar h2{
+    margin-bottom: .65rem;
+    color: var(--terror-toxic);
+    font-size: 1.3rem;
+    line-height: 1.25;
+}
+
+.granada-page .informacion-lugar p{
+    color: #ded2e8;
+    line-height: 1.6;
+}
+
+.granada-page .modal-mapa{
+    position: fixed;
+    z-index: 10;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(5, 3, 8, .82);
+}
+
+.granada-page .modal-mapa.activo{
+    display: flex;
+}
+
+.granada-page .contenido-mapa{
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 960px);
+    max-height: min(90vh, 820px);
+    overflow: hidden;
+    border: 1px solid var(--terror-purple);
+    border-radius: 12px;
+    background: var(--terror-surface);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, .75);
+}
+
+.granada-page .cabecera-mapa,
+.granada-page .pie-mapa{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .85rem 1rem;
+}
+
+.granada-page .cabecera-mapa h2{
+    color: var(--terror-toxic);
+    font-size: 1.15rem;
+}
+
+.granada-page #cerrar-mapa{
+    border: 0;
+    color: var(--terror-text);
+    background: transparent;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.granada-page #iframe-mapa{
+    display: block;
+    width: 100%;
+    min-height: 55vh;
+    flex: 1;
+    border: 0;
+    background: #08060b;
+}
+
+.granada-page .pie-mapa{
+    justify-content: flex-end;
+}
+
+.granada-page #ampliar-mapa{
+    padding: .65rem 1rem;
+    border: 1px solid var(--terror-toxic);
+    border-radius: 6px;
+    color: #fff;
+    background: var(--terror-red);
+    text-decoration: none;
+}
+
+.granada-page #ampliar-mapa:hover,
+.granada-page #ampliar-mapa:focus-visible{
+    background: #542044;
+}
+
+@media (max-width: 600px){
+    .granada-page #iframe-mapa{
+        min-height: 60vh;
+    }
 }

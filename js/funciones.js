@@ -75,11 +75,6 @@ export function recetasDulces(recetas, tipo) {
         const contenido = recetaDulce.map(a => mostrarTarjeta(a)).join("");
         seccionDulce.innerHTML += contenido;
     }
-
-    let numero;
-    return numero = Math.floor(Math.random() * num) + 1;
-
-
 }
 
 /* ========================================================================
@@ -139,53 +134,11 @@ export function crearBtn(datos, contenedor) {
             });
 
             reproducirAudio(audio, btn);
-
-        btn.title = sonido.nombre;
-        btn.setAttribute("aria-label", sonido.nombre);
-
-        const imagen = document.createElement("img");
-        imagen.src = sonido.imagen;
-        imagen.alt = "";
-        imagen.setAttribute("aria-hidden", "true");
-        btn.appendChild(imagen);
-
-        btn.addEventListener("click", () => {
-
-            if (btnActual === btn && audioActual) {
-                if (audioActual.paused) {
-                    reproducirAudio(audioActual, btn);
-                } else {
-                    audioActual.pause();
-                    btn.classList.remove("sonando");
-                }
-                return;
-            }
-
-            if (audioActual) {
-                audioActual.pause();
-                audioActual.currentTime = 0;
-                btnActual.classList.remove("sonando");
-            }
-
-            const audio = new Audio(sonido.audio);
-            audioActual = audio;
-            btnActual = btn;
-
-            audio.addEventListener("ended", () => {
-                btn.classList.remove("sonando");
-                if (audioActual === audio) {
-                    audioActual = null;
-                    btnActual = null;
-                }
-            });
-
-            reproducirAudio(audio, btn);
         });
 
         contenedor.appendChild(btn);
 
     });
-})
 }
 
 function reproducirAudio(audio, btn) {
@@ -209,6 +162,129 @@ function reproducirAudio(audio, btn) {
             btnActual = null;
             alert("No se ha podido reproducir el audio.");
         });
+}
+
+/* ==============================================================================
+LUGARES DE GRANADA
+================================================================================*/
+
+// Mostrar las tarjetas de los lugares
+export function mostrarLugares(granada) {
+
+    const contenedor = document.getElementById("lugares");
+
+    if (!contenedor) {
+        return;
     }
 
+    const contenido = granada.map((lugar, indice) => `
+        <article class="tarjeta-lugar">
 
+            <div class="imagen-lugar">
+
+                <img src="${lugar.imagen}" alt="${lugar.nombre}">
+
+                <button 
+                    class="boton-mapa"
+                    data-indice="${indice}"
+                    title="Ver ubicación en Google Maps"
+                    aria-label="Ver ubicación de ${lugar.nombre}">
+                    <span>⌖</span>
+                </button>
+
+            </div>
+
+            <div class="informacion-lugar">
+
+                <h2>${lugar.nombre}</h2>
+
+                <p>${lugar.descripcion}</p>
+
+            </div>
+
+        </article>
+    `).join("");
+
+    contenedor.innerHTML = contenido;
+
+    // Eventos de los botones del mapa
+    contenedor.querySelectorAll(".boton-mapa").forEach(boton => {
+
+        boton.addEventListener("click", () => {
+
+            const indice = boton.dataset.indice;
+            const lugar = granada[indice];
+
+            abrirMapa(lugar);
+
+        });
+
+    });
+
+}
+
+
+// Abrir la ventana del mapa
+function abrirMapa(lugar) {
+
+    const modal = document.getElementById("modal-mapa");
+    const iframe = document.getElementById("iframe-mapa");
+    const titulo = document.getElementById("titulo-mapa");
+    const ampliar = document.getElementById("ampliar-mapa");
+
+    const busqueda = `${lugar.nombre}, Granada`;
+
+    iframe.src = `https://www.google.com/maps?q=${encodeURIComponent(busqueda)}&output=embed`;
+
+    titulo.textContent = lugar.nombre;
+
+    ampliar.href = lugar.enlace;
+
+    modal.classList.add("activo");
+
+}
+
+
+// Cerrar la ventana del mapa
+export function cerrarMapa() {
+
+    const modal = document.getElementById("modal-mapa");
+    const iframe = document.getElementById("iframe-mapa");
+    const botonCerrar = document.getElementById("cerrar-mapa");
+
+    if (!modal || !iframe || !botonCerrar) {
+        return;
+    }
+
+    botonCerrar.addEventListener("click", () => {
+
+        modal.classList.remove("activo");
+        iframe.src = "";
+
+    });
+
+    // Cerrar al pulsar fuera del mapa
+    modal.addEventListener("click", evento => {
+
+        if (evento.target === modal) {
+
+            modal.classList.remove("activo");
+            iframe.src = "";
+
+        }
+
+    });
+
+    // Cerrar pulsando Escape
+    document.addEventListener("keydown", evento => {
+
+        if (evento.key === "Escape") {
+
+            modal.classList.remove("activo");
+            iframe.src = "";
+
+        }
+
+    });
+
+}
