@@ -25,10 +25,10 @@
 }
 
 /* ==================================================================
-ESTILOS HISTORIA
+ESTILO COMUN
 ================================================================== */
 
-.historia-page{
+.page{
     --terror-bg: #100b18;
     --terror-surface: #1b1225;
     --terror-purple: #a77be8;
@@ -45,8 +45,9 @@ ESTILOS HISTORIA
     font-family: Georgia, "Times New Roman", serif;
 }
 
-.historia-page header{
-    position: relative;
+.page header{
+    position: sticky;
+    top: 0;
     z-index: 2;
     display: flex;
     align-items: center;
@@ -54,17 +55,22 @@ ESTILOS HISTORIA
     padding: 1rem clamp(1rem, 5vw, 4rem);
     border-bottom: 1px solid rgba(167, 123, 232, .35);
     background: rgba(16, 11, 24, .9);
+    transition: transform .2s ease;
 }
 
-.historia-page .hamburger{
+.page header.header-oculto{
+    transform: translateY(-100%);
+}
+
+.page .hamburger{
     padding: .5rem;
 }
 
-.historia-page .barMenu{
+.page .barMenu{
     background-color: var(--terror-toxic);
 }
 
-.historia-page .logo{
+.page .logo{
     color: var(--terror-text);
     font-size: 1.35rem;
     font-weight: bold;
@@ -72,8 +78,8 @@ ESTILOS HISTORIA
     letter-spacing: .04em;
 }
 
-.historia-page .login,
-.historia-page .btn{
+.page .login,
+.page .btn{
     border: 1px solid var(--terror-toxic);
     border-radius: 6px;
     padding: .65rem 1rem;
@@ -84,17 +90,17 @@ ESTILOS HISTORIA
     transition: background-color .2s ease, transform .2s ease;
 }
 
-.historia-page .login{
+.page .login{
     margin-left: auto;
 }
 
-.historia-page .login:hover,
-.historia-page .btn:hover{
+.page .login:hover,
+.page .btn:hover{
     background: #542044;
     transform: translateY(-1px);
 }
 
-.historia-page #menu-desplegable{
+.page #menu-desplegable{
     position: absolute;
     top: 100%;
     left: 1rem;
@@ -106,87 +112,23 @@ ESTILOS HISTORIA
     box-shadow: 0 12px 30px rgba(0, 0, 0, .55);
 }
 
-.historia-page #menu-desplegable ul{
+.page #menu-desplegable ul{
     list-style: none;
 }
 
-.historia-page #menu-desplegable a{
+.page #menu-desplegable a{
     display: block;
     padding: .7rem;
     color: var(--terror-text);
     text-decoration: none;
 }
 
-.historia-page #menu-desplegable a:hover{
+.page #menu-desplegable a:hover{
     color: var(--terror-toxic);
     background: rgba(167, 123, 232, .1);
 }
 
-.historia-page main{
-    width: min(100% - 2rem, 900px);
-    margin: 0 auto;
-    padding: clamp(3rem, 9vh, 6rem) 0;
-    flex: 1;
-}
-
-.historia-page main section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-}
-
-.historia-page .titulo{
-    text-align: center;
-}
-
-.historia-page .titulo h1{
-    color: var(--terror-toxic);
-    font-size: clamp(2.2rem, 6vw, 4rem);
-    line-height: 1.1;
-    text-shadow: 0 0 24px rgba(167, 123, 232, .55);
-}
-
-.historia-page .video{
-    width: min(100%, 800px);
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border: 1px solid rgba(167, 123, 232, .75);
-    border-radius: 12px;
-    background: #050404;
-    box-shadow: 0 0 0 6px rgba(125, 38, 59, .25), 0 18px 45px rgba(0, 0, 0, .65);
-}
-
-.historia-page .video iframe{
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.historia-page .descripcion{
-    width: min(100%, 720px);
-    padding: clamp(1.25rem, 4vw, 2rem);
-    border-left: 3px solid var(--terror-red);
-    border-radius: 0 10px 10px 0;
-    background: linear-gradient(110deg, rgba(73, 38, 100, .48), rgba(27, 18, 37, .88));
-    box-shadow: 0 12px 35px rgba(0, 0, 0, .24);
-    text-align: center;
-}
-
-.historia-page .descripcion h3{
-    margin-bottom: .75rem;
-    color: var(--terror-toxic);
-    font-size: clamp(1.35rem, 4vw, 1.8rem);
-}
-
-.historia-page .descripcion p{
-    color: #ded2e8;
-    font-size: 1.05rem;
-    line-height: 1.7;
-}
-
-.historia-page footer{
+.page footer{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -196,26 +138,26 @@ ESTILOS HISTORIA
     background: #0b0810;
 }
 
-.historia-page footer a{
+.page footer a{
     color: var(--terror-toxic);
 }
 
-.historia-page footer h2{
+.page footer h2{
     margin-bottom: .5rem;
     color: var(--terror-purple);
     font-size: 1.1rem;
 }
 
-.historia-page footer p{
+.page footer p{
     margin-top: .35rem;
     color: #c9bbd3;
 }
 
-.historia-page #ventana-login,
-.historia-page #ventana-registro,
-.historia-page #ventana-recuperacion{
+.page #ventana-login,
+.page #ventana-registro,
+.page #ventana-recuperacion{
     position: fixed;
-    z-index: 5;
+    z-index: 50;
     top: 50%;
     left: 50%;
     width: min(90vw, 420px);
@@ -227,17 +169,17 @@ ESTILOS HISTORIA
     transform: translate(-50%, -50%);
 }
 
-.historia-page #ventana-login form,
-.historia-page #ventana-registro form,
-.historia-page #ventana-recuperacion form{
+.page #ventana-login form,
+.page #ventana-registro form,
+.page #ventana-recuperacion form{
     display: flex;
     flex-direction: column;
     gap: .7rem;
 }
 
-.historia-page #ventana-login input,
-.historia-page #ventana-registro input,
-.historia-page #ventana-recuperacion input{
+.page #ventana-login input,
+.page #ventana-registro input,
+.page #ventana-recuperacion input{
     width: 100%;
     padding: .7rem;
     border: 1px solid #684b83;
@@ -247,7 +189,7 @@ ESTILOS HISTORIA
     font: inherit;
 }
 
-.historia-page .cerrar-ventana{
+.page .cerrar-ventana{
     position: absolute;
     top: .65rem;
     right: .75rem;
@@ -259,40 +201,97 @@ ESTILOS HISTORIA
 }
 
 @media (max-width: 600px){
-    .historia-page header{
+    .page header{
         gap: .8rem;
         padding-inline: 1rem;
     }
 
-    .historia-page .logo{
+    .page .logo{
         font-size: 1.1rem;
     }
 
-    .historia-page .login{
+    .page .login{
         padding: .55rem .7rem;
         font-size: .9rem;
     }
 
-    .historia-page footer{
+    .page footer{
         flex-direction: column;
     }
 }
 
 /* ==================================================================
+ESTILOS DE HISTORIA
+================================================================== */
+.page main{
+    width: min(100% - 2rem, 900px);
+    margin: 0 auto;
+    padding: clamp(3rem, 9vh, 6rem) 0;
+    flex: 1;
+}
+
+.page main section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.page .titulo{
+    text-align: center;
+}
+
+.page .titulo h1{
+    color: var(--terror-toxic);
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.1;
+    text-shadow: 0 0 24px rgba(167, 123, 232, .55);
+}
+
+.page .video{
+    width: min(100%, 800px);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, .75);
+    border-radius: 12px;
+    background: #050404;
+    box-shadow: 0 0 0 6px rgba(125, 38, 59, .25), 0 18px 45px rgba(0, 0, 0, .65);
+}
+
+.page .video iframe{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.page .descripcion{
+    width: min(100%, 720px);
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border-left: 3px solid var(--terror-red);
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(110deg, rgba(73, 38, 100, .48), rgba(27, 18, 37, .88));
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .24);
+    text-align: center;
+}
+
+.page .descripcion h3{
+    margin-bottom: .75rem;
+    color: var(--terror-toxic);
+    font-size: clamp(1.35rem, 4vw, 1.8rem);
+}
+
+.page .descripcion p{
+    color: #ded2e8;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* ==================================================================
 ESTILOS RECETAS
 ================================================================== */
-.historia-page header{
-    position: sticky;
-    top: 0;
-    transition: transform .2s ease;
-}
-
-.historia-page header.header-oculto{
-    transform: translateY(-100%);
-}
-
-.historia-page .recetas-populares,
-.historia-page .dulces{
+.page .recetas-populares,
+.page .dulces{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -301,19 +300,19 @@ ESTILOS RECETAS
     width: 100%;
 }
 
-.historia-page .recetas-populares{
+.page .recetas-populares{
     padding: 20px;
     border-radius: 12px;
     background: var(--terror-surface);
 }
 
-.historia-page .dulces h2{
+.page .dulces h2{
     padding: 1rem;
     width: 100%;
     text-align: center;
 }
 
-.historia-page .salados{
+.page .salados{
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -321,12 +320,12 @@ ESTILOS RECETAS
     width: 100%;
 }
 
-.historia-page .salados h2{
+.page .salados h2{
     padding: 2rem 1rem;
     text-align: center;
 }
 
-.historia-page .contenedor-tarjeta{
+.page .contenedor-tarjeta{
     width: min(100%, 250px);
     overflow: hidden;
     border: 1px solid var(--terror-purple);
@@ -335,60 +334,60 @@ ESTILOS RECETAS
     cursor: pointer;
 }
 
-.historia-page .salados .contenedor-tarjeta{
+.page .salados .contenedor-tarjeta{
     display: flex;
     width: 100%;
 }
 
-.historia-page .salados .front{
+.page .salados .front{
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-.historia-page .salados .contenedor-img{
+.page .salados .contenedor-img{
     width: 220px;
     flex-shrink: 0;
 }
 
-.historia-page .salados .contenedor-datos{
+.page .salados .contenedor-datos{
     flex: 1;
 }
 
-.historia-page .salados .contenedor-tarjeta > .back{
+.page .salados .contenedor-tarjeta > .back{
     width: 100%;
 }
 
-.historia-page .contenedor-img img{
+.page .contenedor-img img{
     display: block;
     width: 100%;
     height: 180px;
     object-fit: cover;
 }
 
-.historia-page .contenedor-datos,
-.historia-page .contenedor-tarjeta > .back{
+.page .contenedor-datos,
+.page .contenedor-tarjeta > .back{
     padding: 15px;
 }
 
-.historia-page .contenedor-tarjeta > .back{
+.page .contenedor-tarjeta > .back{
     display: none;
 }
 
-.historia-page .contenedor-tarjeta.back > .front{
+.page .contenedor-tarjeta.back > .front{
     display: none;
 }
 
-.historia-page .contenedor-tarjeta.back > .back{
+.page .contenedor-tarjeta.back > .back{
     display: block;
 }
 
-.historia-page .contenedor-tarjeta h3{
+.page .contenedor-tarjeta h3{
     margin-bottom: 10px;
     color: var(--terror-toxic);
 }
 
-.historia-page .contenedor-tarjeta p{
+.page .contenedor-tarjeta p{
     margin-bottom: 6px;
     line-height: 1.4;
 }
@@ -398,15 +397,44 @@ img {
 }
 
 @media (max-width: 600px){
-    .historia-page .salados .contenedor-tarjeta{
+    .page .salados .contenedor-tarjeta{
         flex-direction: column;
     }
 
-    .historia-page .salados .front{
+    .page .salados .front{
         flex-direction: column;
     }
 
-    .historia-page .salados .contenedor-img{
+    .page .salados .contenedor-img{
         width: 100%;
     }
+}
+
+/* ==================================================================
+ESTILOS JUEGO
+================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+    
+.font-retro {
+    font-family: 'Press Start 2P', monospace;
+}
+
+/* Estilo pixelado del grid */
+#gameCanvas {
+    background-color: #0f172a;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+    touch-action: none;
+}
+
+/* Efecto de brillo de pantalla CRT suave */
+.retro-container {
+    border: 4px solid #334155;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Desactivar selección de texto en controles táctiles */
+.touch-btn {
+    user-select: none;
+    -webkit-user-select: none;
 }

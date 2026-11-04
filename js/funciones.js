@@ -21,7 +21,7 @@ export function cargarHistoria(historia, num) {
 
 export function numeroAleatorio(num) {
     let numero;
-    return numero = Math.floor(Math.random() * num) + 1;
+    return numero = Math.floor(Math.random() * num)
 }
 
 /* ==============================================================================
