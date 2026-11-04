@@ -5,7 +5,6 @@ import { numeroAleatorio, cargarHistoria, crearBtn, recetasTop, recetasSaladas, 
 DESPLEGABLES
 ================================================================================*/
 
-
 //aparece la barra de navegacion
 const btnMenuLateral = document.querySelector(".hamburger");
 const menuDesplegable = document.getElementById("menu-desplegable");
@@ -121,6 +120,11 @@ if (contenedorTemas) {
 }
 
 crearBtn(temas, contenedorTemas);
+
+if (contenedorTemas) {
+    const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
+    crearBtn(temas, contenedorTemas);
+}
 
 if (contenedorTemas) {
     const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");

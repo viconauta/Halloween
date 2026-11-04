@@ -223,15 +223,10 @@ export const audios = [
   {
     descripcion: "Efecto de sonido",
     nombre: "¿Quién te está hablando?",
-<<<<<<< HEAD
-<<<<<<< HEAD
     imagen: "./img/imgAudios/exorcist.webp",
-=======
     imagen: "./img/imgAudios/payaso.jpeg",
->>>>>>> 80dbcbc (Comienzo de la pestaña sonidos.html y su js)
-=======
     imagen: "./img/imgAudios/exorcist.webp",
->>>>>>> 3b86054 (Página de sonidos terminada, solo faltaría por poner algun que otro efecto de sonido/tema musical de miedo.)
+    imagen: "./img/imgAudios/exorcist.webp",
     audio: "./audios/efectos/susurroEco.mp3"
   },
   {
@@ -247,10 +242,6 @@ export const audios = [
     audio: "./audios/efectos/noseDescribirlo.mp3"
   },
   {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3b86054 (Página de sonidos terminada, solo faltaría por poner algun que otro efecto de sonido/tema musical de miedo.)
     descripcion: "Efecto de sonido",
     nombre: "Mommy",
     imagen: "./img/imgAudios/mommy.jpeg",
@@ -275,20 +266,18 @@ export const audios = [
     audio: "./audios/efectos/"
   },
   {
-<<<<<<< HEAD
     descripcion: "Tema musical de Película",
     nombre: "HalloWeen",
     imagen: "./img/imgAudios/michaelMyers.webp",
-=======
     descripcion: "Tema musical de Película",
     nombre: "HalloWeen",
     imagen: "./img/imgAudios/michaelMers.webp",
->>>>>>> 80dbcbc (Comienzo de la pestaña sonidos.html y su js)
-=======
+   descripcion: "Tema musical de Película",
+    nombre: "HalloWeen",
+    imagen: "./img/imgAudios/michaelMyers.webp",
     descripcion: "Tema musical de Película",
     nombre: "HalloWeen",
     imagen: "./img/imgAudios/michaelMyers.webp",
->>>>>>> 3b86054 (Página de sonidos terminada, solo faltaría por poner algun que otro efecto de sonido/tema musical de miedo.)
     audio: "./audios/temas/michaelMyers.mp3"
   },
   {
@@ -309,10 +298,6 @@ export const audios = [
     imagen: "./img/imgAudios/itPayaso.webp",
     audio: "./audios/temas/itPayaso.mp3"
   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3b86054 (Página de sonidos terminada, solo faltaría por poner algun que otro efecto de sonido/tema musical de miedo.)
   {
     descripcion: "Tema musical de Película",
     nombre: "Daisy Bell",
@@ -337,9 +322,4 @@ export const audios = [
     imagen: "./img/imgAudios/purgatorioIV.jpg",
     audio: "./audios/temas/elPurgatorio.mp3"
   },
-<<<<<<< HEAD
-=======
->>>>>>> 80dbcbc (Comienzo de la pestaña sonidos.html y su js)
-=======
->>>>>>> 3b86054 (Página de sonidos terminada, solo faltaría por poner algun que otro efecto de sonido/tema musical de miedo.)
 ]

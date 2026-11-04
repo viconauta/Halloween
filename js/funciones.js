@@ -21,7 +21,6 @@ export function cargarHistoria(historia, num) {
 
 export function numeroAleatorio(num) {
     return Math.floor(Math.random() * num);
-
 }
 
 
@@ -79,6 +78,7 @@ export function recetasDulces(recetas, tipo) {
 
     let numero;
     return numero = Math.floor(Math.random() * num) + 1;
+
 
 }
 
