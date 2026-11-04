@@ -49,18 +49,21 @@ document.querySelectorAll(".cerrar-ventana").forEach((btn) => {
 });
 
 //cargar historia diaria
-const num = numeroAleatorio(historias.length);
-cargarHistoria(historias, num);
+if (document.querySelector(".video") && document.querySelector(".descripcion")) {
+    const num = numeroAleatorio(historias.length);
+    cargarHistoria(historias, num);
+}
 
 
 const contenedorEfectos = document.getElementById("efectos-sonido");
 const contenedorTemas = document.getElementById("temas-musicales");
 
-// Separamos los efectos de los temas musicales
-const efectos = audios.filter(sonido => sonido.descripcion === "Efecto de sonido");
+if (contenedorEfectos) {
+    const efectos = audios.filter(sonido => sonido.descripcion === "Efecto de sonido");
+    crearBtn(efectos, contenedorEfectos);
+}
 
-const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
-
-// Creamos los botones
-crearBtn(efectos, contenedorEfectos);
-crearBtn(temas, contenedorTemas);
+if (contenedorTemas) {
+    const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
+    crearBtn(temas, contenedorTemas);
+}
