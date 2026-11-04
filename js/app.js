@@ -76,3 +76,18 @@ tipo = "dulce";
 recetasDulces(recetas, tipo);
 
 //eventos para la tarjeta reversible
+document.querySelectorAll(".contenedor-tarjeta").forEach((tarjeta) => {
+    tarjeta.addEventListener("click", () => {
+        tarjeta.classList.toggle("back");
+    });
+});
+
+//Mostrar el encabezado al subir y ocultarlo al bajar
+const header = document.querySelector("header");
+let ultimaPosicion = window.scrollY;
+
+window.addEventListener("scroll", () => {
+    const posicionActual = window.scrollY;
+    header.classList.toggle("header-oculto", posicionActual > ultimaPosicion && posicionActual > header.offsetHeight);
+    ultimaPosicion = posicionActual;
+}, { passive: true });

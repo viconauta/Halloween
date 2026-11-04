@@ -30,22 +30,21 @@ RECETAS
 //mostrar tarjeta para las recetas
 function mostrarTarjeta(a) {
     return `
-        <div class="contenedor-tarjeta">
-            <div class="front tarjeta-top">
+        <article class="contenedor-tarjeta">
+            <div class="front tarjeta">
                 <div class="contenedor-img">
-                    <img src=${a.imagen} alt="imagen de la receta">
+                    <img src="${a.imagen}" alt="${a.nombre}">
                 </div>
                 <div class="contenedor-datos">
                     <h3>${a.nombre}</h3>
                     <p>${a.descripcion}</p>
                 </div>
             </div>
-            <div class="tarjeta-top back">
-                ${a.ingredientes.map(lista => 
-                    `<p>${lista}</p>`
-                ).join("")}
+            <div class="back tarjeta">
+                <h3>Ingredientes</h3>
+                ${a.ingredientes.map(ingrediente => `<p>${ingrediente}</p>`).join("")}
             </div>
-        </div>`;
+        </article>`;
 }
 
 //funcion para mostrar las recetas top

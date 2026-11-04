@@ -24,6 +24,10 @@
     display: none;
 }
 
+/* ==================================================================
+ESTILOS HISTORIA
+================================================================== */
+
 .historia-page{
     --terror-bg: #100b18;
     --terror-surface: #1b1225;
@@ -254,11 +258,6 @@
     cursor: pointer;
 }
 
-/* ==================================================================
-ESTILOS RECETAS
-================================================================== */
-
-
 @media (max-width: 600px){
     .historia-page header{
         gap: .8rem;
@@ -276,5 +275,138 @@ ESTILOS RECETAS
 
     .historia-page footer{
         flex-direction: column;
+    }
+}
+
+/* ==================================================================
+ESTILOS RECETAS
+================================================================== */
+.historia-page header{
+    position: sticky;
+    top: 0;
+    transition: transform .2s ease;
+}
+
+.historia-page header.header-oculto{
+    transform: translateY(-100%);
+}
+
+.historia-page .recetas-populares,
+.historia-page .dulces{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.historia-page .recetas-populares{
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--terror-surface);
+}
+
+.historia-page .dulces h2{
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.historia-page .salados{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.historia-page .salados h2{
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.historia-page .contenedor-tarjeta{
+    width: min(100%, 250px);
+    overflow: hidden;
+    border: 1px solid var(--terror-purple);
+    border-radius: 10px;
+    background: var(--terror-surface);
+    cursor: pointer;
+}
+
+.historia-page .salados .contenedor-tarjeta{
+    display: flex;
+    width: 100%;
+}
+
+.historia-page .salados .front{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.historia-page .salados .contenedor-img{
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.historia-page .salados .contenedor-datos{
+    flex: 1;
+}
+
+.historia-page .salados .contenedor-tarjeta > .back{
+    width: 100%;
+}
+
+.historia-page .contenedor-img img{
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.historia-page .contenedor-datos,
+.historia-page .contenedor-tarjeta > .back{
+    padding: 15px;
+}
+
+.historia-page .contenedor-tarjeta > .back{
+    display: none;
+}
+
+.historia-page .contenedor-tarjeta.back > .front{
+    display: none;
+}
+
+.historia-page .contenedor-tarjeta.back > .back{
+    display: block;
+}
+
+.historia-page .contenedor-tarjeta h3{
+    margin-bottom: 10px;
+    color: var(--terror-toxic);
+}
+
+.historia-page .contenedor-tarjeta p{
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+img {
+    max-width: 100%;
+}
+
+@media (max-width: 600px){
+    .historia-page .salados .contenedor-tarjeta{
+        flex-direction: column;
+    }
+
+    .historia-page .salados .front{
+        flex-direction: column;
+    }
+
+    .historia-page .salados .contenedor-img{
+        width: 100%;
     }
 }
