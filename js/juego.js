@@ -135,17 +135,26 @@ for (let i = 0; i < canvas.width; i += GRID_SIZE) {
     ctx.stroke();
 }
 
-// Dibujar Comida (Manzana roja con borde brillante)
-ctx.fillStyle = '#ef4444';
+// Dibujar calabaza
+ctx.fillStyle = '#f97316';
 ctx.beginPath();
-ctx.arc(
+ctx.ellipse(
     food.x + GRID_SIZE / 2, 
-    food.y + GRID_SIZE / 2, 
-    GRID_SIZE / 2 - 2, 
-    0, 
+    food.y + GRID_SIZE / 2 + 2,
+    GRID_SIZE / 2 - 2,
+    GRID_SIZE / 2 - 3,
+    0,
+    0,
     Math.PI * 2
 );
 ctx.fill();
+ctx.strokeStyle = '#c2410c';
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.ellipse(food.x + GRID_SIZE / 2, food.y + GRID_SIZE / 2 + 2, 3, GRID_SIZE / 2 - 4, 0, 0, Math.PI * 2);
+ctx.stroke();
+ctx.fillStyle = '#4d7c0f';
+ctx.fillRect(food.x + GRID_SIZE / 2 - 1, food.y + 2, 3, 5);
 
 // Dibujar Serpiente
 snake.forEach((segment, index) => {
