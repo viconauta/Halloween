@@ -423,9 +423,10 @@ img {
 /* Distribución de los círculos */
 #efectos-sonido,
 #temas-musicales {
+    margin:auto;
     display: grid;
-    grid-template-columns: repeat(5, 50px);
-    gap: 15px;
+    grid-template-columns: repeat(5, 70px);
+    gap: 24px;
     margin: 20px 0;
 }
 
@@ -449,7 +450,6 @@ img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-
 }
 
 /* Efecto al pasar el ratón */
@@ -462,8 +462,6 @@ img {
 .circulo-sonido.sonando {
     box-shadow: 0 0 0 3px #00e676, 0 0 15px #00e676;
 }
-
-
     background-color: #00e676;
     box-shadow: 0 0 15px #00e676;
 }

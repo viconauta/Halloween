@@ -121,3 +121,8 @@ if (contenedorTemas) {
 }
 
 crearBtn(temas, contenedorTemas);
+
+if (contenedorTemas) {
+    const temas = audios.filter(sonido => sonido.descripcion === "Tema musical de Película");
+    crearBtn(temas, contenedorTemas);
+}
