@@ -1,5 +1,9 @@
-import { historias } from "./datos.js";
-import { numeroAleatorio, cargarHistoria } from "./funciones.js";
+import { historias, recetas } from "./datos.js";
+import { numeroAleatorio, cargarHistoria, recetasTop, recetasSaladas, recetasDulces } from "./funciones.js";
+
+/* ==============================================================================
+DESPLEGABLES
+================================================================================*/
 
 //aparece la barra de navegacion
 const btnMenuLateral = document.querySelector(".hamburger");
@@ -48,6 +52,42 @@ document.querySelectorAll(".cerrar-ventana").forEach((btn) => {
     });
 });
 
+/* ==============================================================================
+HISTORIA
+================================================================================*/
+
 //cargar historia diaria
-    const num = numeroAleatorio(historias.length);
-    cargarHistoria(historias, num);
+const num = numeroAleatorio(historias.length);
+cargarHistoria(historias, num);
+
+/* ==============================================================================
+RECETAS
+================================================================================*/
+
+//obtener recetas top
+recetasTop(recetas);
+
+//obtener aperitivos salados
+let tipo = "salado";
+recetasSaladas(recetas, tipo);
+
+//obtener dulces y pasteles
+tipo = "dulce";
+recetasDulces(recetas, tipo);
+
+//eventos para la tarjeta reversible
+document.querySelectorAll(".contenedor-tarjeta").forEach((tarjeta) => {
+    tarjeta.addEventListener("click", () => {
+        tarjeta.classList.toggle("back");
+    });
+});
+
+//Mostrar el encabezado al subir y ocultarlo al bajar
+const header = document.querySelector("header");
+let ultimaPosicion = window.scrollY;
+
+window.addEventListener("scroll", () => {
+    const posicionActual = window.scrollY;
+    header.classList.toggle("header-oculto", posicionActual > ultimaPosicion && posicionActual > header.offsetHeight);
+    ultimaPosicion = posicionActual;
+}, { passive: true });

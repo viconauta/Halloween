@@ -81,7 +81,7 @@ export const recetas = [
     nombre: "Dedos de Bruja crujientes",
     descripcion: "Galletas de mantequilla con almendras que parecen dedos espeluznantes.",
     puntuacion: 4.8,
-    imagen: "./img/dedosBruja.jpg",
+    imagen: "./img/recetas/dedosBruja.jpg",
     tipo: "dulce",
     ingredientes: [
       "225g de mantequilla",
@@ -97,7 +97,7 @@ export const recetas = [
     nombre: "Cheesecake de Calabaza y Telaraña",
     descripcion: "Pastel cremoso con especias y decoración de telaraña de chocolate.",
     puntuacion: 4.9,
-    imagen: "./img/cheesecake.jpg",
+    imagen: "./img/recetas/cheesecake.jpg",
     tipo: "dulce",
     ingredientes: [
       "200g de galletas tipo Maria o Graham",
@@ -114,7 +114,7 @@ export const recetas = [
     nombre: "Momias de Salchicha",
     descripcion: "Divertidas salchichas envueltas en tiras de hojaldre crujiente.",
     puntuacion: 4.6,
-    imagen: "./img/momias.jpg",
+    imagen: "./img/recetas/momias.jpg",
     tipo: "salado",
     ingredientes: [
       "12 salchichas de pavo o cerdo",
@@ -128,7 +128,7 @@ export const recetas = [
     nombre: "Cupcakes Fantasmagóricos",
     descripcion: "Magdalenas de chocolate cubiertas de merengue en forma de fantasma.",
     puntuacion: 4.7,
-    imagen: "./img/fantasmagoricos.jpg",
+    imagen: "./img/recetas/fantasmagoricos.jpg",
     tipo: "dulce",
     ingredientes: [
       "150g de harina",
@@ -144,7 +144,7 @@ export const recetas = [
     nombre: "Hamburguesa Monstruosa de Pan Negro",
     descripcion: "Hamburguesa jugosa con queso cortado como dientes y pan de carbón activado.",
     puntuacion: 4.8,
-    imagen: "./img/hamburguesa.jpg",
+    imagen: "./img/recetas/hamburguesa.jpg",
     tipo: "salado",
     ingredientes: [
       "Panes de hamburguesa negros",
@@ -159,7 +159,7 @@ export const recetas = [
     nombre: "Huevos Rellenos de Araña",
     descripcion: "Huevos duros rellenos decorados con aceitunas negras formando arañas.",
     puntuacion: 4.5,
-    imagen: "./img/huevos.jpg",
+    imagen: "./img/recetas/huevos.jpg",
     tipo: "salado",
     ingredientes: [
       "6 huevos cocidos",
@@ -173,7 +173,7 @@ export const recetas = [
     nombre: "Manzanas Caramelizadas de Monstruo",
     descripcion: "Manzanas cubiertas de caramelo de colores con detalles terroríficos.",
     puntuacion: 4.6,
-    imagen: "./img/manzana.jpg",
+    imagen: "./img/recetas/manzana.jpg",
     tipo: "dulce",
     ingredientes: [
       "4 manzanas verdes o rojas",
@@ -187,7 +187,7 @@ export const recetas = [
     nombre: "Tabla Esquelética de Embutidos",
     descripcion: "Aperitivo salado presentado de forma terrorífica en una tabla decorativa.",
     puntuacion: 4.9,
-    imagen: "./img/embutidos.jpg",
+    imagen: "./img/recetas/embutidos.jpg",
     tipo: "salado",
     ingredientes: [
       "Variedad de quesos",
@@ -201,7 +201,7 @@ export const recetas = [
     nombre: "Trufas de Chocolate Murciélago",
     descripcion: "Bocaditos intensos de chocolate con alas de galleta crujiente.",
     puntuacion: 4.7,
-    imagen: "./img/trufas.jpg",
+    imagen: "./img/recetas/trufas.jpg",
     tipo: "dulce",
     ingredientes: [
       "200g de chocolate negro 70%",
