@@ -20,8 +20,7 @@ export function cargarHistoria(historia, num) {
 }
 
 export function numeroAleatorio(num) {
-    let numero;
-    return numero = Math.floor(Math.random() * num) + 1;
+    return Math.floor(Math.random() * num);
 }
 
 
@@ -95,56 +94,72 @@ export function crearBtn(datos, contenedor) {
 
         btn.type = "button";
         btn.classList.add("circulo-sonido");
-
         btn.title = sonido.nombre;
         btn.setAttribute("aria-label", sonido.nombre);
 
+        const imagen = document.createElement("img");
+        imagen.src = sonido.imagen;
+        imagen.alt = "";
+        imagen.setAttribute("aria-hidden", "true");
+        btn.appendChild(imagen);
+
         btn.addEventListener("click", () => {
 
-            // Si pulsamos el mismo botón, pausamos el audio
-            if (btnActual === btn && audioActual && !audioActual.paused) {
-
-                audioActual.pause();
-                btn.classList.remove("sonando");
-
+            if (btnActual === btn && audioActual) {
+                if (audioActual.paused) {
+                    reproducirAudio(audioActual, btn);
+                } else {
+                    audioActual.pause();
+                    btn.classList.remove("sonando");
+                }
                 return;
             }
 
-            // Detenemos el audio anterior
-            if (audioActual !== null) {
-
+            if (audioActual) {
                 audioActual.pause();
                 audioActual.currentTime = 0;
-
                 btnActual.classList.remove("sonando");
             }
 
-            // Creamos el nuevo audio
-            audioActual = new Audio(sonido.audio);
+            const audio = new Audio(sonido.audio);
+            audioActual = audio;
             btnActual = btn;
 
-            // Reproducimos el audio
-            audioActual.play()
-                .then(() => {
-                    btn.classList.add("sonando");
-                })
-                .catch(() => {
-                    btn.classList.remove("sonando");
-                    alert("No se ha podido reproducir el audio.");
-                });
-
-            // Cuando termina el audio
-            audioActual.addEventListener("ended", () => {
-
+            audio.addEventListener("ended", () => {
                 btn.classList.remove("sonando");
-                audioActual = null;
-                btnActual = null;
-
+                if (audioActual === audio) {
+                    audioActual = null;
+                    btnActual = null;
+                }
             });
 
+            reproducirAudio(audio, btn);
         });
 
         contenedor.appendChild(btn);
 
     });
+}
+
+function reproducirAudio(audio, btn) {
+    audio.play()
+        .then(() => {
+            if (audioActual === audio) {
+                btn.classList.add("sonando");
+            }
+        })
+        .catch(error => {
+            if (audioActual !== audio) {
+                return;
+            }
+
+            if (error.name === "AbortError" && audio.paused) {
+                return;
+            }
+
+            btn.classList.remove("sonando");
+            audioActual = null;
+            btnActual = null;
+            alert("No se ha podido reproducir el audio.");
+        });
 }

@@ -223,7 +223,7 @@ export const audios = [
   {
     descripcion: "Efecto de sonido",
     nombre: "¿Quién te está hablando?",
-    imagen: "./img/imgAudios/payaso.jpeg",
+    imagen: "./img/imgAudios/exorcist.webp",
     audio: "./audios/efectos/susurroEco.mp3"
   },
   {
@@ -239,9 +239,33 @@ export const audios = [
     audio: "./audios/efectos/noseDescribirlo.mp3"
   },
   {
+    descripcion: "Efecto de sonido",
+    nombre: "Mommy",
+    imagen: "./img/imgAudios/mommy.jpeg",
+    audio: "./audios/efectos/mamiMami.mp3"
+  },
+  {
+    descripcion: "Efecto de sonido",
+    nombre: "",
+    imagen: "./img/imgAudios/",
+    audio: "./audios/efectos/"
+  },
+  {
+    descripcion: "Efecto de sonido",
+    nombre: "",
+    imagen: "./img/imgAudios/",
+    audio: "./audios/efectos/"
+  },
+  {
+    descripcion: "Efecto de sonido",
+    nombre: "",
+    imagen: "./img/imgAudios/",
+    audio: "./audios/efectos/"
+  },
+  {
     descripcion: "Tema musical de Película",
     nombre: "HalloWeen",
-    imagen: "./img/imgAudios/michaelMers.webp",
+    imagen: "./img/imgAudios/michaelMyers.webp",
     audio: "./audios/temas/michaelMyers.mp3"
   },
   {
@@ -261,5 +285,29 @@ export const audios = [
     nombre: "It",
     imagen: "./img/imgAudios/itPayaso.webp",
     audio: "./audios/temas/itPayaso.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "Daisy Bell",
+    imagen: "./img/imgAudios/daisyBell.jpg",
+    audio: "./audios/temas/daisyBell.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "Dead Silence",
+    imagen: "./img/imgAudios/deadSilence.jpg",
+    audio: "./audios/temas/deadSilence.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "Jason",
+    imagen: "./img/imgAudios/jason.jpg",
+    audio: "./audios/temas/jason.mp3"
+  },
+  {
+    descripcion: "Tema musical de Película",
+    nombre: "El Purgatorio IV",
+    imagen: "./img/imgAudios/purgatorioIV.jpg",
+    audio: "./audios/temas/elPurgatorio.mp3"
   },
 ]
