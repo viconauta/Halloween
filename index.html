@@ -15,46 +15,67 @@
         </button>
         <nav id="menu-desplegable" class="oculto">
             <ul>
+                <li><a href="./index.html">Inicio</a></li>
                 <li><a href="./recetas.html">Recetas</a></li>
                 <li><a href="./historia.html">Historias de miedo</a></li>
                 <li><a href="./sonidos.html">Musica y tonos</a></li>
                 <li><a href="./enGranada.html">Granada</a></li>
                 <li><a href="./juego.html">Juego</a></li>
+                <li><a href="./miCuenta.html">Mi cuenta</a></li>
             </ul>
         </nav>
         <a class="logo" href="./index.html">GranaWeen</a>
         <button class="login btn">Iniciar Sesion</button>
     </header>
 
-        <main class="contenido" id="inicio">
-            <section class="tarjetas" aria-label="Secciones de GranaWeen">
-                <a class="tarjeta" href="#jack">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Formulario para enviar Email a “Jack Skellington”</span>
+        <main id="main-index">
+            <section id="correo-jack" aria-label="Secciones de GranaWeen">
+                <div class="formulario-correo">
+                    <h2>Envia un email a Jack Skellington</h2>
+                    <form action="./php/correo.php" method="post">
+                        <label for="asunto">Asunto</label>
+                        <input type="text" name="asunto" id="asunto" placeholder="Aqui el asunto" required>
+
+                        <label for="tuEmail">Escribe tu email</label>
+                        <input type="email" name="email" id="email" placeholder="email@ejemplo.com" required>
+
+                        <label for="mensaje">Tus pesadillas</label>
+                        <textarea name="mensaje" id="mensaje" rows="4" cols="40" placeholder="Escribe aqui a Jack tus peores pesadillas" required></textarea>
+
+                        <button type="submit" class="btn-mensaje">Enviar mensaje</button>
+                    </form>
+                </div>
+            </section>
+            <section>
+                <a class="enlace-pagina" href="./juego.html">
+                    <img src="./img/index/snake.png" alt="Juego serpiente">
+                    <h2>Juega al mitico juego de la serpiente</h2>
+                    <p>Comete las calabazas de Halloween que apareceran por el mapa sin chocarte con las paredes ni contigo mismo.</p>
                 </a>
-                <a class="tarjeta" href="#juego">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información del Juego</span>
+                <a class="enlace-pagina" href="./enGranada.html">
+                    <img src="./img/index/lugares.webp" alt="Imagen de casa abandonada">
+                    <h2>Halloween en Granada</h2>
+                    <p>Lugares que puedes visitar en Halloween.</p>
                 </a>
-                <a class="tarjeta" href="#granada">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información halloween en Granada</span>
+                <a class="enlace-pagina" href="./historia.html">
+                    <img src="./img/index/historia.jpeg" alt="Imagen terror">
+                    <h2>Historias de miedo</h2>
+                    <span>Una historia de miedo cada vez.</span>
                 </a>
-                <a class="tarjeta" href="#historias">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información Historias de Miedo</span>
+                <a class="enlace-pagina" href="./recetas.html">
+                    <img src="./img/index/recetas.jpg" alt="Tarta de cerebro">
+                    <h2>Recetas de Halloween</h2>
+                    <p>Recetas de dulces, pasteles y salados con tematica de Halloween</p>
                 </a>
-                <a class="tarjeta" href="#recetas">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Mundillo de recetas</span>
+                <a class="enlace-pagina" href="./sonidos.html">
+                    <img src="./img/index/sonidos.jpg" alt="Imagen de calabaza con cascos de musica">
+                    <h2>Sonidos</h2>
+                    <p>Efectos de sonido y temas musicales con tematica Halloween.</p>
                 </a>
-                <a class="tarjeta" href="#musica">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Variedad de notas musicales y audios de miedo</span>
-                </a>
-                <a class="tarjeta" href="#nosotros">
-                    <img src="" alt="Casa encantada">                                           <!--Falta imagen-->
-                    <span>Información sobre nosotros</span>
+                <a class="enlace-pagina" href="./sobreNosotros.html">
+                    <img src="./img/index/desarrolladores.jpg" alt="Desarrolladores">
+                    <h2>Sobre Nosotros</h2>
+                    <p>Informacion sobre los desarrolladores del proyecto.</p>
                 </a>
             </section>
         </main>

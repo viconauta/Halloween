@@ -78,6 +78,7 @@ ESTILO COMUN
     font-weight: bold;
     text-decoration: none;
     letter-spacing: .04em;
+    text-shadow: 2px 2px 10px var(--terror-text);
 }
 
 .page .login,
@@ -148,6 +149,7 @@ ESTILO COMUN
     margin-bottom: .5rem;
     color: var(--terror-purple);
     font-size: 1.1rem;
+    text-shadow: 2px 2px 5px var(--terror-purple);
 }
 
 .page footer p{
@@ -223,6 +225,268 @@ ESTILO COMUN
 }
 
 /* ==================================================================
+INDEX
+================================================================== */
+/* Inicio */
+.page #main-index{
+    width: min(100% - 2rem, 1180px);
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 5rem) 0;
+}
+
+.page #correo-jack{
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
+    align-items: center;
+    width: 100%;
+    min-height: 580px;
+    margin: 0 0 clamp(3rem, 7vw, 6rem);
+    padding: clamp(1.25rem, 5vw, 4rem);
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, .5);
+    border-radius: 24px;
+    background:
+        linear-gradient(90deg, rgba(10, 7, 15, .12) 0%, rgba(16, 11, 24, .48) 44%, rgba(16, 11, 24, .96) 68%),
+        url("../img/index/jack.jpg") center 35% / cover no-repeat;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .45);
+}
+
+.page .formulario-correo{
+    grid-column: 2;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid rgba(167, 123, 232, .55);
+    border-radius: 18px;
+    background: rgba(16, 11, 24, .82);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+    backdrop-filter: blur(8px);
+}
+
+.page .formulario-correo h2{
+    margin-bottom: 1.25rem;
+    color: var(--terror-toxic);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.2;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, .8);
+}
+
+.page .formulario-correo form{
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+}
+
+.page .formulario-correo label{
+    color: #e4d8ed;
+    font-size: .95rem;
+}
+
+.page .formulario-correo input,
+.page .formulario-correo textarea{
+    width: 100%;
+    padding: .8rem .9rem;
+    border: 1px solid #684b83;
+    border-radius: 8px;
+    color: var(--terror-text);
+    background: rgba(10, 7, 15, .9);
+    font: inherit;
+}
+
+.page .formulario-correo textarea{
+    min-height: 110px;
+    resize: vertical;
+}
+
+.page .formulario-correo input:focus,
+.page .formulario-correo textarea:focus{
+    outline: 2px solid var(--terror-toxic);
+    outline-offset: 2px;
+}
+
+.page .btn-mensaje{
+    align-self: flex-start;
+    margin-top: .5rem;
+    padding: .75rem 1.2rem;
+    border: 1px solid var(--terror-toxic);
+    border-radius: 8px;
+    color: #fff;
+    background: var(--terror-red);
+    font: inherit;
+    cursor: pointer;
+    transition: transform .2s ease, background-color .2s ease;
+}
+
+.page .btn-mensaje:hover{
+    transform: translateY(-2px);
+    background: #542044;
+}
+
+.page #main-index > section:not(#correo-jack){
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 1.25rem;
+}
+
+.page .enlace-pagina{
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, .42);
+    border-radius: 14px;
+    color: var(--terror-text);
+    background: linear-gradient(145deg, rgba(38, 25, 50, .98), rgba(20, 14, 28, .98));
+    text-decoration: none;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.page .enlace-pagina:hover,
+.page .enlace-pagina:focus-visible{
+    transform: translateY(-6px);
+    border-color: var(--terror-toxic);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, .4), 0 0 20px rgba(184, 242, 58, .12);
+}
+
+.page .enlace-pagina:focus-visible{
+    outline: 2px solid var(--terror-toxic);
+    outline-offset: 4px;
+}
+
+.page .enlace-pagina img{
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.page .enlace-pagina:hover img{
+    transform: scale(1.04);
+}
+
+.page .enlace-pagina h2{
+    margin: 1.15rem 1.2rem .55rem;
+    color: var(--terror-toxic);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.3;
+}
+
+.page .enlace-pagina p,
+.page .enlace-pagina span{
+    margin: 0 1.2rem 1.25rem;
+    color: #d3c7dc;
+    line-height: 1.6;
+}
+
+.page .enlace-pagina:nth-child(1){
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    border-color: rgba(184, 242, 58, .45);
+    background: linear-gradient(110deg, rgba(43, 26, 53, .98), rgba(25, 18, 33, .98));
+}
+
+.page .enlace-pagina:nth-child(1) img{
+    width: 46%;
+    height: 100%;
+    min-height: 240px;
+    align-self: stretch;
+}
+
+.page .enlace-pagina:nth-child(1) h2{
+    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+}
+
+.page .enlace-pagina:nth-child(6){
+    grid-column: 2 / span 2;
+    flex-direction: row;
+    align-items: center;
+    border-color: rgba(167, 123, 232, .65);
+}
+
+.page .enlace-pagina:nth-child(6) img{
+    width: 42%;
+    height: 100%;
+    min-height: 190px;
+    align-self: stretch;
+}
+
+.page .enlace-pagina:nth-child(6) h2{
+    color: #d6b8ff;
+}
+
+@media (max-width: 800px){
+    .page #correo-jack{
+        grid-template-columns: 1fr;
+        min-height: auto;
+        background-position: 35% center;
+    }
+
+    .page .formulario-correo{
+        grid-column: 1;
+        width: min(100%, 520px);
+        margin-left: auto;
+    }
+
+    .page #main-index > section:not(#correo-jack){
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .page .enlace-pagina:nth-child(1){
+        grid-column: span 2;
+    }
+
+    .page .enlace-pagina:nth-child(6){
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 520px){
+    .page #main-index{
+        width: min(100% - 1.25rem, 1180px);
+    }
+
+    .page #correo-jack{
+        padding: 1rem;
+        border-radius: 16px;
+        background-position: 28% center;
+    }
+
+    .page .formulario-correo{
+        padding: 1.1rem;
+        background: rgba(16, 11, 24, .9);
+    }
+
+    .page #main-index > section:not(#correo-jack){
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .page .enlace-pagina:nth-child(1),
+    .page .enlace-pagina:nth-child(6){
+        grid-column: auto;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page .enlace-pagina:nth-child(1) img,
+    .page .enlace-pagina:nth-child(6) img{
+        width: 100%;
+        height: 190px;
+        min-height: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .page .enlace-pagina,
+    .page .enlace-pagina img,
+    .page .btn-mensaje{
+        transition: none;
+    }
+}
+
+/* ==================================================================
 ESTILOS DE HISTORIA
 ================================================================== */
 .page main{
@@ -251,7 +515,7 @@ ESTILOS DE HISTORIA
     color: var(--terror-toxic);
     font-size: clamp(2.2rem, 6vw, 4rem);
     line-height: 1.1;
-    text-shadow: 0 0 24px rgba(167, 123, 232, .55);
+    text-shadow: 2px 2px 10px var(--terror-toxic);
 }
 
 .page .video{
@@ -285,6 +549,7 @@ ESTILOS DE HISTORIA
     margin-bottom: .75rem;
     color: var(--terror-toxic);
     font-size: clamp(1.35rem, 4vw, 1.8rem);
+    text-shadow: 2px 2px 10px var(--terror-toxic);
 }
 
 .page .descripcion p{
@@ -633,7 +898,6 @@ TELON DE HISTORIA Y SUSTO DEL INICIO
 /* ==================================================================
 ESTILOS JUEGO
 ================================================================== */
-
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
     
