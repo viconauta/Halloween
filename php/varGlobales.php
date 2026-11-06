@@ -24,6 +24,14 @@ if (!is_array($_SESSION['usuarios'])) {
     throw new UnexpectedValueException('La matriz de usuarios de la sesión no es válida.');
 }
 
+if (!isset($_SESSION['mimatriz'])) {
+    $_SESSION['mimatriz'] = [];
+}
+
+if (!is_array($_SESSION['mimatriz'])) {
+    throw new UnexpectedValueException('La matriz de usuarios de la sesión no es válida.');
+}
+
 if (!isset($_SESSION['csrf_cambio_pass']) || !is_string($_SESSION['csrf_cambio_pass'])) {
     $_SESSION['csrf_cambio_pass'] = bin2hex(random_bytes(32));
 }
@@ -42,6 +50,11 @@ if (!isset($_SESSION['csrf_correo']) || !is_string($_SESSION['csrf_correo'])) {
  */
 function currentUser(): ?array
 {
+    $usuarioActual = $_SESSION['currentUser'] ?? null;
+    if (is_array($usuarioActual)) {
+        return $usuarioActual;
+    }
+
     $nombreUsuario = $_SESSION['usuario'] ?? null;
     $usuarios = $_SESSION['usuarios'] ?? null;
 
@@ -64,7 +77,7 @@ function currentUser(): ?array
 function currentUserEmail(): ?string
 {
     $usuario = currentUser();
-    $email = $usuario['email'] ?? null;
+    $email = $usuario['email'] ?? $usuario['Email'] ?? null;
 
     if (
         !is_string($email)
@@ -144,4 +157,30 @@ function cambioContraseña(string $respuesta, string $nuevaContraseña, ?string 
     $_SESSION['usuarios'][$usuario] = $datosUsuario;
 
     return true;
+}
+
+/**
+ * Guarda en la sesión el usuario autenticado.
+ *
+ * @param array<string, mixed> $usuario
+ */
+function setCurrentUser(array $usuario): void
+{
+    session_regenerate_id(true);
+    $_SESSION['currentUser'] = $usuario;
+
+    $nombreUsuario = $usuario['Usuario'] ?? $usuario['usuario'] ?? null;
+    if (is_string($nombreUsuario) && $nombreUsuario !== '') {
+        $_SESSION['usuario'] = $nombreUsuario;
+    }
+}
+
+/**
+ * Añade un usuario a la matriz utilizada por el formulario de registro.
+ *
+ * @param array<string, string> $nuevoUsuario
+ */
+function AltaUsuario(array $nuevoUsuario): void
+{
+    $_SESSION['mimatriz'][] = $nuevoUsuario;
 }

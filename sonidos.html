@@ -101,9 +101,14 @@
 
     <!-- ventana emergente de recuperar contraseña -->
     <div id="ventana-recuperacion" class="oculto">
-        <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
-        <p>Continúa para verificar tu respuesta de seguridad y establecer una nueva contraseña.</p>
-        <a class="btn" href="./php/cambioPass.php">Recuperar contraseña</a>
-    </div>
+            <button class="cerrar-ventana">X</button>
+            <p>PREGUNTA DE SEGURIDAD</p>
+            <form action="./php/cambioPass.php">
+                <label for="respuesta">Respuesta</label>
+                <input type="text" name="respuesta" id="respuesta">
+
+                <button type="submit" class="btn">Enviar respuesta</button>
+            </form>
+        </div>
 </body>
 </html>

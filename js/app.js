@@ -8,8 +8,7 @@ import {
     recetasSaladas,
     recetasDulces,
     mostrarLugares,
-    cerrarMapa,
-    inicializarMiCuenta
+    cerrarMapa
 } from "./funciones.js";
 
 /* ==============================================================================
@@ -26,75 +25,36 @@ const btnRegistro = document.querySelector(".registro");
 const ventanaRegistro = document.getElementById("ventana-registro");
 const btnRecuperarContraseña = document.querySelector(".recuperar-contraseña");
 const ventanaRecuperacion = document.getElementById("ventana-recuperacion");
-const enlaceCuenta = document.querySelector(".enlace-cuenta");
+const enlacesCuenta = document.querySelectorAll(".enlace-cuenta");
 let sesionIniciada = false;
+let tokenSesion = "";
+
+const mensajeSesion = document.createElement("p");
+mensajeSesion.className = "mensaje-sesion";
+mensajeSesion.setAttribute("role", "status");
+mensajeSesion.setAttribute("aria-live", "polite");
+mensajeSesion.hidden = true;
+document.querySelector("header")?.insertAdjacentElement("afterend", mensajeSesion);
 
 function mostrarMensajeSesion(mensaje) {
-    if (!mensaje) {
+    if (typeof mensaje !== "string" || mensaje === "") {
         return;
     }
 
-    let aviso = document.querySelector(".mensaje-sesion");
-    if (!aviso) {
-        aviso = document.createElement("p");
-        aviso.className = "mensaje-sesion";
-        aviso.setAttribute("role", "status");
-        document.querySelector("header")?.insertAdjacentElement("afterend", aviso);
-    }
-
-    if (aviso) {
-        aviso.textContent = mensaje;
-    }
+    mensajeSesion.textContent = mensaje;
+    mensajeSesion.hidden = false;
 }
 
-function actualizarInterfazSesion() {
+function actualizarInterfazSesion(iniciada) {
+    sesionIniciada = iniciada;
+    enlacesCuenta.forEach((enlace) => {
+        enlace.classList.toggle("oculto", !sesionIniciada);
+    });
+
     if (btnLogin) {
-        btnLogin.textContent = sesionIniciada ? "Cerrar sesión" : "Iniciar Sesion";
+        btnLogin.textContent = sesionIniciada ? "Cerrar sesión" : "Iniciar sesión";
         btnLogin.setAttribute("aria-label", btnLogin.textContent);
     }
-
-    enlaceCuenta?.classList.toggle("oculto", !sesionIniciada);
-}
-
-async function cargarEstadoSesion() {
-    const respuesta = await fetch("./php/estadoSesion.php", {
-        headers: { Accept: "application/json" },
-        credentials: "same-origin"
-    });
-
-    if (!respuesta.ok) {
-        throw new Error(`No se pudo consultar la sesión (HTTP ${respuesta.status}).`);
-    }
-
-    const estado = await respuesta.json();
-    if (typeof estado.sesionIniciada !== "boolean" || typeof estado.mensaje !== "string") {
-        throw new Error("La respuesta del estado de sesión no tiene un formato válido.");
-    }
-
-    sesionIniciada = estado.sesionIniciada;
-    actualizarInterfazSesion();
-    mostrarMensajeSesion(estado.mensaje);
-}
-
-async function cerrarSesion() {
-    const respuesta = await fetch("./php/estadoSesion.php", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        credentials: "same-origin"
-    });
-
-    if (!respuesta.ok) {
-        throw new Error(`No se pudo cerrar la sesión (HTTP ${respuesta.status}).`);
-    }
-
-    const estado = await respuesta.json();
-    if (estado.sesionIniciada !== false || typeof estado.mensaje !== "string") {
-        throw new Error("La respuesta al cerrar sesión no tiene un formato válido.");
-    }
-
-    sesionIniciada = false;
-    actualizarInterfazSesion();
-    mostrarMensajeSesion(estado.mensaje);
 }
 
 if (btnMenuLateral && menuDesplegable) {
@@ -104,14 +64,26 @@ if (btnMenuLateral && menuDesplegable) {
 }
 
 if (btnLogin && ventanaLogin) {
-    btnLogin.addEventListener("click", async () => {
+    btnLogin.addEventListener("click", () => {
         if (sesionIniciada) {
-            try {
-                await cerrarSesion();
-            } catch (error) {
-                console.error("No se pudo cerrar la sesión.", error);
-                mostrarMensajeSesion("No se pudo cerrar la sesión. Inténtalo de nuevo.");
-            }
+            fetch("./php/estadoSesion.php", {
+                method: "POST",
+                headers: { "X-CSRF-Token": tokenSesion }
+            })
+                .then((respuesta) => {
+                    if (!respuesta.ok) {
+                        throw new Error(`Error al cerrar sesión: ${respuesta.status}`);
+                    }
+                    return respuesta.json();
+                })
+                .then((estado) => {
+                    actualizarInterfazSesion(false);
+                    mostrarMensajeSesion(estado.mensaje);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    mostrarMensajeSesion("No se pudo cerrar sesión. Inténtalo de nuevo.");
+                });
             return;
         }
 
@@ -121,11 +93,21 @@ if (btnLogin && ventanaLogin) {
     });
 }
 
-if (btnLogin) {
-    cargarEstadoSesion().catch((error) => {
-        console.error("No se pudo consultar el estado de la sesión.", error);
+fetch("./php/estadoSesion.php")
+    .then((respuesta) => {
+        if (!respuesta.ok) {
+            throw new Error(`Error al consultar la sesión: ${respuesta.status}`);
+        }
+        return respuesta.json();
+    })
+    .then((estado) => {
+        actualizarInterfazSesion(estado.sesionIniciada === true);
+        tokenSesion = typeof estado.token === "string" ? estado.token : "";
+        mostrarMensajeSesion(estado.mensaje);
+    })
+    .catch((error) => {
+        console.error(error);
     });
-}
 
 if (btnRegistro && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
     btnRegistro.addEventListener("click", () => {
@@ -289,9 +271,3 @@ if (document.getElementById("lugares")) {
 
     cerrarMapa();
 }
-
-/* ==============================================================================
-MI CUENTA
-================================================================================*/
-
-inicializarMiCuenta();

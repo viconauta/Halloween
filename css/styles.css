@@ -104,8 +104,8 @@ ESTILO COMUN
 }
 
 .page .mensaje-sesion{
-    margin: 1rem auto 0;
     width: min(100% - 2rem, 1200px);
+    margin: 1rem auto 0;
     padding: .8rem 1rem;
     border: 1px solid rgba(184, 242, 58, .55);
     border-radius: 6px;
@@ -825,18 +825,15 @@ LUGARES DE GRANADA
     line-height: 1;
 }
 
+.granada-page .boton-mapa::after{
+    content: "Ver mapa";
+}
+
 .granada-page .boton-mapa:hover,
 .granada-page .boton-mapa:focus-visible{
     color: var(--terror-bg);
     background: var(--terror-toxic);
     transform: translateY(-1px);
-}
-
-.granada-page .boton-mapa:focus-visible,
-.granada-page #cerrar-mapa:focus-visible,
-.granada-page #ampliar-mapa:focus-visible{
-    outline: 3px solid var(--terror-toxic);
-    outline-offset: 3px;
 }
 
 .granada-page .boton-mapa:hover span:first-child,
@@ -910,10 +907,6 @@ LUGARES DE GRANADA
     cursor: pointer;
 }
 
-.granada-page #cerrar-mapa:hover{
-    color: var(--terror-toxic);
-}
-
 .granada-page #iframe-mapa{
     display: block;
     width: 100%;
@@ -947,20 +940,148 @@ LUGARES DE GRANADA
     }
 }
 
+/* ==================================================================
+TELON DE HISTORIA Y SUSTO DEL INICIO
+================================================================== */
+.page .telon{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    width: 52%;
+    background-color: #541322;
+    background-image:
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(0, 0, 0, .22) 27px 34px, rgba(255, 190, 130, .08) 37px 43px),
+        linear-gradient(90deg, #260811, #8b2635 22%, #631522 70%, #310a14);
+    box-shadow: inset 0 0 38px rgba(0, 0, 0, .7), 0 0 28px rgba(0, 0, 0, .6);
+    transition: transform 1.5s cubic-bezier(.7, 0, .2, 1);
+}
 
+.page .telon-izquierdo{
+    left: 0;
+    border-right: 5px solid #bd7950;
+    border-radius: 0 0 38% 0 / 0 0 8% 0;
+    transform-origin: left center;
+}
+
+.page .telon-derecho{
+    right: 0;
+    border-left: 5px solid #bd7950;
+    background-image:
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(0, 0, 0, .22) 27px 34px, rgba(255, 190, 130, .08) 37px 43px),
+        linear-gradient(90deg, #310a14, #631522 30%, #8b2635 78%, #260811);
+    border-radius: 0 0 0 38% / 0 0 0 8%;
+    transform-origin: right center;
+}
+
+.page .boton-telon{
+    position: relative;
+    z-index: 2;
+    padding: .9rem 1.4rem;
+    box-shadow: 0 0 22px rgba(0, 0, 0, .6);
+}
+
+.page .video{
+    position: relative;
+}
+
+.page .teatro-historia{
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #32101f, #09060d 72%);
+}
+
+.page .teatro-historia[hidden]{
+    display: none;
+}
+
+.page .teatro-historia.abierto .telon-izquierdo{
+    transform: translateX(-100%);
+}
+
+.page .teatro-historia.abierto .telon-derecho{
+    transform: translateX(100%);
+}
+
+.page .teatro-historia.abierto .boton-telon{
+    visibility: hidden;
+}
+
+.page .susto-pantalla{
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    background: #000;
+    cursor: pointer;
+}
+
+.page .susto-pantalla[hidden]{
+    display: none;
+}
+
+.page .susto-pantalla img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    opacity: .8;
+    transform: scale(.08);
+    transition: transform 1.1s cubic-bezier(.16, 1, .3, 1), opacity .7s ease;
+}
+
+.page .susto-pantalla.visible img{
+    opacity: 1;
+    transform: scale(1);
+}
+
+.page .susto-pantalla.cerrando img{
+    opacity: 0;
+    transform: scale(.08);
+    transition-duration: .55s;
+}
+
+.page .susto-pantalla span{
+    position: absolute;
+    right: 1rem;
+    bottom: 1.5rem;
+    left: 1rem;
+    color: #fff;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    text-align: center;
+    text-shadow: 0 2px 12px #000;
+}
+
+.page.susto-activo{
+    overflow: hidden;
+}
 
 /* ==================================================================
 SOBRE NOSOTROS
 ================================================================== */
 
+
 .sobre-nosotros-page main{
     width: min(100% - 2rem, 1000px);
 }
+
 
 .sobre-nosotros-page .sobre-nosotros{
     align-items: stretch;
     gap: 2rem;
 }
+
 
 .sobre-nosotros-page .titulo h1{
     color: var(--terror-toxic);
@@ -969,11 +1090,13 @@ SOBRE NOSOTROS
     text-shadow: 0 0 24px rgba(167, 123, 232, .55);
 }
 
+
 .sobre-nosotros-page .introduccion{
     margin-top: .8rem;
     color: #ded2e8;
     font-size: 1.1rem;
 }
+
 
 .sobre-nosotros-page .equipo{
     display: grid;
@@ -982,6 +1105,7 @@ SOBRE NOSOTROS
     width: 100%;
 }
 
+
 .sobre-nosotros-page .tarjeta-persona{
     overflow: hidden;
     border: 1px solid rgba(167, 123, 232, .55);
@@ -989,6 +1113,7 @@ SOBRE NOSOTROS
     background: linear-gradient(145deg, rgba(38, 25, 51, .98), var(--terror-surface));
     box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
 }
+
 
 .sobre-nosotros-page .foto-persona{
     display: grid;
@@ -1001,6 +1126,7 @@ SOBRE NOSOTROS
         #100b18;
 }
 
+
 .sobre-nosotros-page .foto-persona img{
     display: block;
     width: 200px;
@@ -1008,9 +1134,11 @@ SOBRE NOSOTROS
     object-fit: cover;
 }
 
+
 .sobre-nosotros-page .datos-persona{
     padding: 1.2rem;
 }
+
 
 .sobre-nosotros-page .datos-persona h2,
 .sobre-nosotros-page .descripcion-equipo h2{
@@ -1019,11 +1147,13 @@ SOBRE NOSOTROS
     font-size: 1.35rem;
 }
 
+
 .sobre-nosotros-page .datos-persona p,
 .sobre-nosotros-page .descripcion-equipo p{
     color: #ded2e8;
     line-height: 1.7;
 }
+
 
 .sobre-nosotros-page .descripcion-equipo{
     width: min(100%, 800px);
@@ -1035,20 +1165,51 @@ SOBRE NOSOTROS
     text-align: left;
 }
 
+
 @media (max-width: 600px){
     .sobre-nosotros-page .equipo{
         grid-template-columns: 1fr;
     }
+
 
     .sobre-nosotros-page .foto-persona{
         min-height: 190px;
     }
 }
 
+/* ==================================================================
+ESTILOS JUEGO
+================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+    
+.font-retro {
+    font-family: 'Press Start 2P', monospace;
+}
+
+/* Estilo pixelado del grid */
+#gameCanvas {
+    background-color: #0f172a;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+    touch-action: none;
+}
+
+/* Efecto de brillo de pantalla CRT suave */
+.retro-container {
+    border: 4px solid #334155;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Desactivar selección de texto en controles táctiles */
+.touch-btn {
+    user-select: none;
+    -webkit-user-select: none;
+}
 
 /* ==================================================================
 MI CUENTA
 ================================================================== */
+
 
 .mi-cuenta-page{
     --terror-bg: #100b18;
@@ -1067,6 +1228,7 @@ MI CUENTA
     font-family: Georgia, "Times New Roman", serif;
 }
 
+
 .mi-cuenta-page header{
     position: relative;
     z-index: 2;
@@ -1079,13 +1241,16 @@ MI CUENTA
     transition: transform .25s ease;
 }
 
+
 .mi-cuenta-page header.header-oculto{
     transform: translateY(-100%);
 }
 
+
 .mi-cuenta-page .hamburger{
     padding: .5rem;
 }
+
 
 .mi-cuenta-page .barMenu{
     width: 30px;
@@ -1094,6 +1259,7 @@ MI CUENTA
     background-color: var(--terror-toxic);
 }
 
+
 .mi-cuenta-page .logo{
     color: var(--terror-text);
     font-size: 1.35rem;
@@ -1101,6 +1267,7 @@ MI CUENTA
     letter-spacing: .04em;
     text-decoration: none;
 }
+
 
 .mi-cuenta-page .login,
 .mi-cuenta-page .acciones-edicion button,
@@ -1115,10 +1282,12 @@ MI CUENTA
     transition: background-color .2s ease, transform .2s ease;
 }
 
+
 .mi-cuenta-page .login{
     margin-left: auto;
     text-decoration: none;
 }
+
 
 .mi-cuenta-page .login:hover,
 .mi-cuenta-page .acciones-edicion button:hover,
@@ -1126,6 +1295,7 @@ MI CUENTA
     background: #542044;
     transform: translateY(-1px);
 }
+
 
 .mi-cuenta-page #menu-desplegable{
     position: absolute;
@@ -1139,9 +1309,11 @@ MI CUENTA
     box-shadow: 0 12px 30px rgba(0, 0, 0, .55);
 }
 
+
 .mi-cuenta-page #menu-desplegable ul{
     list-style: none;
 }
+
 
 .mi-cuenta-page #menu-desplegable a{
     display: block;
@@ -1150,11 +1322,13 @@ MI CUENTA
     text-decoration: none;
 }
 
+
 .mi-cuenta-page #menu-desplegable a:hover,
 .mi-cuenta-page #menu-desplegable a:focus-visible{
     color: var(--terror-toxic);
     background: rgba(167, 123, 232, .1);
 }
+
 
 .mi-cuenta-page main{
     width: min(100% - 2rem, 1000px);
@@ -1163,10 +1337,12 @@ MI CUENTA
     flex: 1;
 }
 
+
 .mi-cuenta-page .titulo{
     margin-bottom: 2rem;
     text-align: center;
 }
+
 
 .mi-cuenta-page .titulo h1{
     color: var(--terror-toxic);
@@ -1174,6 +1350,7 @@ MI CUENTA
     line-height: 1.1;
     text-shadow: 0 0 24px rgba(167, 123, 232, .55);
 }
+
 
 .mi-cuenta-page .sobretitulo{
     margin-bottom: .6rem;
@@ -1183,17 +1360,20 @@ MI CUENTA
     text-transform: uppercase;
 }
 
+
 .mi-cuenta-page .introduccion{
     margin-top: .8rem;
     color: #ded2e8;
     font-size: 1.05rem;
 }
 
+
 .mi-cuenta-page .cuenta-contenido{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
 }
+
 
 .mi-cuenta-page #datos,
 .mi-cuenta-page #editar-datos{
@@ -1206,6 +1386,7 @@ MI CUENTA
     box-shadow: 0 12px 30px rgba(0, 0, 0, .3);
 }
 
+
 .mi-cuenta-page #datos h2,
 .mi-cuenta-page #editar-datos h2{
     margin-bottom: 1.2rem;
@@ -1213,20 +1394,24 @@ MI CUENTA
     font-size: 1.4rem;
 }
 
+
 .mi-cuenta-page .lista-datos{
     display: grid;
     gap: 1rem;
 }
+
 
 .mi-cuenta-page .dato{
     padding-bottom: .8rem;
     border-bottom: 1px solid rgba(167, 123, 232, .22);
 }
 
+
 .mi-cuenta-page .dato:last-child{
     padding-bottom: 0;
     border-bottom: 0;
 }
+
 
 .mi-cuenta-page .dato dt{
     margin-bottom: .25rem;
@@ -1234,11 +1419,13 @@ MI CUENTA
     font-size: .9rem;
 }
 
+
 .mi-cuenta-page .dato dd{
     overflow-wrap: anywhere;
     color: var(--terror-text);
     font-size: 1.05rem;
 }
+
 
 .mi-cuenta-page .ayuda-edicion,
 .mi-cuenta-page .aviso-seguridad{
@@ -1246,16 +1433,19 @@ MI CUENTA
     line-height: 1.6;
 }
 
+
 .mi-cuenta-page .acciones-edicion{
     display: grid;
     gap: .65rem;
     margin: 1rem 0 1.25rem;
 }
 
+
 .mi-cuenta-page .acciones-edicion button{
     width: 100%;
     text-align: left;
 }
+
 
 .mi-cuenta-page .aviso-seguridad{
     padding-left: .8rem;
@@ -1263,14 +1453,17 @@ MI CUENTA
     font-size: .9rem;
 }
 
+
 .mi-cuenta-page #formulario-edicion{
     width: min(100%, 650px);
     margin: 1.5rem auto 0;
 }
 
+
 .mi-cuenta-page #formulario-edicion:empty{
     display: none;
 }
+
 
 .mi-cuenta-page #formulario-edicion form{
     display: grid;
@@ -1283,14 +1476,17 @@ MI CUENTA
     box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
 }
 
+
 .mi-cuenta-page #formulario-edicion h3{
     color: var(--terror-toxic);
     font-size: 1.25rem;
 }
 
+
 .mi-cuenta-page #formulario-edicion label{
     color: #ded2e8;
 }
+
 
 .mi-cuenta-page #formulario-edicion input{
     width: 100%;
@@ -1302,11 +1498,13 @@ MI CUENTA
     font: inherit;
 }
 
+
 .mi-cuenta-page #formulario-edicion input:focus-visible,
 .mi-cuenta-page button:focus-visible{
     outline: 3px solid var(--terror-toxic);
     outline-offset: 3px;
 }
+
 
 .mi-cuenta-page .acciones-formulario{
     display: flex;
@@ -1314,10 +1512,12 @@ MI CUENTA
     gap: .65rem;
 }
 
+
 .mi-cuenta-page #formulario-edicion .boton-secundario{
     border-color: rgba(167, 123, 232, .65);
     background: transparent;
 }
+
 
 .mi-cuenta-page .estado-cuenta{
     min-height: 1.5em;
@@ -1325,6 +1525,7 @@ MI CUENTA
     color: var(--terror-toxic);
     text-align: center;
 }
+
 
 .mi-cuenta-page footer{
     display: flex;
@@ -1336,9 +1537,11 @@ MI CUENTA
     background: #0b0810;
 }
 
+
 .mi-cuenta-page footer a{
     color: var(--terror-toxic);
 }
+
 
 .mi-cuenta-page footer h2{
     margin-bottom: .5rem;
@@ -1346,25 +1549,31 @@ MI CUENTA
     font-size: 1.1rem;
 }
 
+
 .mi-cuenta-page footer p{
     margin-top: .35rem;
     color: #ded2e8;
 }
+
 
 @media (max-width: 650px){
     .mi-cuenta-page header{
         gap: .75rem;
     }
 
+
     .mi-cuenta-page .logo{
         font-size: 1.15rem;
     }
+
 
     .mi-cuenta-page .cuenta-contenido{
         grid-template-columns: 1fr;
     }
 
+
     .mi-cuenta-page footer{
         flex-direction: column;
     }
 }
+

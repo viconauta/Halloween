@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($usuarioEncontrado !== null) {
-            currentUser($usuarioEncontrado);
+            setCurrentUser($usuarioEncontrado);
             $_SESSION['mensaje_flash'] = 'Has iniciado sesión correctamente.';
             redirect('../index.html');
         }

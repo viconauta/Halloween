@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         AltaUsuario($nuevoUser);
         $mensaje = 'El usuario se ha registrado correctamente.';
+        $_SESSION['mensaje_flash'] = $mensaje;
         $nombre = '';
         $email = '';
         $pregunta = '';

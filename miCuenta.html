@@ -23,10 +23,11 @@
                 <li><a href="./sonidos.html">Musica y tonos</a></li>
                 <li><a href="./enGranada.html">Granada</a></li>
                 <li><a href="./juego.html">Juego</a></li>
-                <li><a class="enlace-cuenta oculto" href="./miCuenta.html">Mi cuenta</a></li>
+                <li><a href="./miCuenta.html">Mi cuenta</a></li>
             </ul>
         </nav>
     </header>
+
 
     <main>
         <div class="titulo">
@@ -34,6 +35,7 @@
             <h1>Mis datos</h1>
             <p class="introduccion">Consulta y actualiza la información de tu cuenta.</p>
         </div>
+
 
         <div class="cuenta-contenido">
             <section id="datos" aria-labelledby="titulo-datos">
@@ -58,6 +60,7 @@
                 </dl>
             </section>
 
+
             <section id="editar-datos" aria-labelledby="titulo-editar">
                 <h2 id="titulo-editar">Editar perfil</h2>
                 <p class="ayuda-edicion">Elige el dato que quieras actualizar.</p>
@@ -71,9 +74,11 @@
             </section>
         </div>
 
+
         <div id="formulario-edicion" aria-live="polite"></div>
         <p id="estado-cuenta" class="estado-cuenta" role="status" aria-live="polite"></p>
     </main>
+
 
     <footer>
         <div>
@@ -90,14 +95,17 @@
         </div>
     </footer>
 
+
     <div id="ventana-login" class="oculto">
         <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
         <form action="./php/login.php" method="post">
             <label for="login-nombre">Nombre:</label>
             <input type="text" name="nombre" id="login-nombre" placeholder="Escribe tu nombre aquí" required>
 
+
             <label for="login-password">Contraseña:</label>
             <input type="password" name="password" id="login-password" placeholder="Escribe aquí tu contraseña" required>
+
 
             <button type="submit" class="btn">Iniciar sesión</button>
             <button type="button" class="registro">¿No tienes cuenta? | Regístrate</button>
@@ -105,27 +113,34 @@
         </form>
     </div>
 
+
     <div id="ventana-registro" class="oculto">
         <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
         <form action="./php/altaUsuario.php" method="post">
             <label for="registro-nombre">Nombre:</label>
             <input type="text" name="nombre" id="registro-nombre" placeholder="Escribe tu nombre aquí" required>
 
+
             <label for="registro-password">Contraseña:</label>
             <input type="password" name="password" id="registro-password" placeholder="Escribe aquí tu contraseña" required>
+
 
             <label for="registro-email">Email:</label>
             <input type="email" name="email" id="registro-email" placeholder="tuEmail@ejemplo.com" required>
 
+
             <label for="registro-pregunta">Pregunta de seguridad:</label>
             <input type="text" name="pregunta" id="registro-pregunta" placeholder="¿Nombre de mi primera mascota?" required>
+
 
             <label for="registro-respuesta">Respuesta:</label>
             <input type="text" name="respuesta" id="registro-respuesta" placeholder="Firulais" required>
 
+
             <button type="submit" class="btn">Registrarse</button>
         </form>
     </div>
+
 
     <div id="ventana-recuperacion" class="oculto">
         <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
@@ -134,6 +149,10 @@
         <a class="btn" href="./php/cambioPass.php">Recuperar contraseña</a>
     </div>
 
+
     <script type="module" src="./js/app.js"></script>
 </body>
 </html>
+
+
+
