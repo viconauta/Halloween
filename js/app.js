@@ -26,28 +26,20 @@ const ventanaRegistro = document.getElementById("ventana-registro");
 const btnRecuperarContraseña = document.querySelector(".recuperar-contraseña");
 const ventanaRecuperacion = document.getElementById("ventana-recuperacion");
 
-if (btnLogin && ventanaLogin) {
-    btnLogin.addEventListener("click", () => {
-        ventanaRegistro?.classList.add("oculto");
-        ventanaRecuperacion?.classList.add("oculto");
 if (btnMenuLateral && menuDesplegable) {
     btnMenuLateral.addEventListener("click", () => {
         menuDesplegable.classList.toggle("oculto");
     });
 }
 
-if (btnLogin && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
+if (btnLogin && ventanaLogin) {
     btnLogin.addEventListener("click", () => {
-        ventanaRegistro.classList.add("oculto");
-        ventanaRecuperacion.classList.add("oculto");
+        ventanaRegistro?.classList.add("oculto");
+        ventanaRecuperacion?.classList.add("oculto");
         ventanaLogin.classList.remove("oculto");
     });
 }
 
-if (btnRegistro && ventanaRegistro) {
-    btnRegistro.addEventListener("click", () => {
-        ventanaLogin?.classList.add("oculto");
-        ventanaRecuperacion?.classList.add("oculto");
 if (btnRegistro && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
     btnRegistro.addEventListener("click", () => {
         ventanaLogin.classList.add("oculto");
@@ -60,13 +52,6 @@ if (btnRecuperarContraseña && ventanaRecuperacion) {
     btnRecuperarContraseña.addEventListener("click", () => {
         ventanaRegistro?.classList.add("oculto");
         ventanaLogin?.classList.add("oculto");
-        ventanaRecuperacion.classList.remove("oculto");
-    });
-}
-if (btnRecuperarContraseña && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
-    btnRecuperarContraseña.addEventListener("click", () => {
-        ventanaRegistro.classList.add("oculto");
-        ventanaLogin.classList.add("oculto");
         ventanaRecuperacion.classList.remove("oculto");
     });
 }
@@ -126,9 +111,6 @@ document.querySelectorAll(".cerrar-ventana").forEach((btn) => {
         ventanaRegistro?.classList.add("oculto");
         ventanaLogin?.classList.add("oculto");
         ventanaRecuperacion?.classList.add("oculto");
-        [ventanaRegistro, ventanaLogin, ventanaRecuperacion].forEach((ventana) => {
-            ventana?.classList.add("oculto");
-        });
     });
 });
 
