@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-session_start();
-include __DIR__ . '/VarGlobales.php';
+include __DIR__ . '/varGlobales.php';
 
 /**
  * Redirige al destino indicado y detiene la ejecución.
@@ -49,20 +48,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($usuarios as $usuario) {
                 if (
                     is_array($usuario)
-                    && isset($usuario['Usuario'], $usuario['Contraseña'])
+                    && isset($usuario['Usuario'])
                     && is_string($usuario['Usuario'])
-                    && is_string($usuario['Contraseña'])
                     && $usuario['Usuario'] === $nombre
-                    && hash_equals($usuario['Contraseña'], $password)
                 ) {
-                    $usuarioEncontrado = $usuario;
-                    break;
+                    $passwordHash = $usuario['password_hash'] ?? null;
+                    $passwordCorrecta = is_string($passwordHash)
+                        ? password_verify($password, $passwordHash)
+                        : (
+                            isset($usuario['Contraseña'])
+                            && is_string($usuario['Contraseña'])
+                            && hash_equals($usuario['Contraseña'], $password)
+                        );
+
+                    if ($passwordCorrecta) {
+                        $usuarioEncontrado = $usuario;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if ($usuarioEncontrado === null) {
+            $usuariosSeguros = $_SESSION['usuarios'] ?? [];
+            if (is_array($usuariosSeguros)) {
+                foreach ($usuariosSeguros as $claveUsuario => $usuarioSeguro) {
+                    if (!is_array($usuarioSeguro)) {
+                        continue;
+                    }
+
+                    $nombreGuardado = $usuarioSeguro['usuario'] ?? $claveUsuario;
+                    $passwordHash = $usuarioSeguro['password_hash'] ?? null;
+                    if (
+                        is_string($nombreGuardado)
+                        && $nombreGuardado === $nombre
+                        && is_string($passwordHash)
+                        && password_verify($password, $passwordHash)
+                    ) {
+                        $usuarioEncontrado = [
+                            'Usuario' => $nombreGuardado,
+                            'Email' => $usuarioSeguro['email'] ?? '',
+                            'Perfil' => $usuarioSeguro['perfil'] ?? 'user',
+                        ];
+                        break;
+                    }
                 }
             }
         }
 
         if ($usuarioEncontrado !== null) {
-            setCurrentUser($usuarioEncontrado);
+            currentUser($usuarioEncontrado);
             $_SESSION['mensaje_flash'] = 'Has iniciado sesión correctamente.';
             redirect('../index.html');
         }

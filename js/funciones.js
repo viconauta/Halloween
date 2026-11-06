@@ -377,25 +377,10 @@ export function inicializarMiCuenta() {
         seguridad: "No configurada"
     };
     const perfil = { ...valoresPorDefecto };
-
-    try {
-        const perfilGuardado = localStorage.getItem("granaween-perfil");
-        if (perfilGuardado) {
-            const datosGuardados = JSON.parse(perfilGuardado);
-            if (typeof datosGuardados !== "object" || datosGuardados === null || Array.isArray(datosGuardados)) {
-                throw new TypeError("El perfil guardado no tiene un formato válido.");
-            }
-
-            Object.keys(campos).forEach(campo => {
-                if (typeof datosGuardados[campo] === "string") {
-                    perfil[campo] = datosGuardados[campo];
-                }
-            });
-        }
-    } catch (error) {
-        console.error("No se pudo cargar el perfil guardado.", error);
-        estado.textContent = "No se pudieron cargar los datos guardados.";
-    }
+    let tokenPerfil = "";
+    botonesEdicion.forEach(boton => {
+        boton.disabled = true;
+    });
 
     function mostrarValor(campo) {
         const elemento = document.getElementById(campo);
@@ -412,10 +397,38 @@ export function inicializarMiCuenta() {
             return;
         }
 
-        elemento.textContent = valor || valoresPorDefecto[campo];
+        elemento.textContent = valor || (campo === "fecha" ? "No indicada" : valoresPorDefecto[campo]);
     }
 
     Object.keys(campos).forEach(mostrarValor);
+
+    fetch("./php/perfilCuenta.php", { headers: { Accept: "application/json" } })
+        .then(async respuesta => {
+            const datos = await respuesta.json();
+            if (!respuesta.ok) {
+                throw new Error(datos.error || `Error al cargar los datos de cuenta: ${respuesta.status}`);
+            }
+            if (typeof datos.perfil !== "object" || datos.perfil === null || typeof datos.token !== "string") {
+                throw new TypeError("El servidor devolvió datos de cuenta no válidos.");
+            }
+
+            Object.keys(campos).forEach(campo => {
+                if (typeof datos.perfil[campo] === "string") {
+                    perfil[campo] = datos.perfil[campo];
+                }
+                mostrarValor(campo);
+            });
+            tokenPerfil = datos.token;
+            botonesEdicion.forEach(boton => {
+                boton.disabled = false;
+            });
+        })
+        .catch(error => {
+            console.error("No se pudieron cargar los datos actuales de la cuenta.", error);
+            estado.textContent = error.message.includes("Inicia sesión")
+                ? "Inicia sesión para consultar y modificar los datos de tu cuenta."
+                : "No se pudieron cargar los datos de tu cuenta.";
+        });
 
     function cerrarFormulario() {
         contenedorFormulario.replaceChildren();
@@ -446,11 +459,11 @@ export function inicializarMiCuenta() {
         entrada.name = campo;
         entrada.placeholder = configuracion.placeholder;
         entrada.autocomplete = configuracion.autocomplete;
-        entrada.required = true;
+        entrada.required = campo === "nombre";
         if (configuracion.tipo === "date") {
             entrada.value = perfil[campo];
         } else {
-            entrada.maxLength = 120;
+            entrada.maxLength = campo === "nombre" ? 100 : campo === "email" ? 254 : 200;
             entrada.value = perfil[campo] === valoresPorDefecto[campo] ? "" : perfil[campo];
         }
 
@@ -476,22 +489,47 @@ export function inicializarMiCuenta() {
             const nuevoValor = entrada.value.trim();
 
             if (!nuevoValor) {
-                entrada.focus();
-                return;
+                if (campo !== "fecha" && campo !== "email" && campo !== "seguridad") {
+                    entrada.focus();
+                    return;
+                }
             }
 
-            perfil[campo] = nuevoValor;
-            mostrarValor(campo);
+            const perfilActualizado = { ...perfil, [campo]: nuevoValor };
+            botonGuardar.disabled = true;
+            estado.textContent = "Guardando cambios…";
 
-            try {
-                localStorage.setItem("granaween-perfil", JSON.stringify(perfil));
-                estado.textContent = "Cambios guardados correctamente.";
-            } catch (error) {
-                console.error("No se pudieron guardar los cambios del perfil.", error);
-                estado.textContent = "El cambio se aplicó, pero no se pudo guardar para la próxima visita.";
-            }
+            fetch("./php/perfilCuenta.php", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ...perfilActualizado, token: tokenPerfil })
+            })
+                .then(async respuesta => {
+                    const datos = await respuesta.json();
+                    if (!respuesta.ok) {
+                        throw new Error(datos.error || `No se pudieron guardar los cambios: ${respuesta.status}`);
+                    }
+                    if (typeof datos.perfil !== "object" || datos.perfil === null) {
+                        throw new TypeError("El servidor devolvió un perfil no válido.");
+                    }
 
-            cerrarFormulario();
+                    Object.keys(campos).forEach(nombreCampo => {
+                        if (typeof datos.perfil[nombreCampo] === "string") {
+                            perfil[nombreCampo] = datos.perfil[nombreCampo];
+                        }
+                        mostrarValor(nombreCampo);
+                    });
+                    estado.textContent = datos.mensaje || "Cambios guardados correctamente.";
+                    cerrarFormulario();
+                })
+                .catch(error => {
+                    console.error("No se pudieron guardar los cambios del perfil.", error);
+                    estado.textContent = error.message;
+                    botonGuardar.disabled = false;
+                });
         });
 
         botonCancelar.addEventListener("click", () => {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-include __DIR__ . '/VarGlobales.php';
+include __DIR__ . '/varGlobales.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, private');
@@ -51,4 +51,5 @@ echo json_encode([
     'sesionIniciada' => isset($_SESSION['currentUser']) && is_array($_SESSION['currentUser']),
     'mensaje' => is_string($mensaje) ? $mensaje : '',
     'token' => $_SESSION['csrf_estado_sesion'],
+    'tokenCorreo' => $_SESSION['csrf_correo'],
 ], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);

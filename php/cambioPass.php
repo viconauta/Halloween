@@ -3,12 +3,137 @@ declare(strict_types=1);
 
 include __DIR__ . '/varGlobales.php';
 
-header('Content-Type: text/html; charset=UTF-8');
+$peticionApi = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json');
+header('Content-Type: ' . ($peticionApi ? 'application/json' : 'text/html') . '; charset=UTF-8');
 header('Cache-Control: no-store, private');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: no-referrer');
 
 $metodo = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+if ($peticionApi && $metodo === 'POST') {
+    $contenido = file_get_contents('php://input');
+    $datos = is_string($contenido) ? json_decode($contenido, true) : null;
+    if (!is_array($datos)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'La solicitud no contiene datos válidos.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    $fase = $datos['fase'] ?? null;
+    if ($fase === 'pregunta') {
+        $tokenCsrf = $datos['token'] ?? null;
+        $nombre = $datos['usuario'] ?? null;
+        if (
+            !is_string($tokenCsrf)
+            || !hash_equals($_SESSION['csrf_estado_sesion'], $tokenCsrf)
+            || !is_string($nombre)
+            || trim($nombre) === ''
+            || strlen($nombre) > 100
+            || preg_match('//u', $nombre) !== 1
+        ) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Introduce un nombre de usuario válido.'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        $pregunta = preguntaSeguridadUsuario($nombre);
+        if ($pregunta === null || trim($pregunta) === '') {
+            http_response_code(400);
+            echo json_encode(['error' => 'No hay una pregunta de seguridad configurada para esa cuenta.'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        echo json_encode(['pregunta' => $pregunta], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+        exit;
+    }
+
+    if ($fase === 'verificar') {
+        unset($_SESSION['usuario_recuperacion'], $_SESSION['token_recuperacion'], $_SESSION['expira_recuperacion']);
+        $tokenCsrf = $datos['token'] ?? null;
+        $nombre = $datos['usuario'] ?? null;
+        $respuesta = $datos['respuesta'] ?? null;
+        if (
+            !is_string($tokenCsrf)
+            || !hash_equals($_SESSION['csrf_estado_sesion'], $tokenCsrf)
+            || !is_string($nombre)
+            || !is_string($respuesta)
+            || trim($nombre) === ''
+            || trim($respuesta) === ''
+            || strlen($nombre) > 100
+            || strlen($respuesta) > 512
+            || preg_match('//u', $nombre) !== 1
+            || preg_match('//u', $respuesta) !== 1
+        ) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Introduce un usuario y una respuesta válidos.'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        if (!verificarRespuestaSeguridad($nombre, $respuesta)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'El usuario o la respuesta de seguridad no coinciden.'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        $_SESSION['usuario_recuperacion'] = trim($nombre);
+        $_SESSION['token_recuperacion'] = bin2hex(random_bytes(32));
+        $_SESSION['expira_recuperacion'] = time() + 600;
+        echo json_encode([
+            'verificado' => true,
+            'token' => $_SESSION['token_recuperacion'],
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    if ($fase === 'cambiar') {
+        $tokenRecibido = $datos['token'] ?? null;
+        $nuevaContraseña = $datos['nueva_contrasena'] ?? null;
+        $confirmarContraseña = $datos['confirmar_contrasena'] ?? null;
+        $tokenGuardado = $_SESSION['token_recuperacion'] ?? null;
+        $nombre = $_SESSION['usuario_recuperacion'] ?? null;
+        $expira = $_SESSION['expira_recuperacion'] ?? 0;
+
+        if (
+            !is_string($tokenRecibido)
+            || !is_string($tokenGuardado)
+            || !hash_equals($tokenGuardado, $tokenRecibido)
+            || !is_string($nombre)
+            || !is_int($expira)
+            || $expira < time()
+        ) {
+            unset($_SESSION['usuario_recuperacion'], $_SESSION['token_recuperacion'], $_SESSION['expira_recuperacion']);
+            http_response_code(403);
+            echo json_encode(['error' => 'La verificación ha caducado. Vuelve a comprobar tu respuesta de seguridad.'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        if (
+            !is_string($nuevaContraseña)
+            || !is_string($confirmarContraseña)
+            || !hash_equals($nuevaContraseña, $confirmarContraseña)
+        ) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Las contraseñas no coinciden.'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        if (!actualizarContraseñaVerificada($nombre, $nuevaContraseña)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'La contraseña debe tener al menos 12 caracteres válidos.'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
+        unset($_SESSION['usuario_recuperacion'], $_SESSION['token_recuperacion'], $_SESSION['expira_recuperacion']);
+        echo json_encode(['mensaje' => 'La contraseña se ha cambiado correctamente.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    http_response_code(400);
+    echo json_encode(['error' => 'La fase de recuperación no es válida.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $error = '';
 $cambioCorrecto = isset($_GET['estado']) && $_GET['estado'] === 'ok';
 $tokenCsrf = $_SESSION['csrf_cambio_pass'];
@@ -70,9 +195,9 @@ if ($metodo === 'POST') {
         ) {
             http_response_code(400);
             $error = 'Comprueba que todos los campos estén completos y que las contraseñas coincidan.';
-        } elseif ($numeroCaracteresContraseña < 8) {
+        } elseif ($numeroCaracteresContraseña < 12) {
             http_response_code(400);
-            $error = 'La contraseña debe tener al menos 8 caracteres.';
+            $error = 'La contraseña debe tener al menos 12 caracteres.';
         } elseif (cambioContraseña($respuesta, $nuevaContraseña, $nombreUsuario !== '' ? $nombreUsuario : null)) {
             header('Location: cambioPass.php?estado=ok', true, 303);
             exit;

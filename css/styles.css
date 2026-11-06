@@ -1555,6 +1555,55 @@ MI CUENTA
     color: #ded2e8;
 }
 
+.page .dialogo-recuperacion{
+    width: min(90vw, 440px);
+    max-height: 90vh;
+    padding: 2rem;
+    border: 1px solid var(--terror-purple);
+    border-radius: 12px;
+    color: var(--terror-text);
+    background: var(--terror-surface);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, .8);
+}
+
+.page .dialogo-recuperacion::backdrop{
+    background: rgba(0, 0, 0, .75);
+}
+
+.page .dialogo-recuperacion form{
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.page .dialogo-recuperacion h2{
+    margin-bottom: .5rem;
+    color: var(--terror-toxic);
+}
+
+.page .dialogo-recuperacion input{
+    width: 100%;
+    padding: .7rem;
+    border: 1px solid #684b83;
+    border-radius: 5px;
+    color: var(--terror-text);
+    background: var(--terror-bg);
+    font: inherit;
+}
+
+.page .dialogo-recuperacion .acciones-formulario{
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+}
+
+.page #ventana-recuperacion [hidden]{
+    display: none !important;
+}
+
+.page .error-recuperacion{
+    color: #ff9a9a;
+}
 
 @media (max-width: 650px){
     .mi-cuenta-page header{
@@ -1576,4 +1625,3 @@ MI CUENTA
         flex-direction: column;
     }
 }
-

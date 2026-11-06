@@ -8,7 +8,8 @@ import {
     recetasSaladas,
     recetasDulces,
     mostrarLugares,
-    cerrarMapa
+    cerrarMapa,
+    inicializarMiCuenta
 } from "./funciones.js";
 
 /* ==============================================================================
@@ -23,7 +24,7 @@ const btnLogin = document.querySelector(".login");
 const ventanaLogin = document.getElementById("ventana-login");
 const btnRegistro = document.querySelector(".registro");
 const ventanaRegistro = document.getElementById("ventana-registro");
-const btnRecuperarContraseña = document.querySelector(".recuperar-contraseña");
+const botonesRecuperarContraseña = document.querySelectorAll(".recuperar-contraseña");
 const ventanaRecuperacion = document.getElementById("ventana-recuperacion");
 const enlacesCuenta = document.querySelectorAll(".enlace-cuenta");
 let sesionIniciada = false;
@@ -103,6 +104,10 @@ fetch("./php/estadoSesion.php")
     .then((estado) => {
         actualizarInterfazSesion(estado.sesionIniciada === true);
         tokenSesion = typeof estado.token === "string" ? estado.token : "";
+        const tokenCorreo = typeof estado.tokenCorreo === "string" ? estado.tokenCorreo : "";
+        document.querySelectorAll('form[action="./php/correo.php"] input[name="csrf_token"]').forEach((campo) => {
+            campo.value = tokenCorreo;
+        });
         mostrarMensajeSesion(estado.mensaje);
     })
     .catch((error) => {
@@ -117,11 +122,281 @@ if (btnRegistro && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
     });
 }
 
-if (btnRecuperarContraseña && ventanaRecuperacion) {
-    btnRecuperarContraseña.addEventListener("click", () => {
+function abrirRecuperacionContraseña() {
+    if (!ventanaRecuperacion) {
+        return;
+    }
+
+    const botonCerrar = ventanaRecuperacion.querySelector(".cerrar-ventana");
+    if (!botonCerrar) {
+        console.error("La ventana de recuperación no tiene botón de cierre.");
+        return;
+    }
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = "Recuperar contraseña";
+
+    const descripcion = document.createElement("p");
+    descripcion.textContent = "Escribe el nombre de usuario para ver su pregunta de seguridad.";
+
+    const formulario = document.createElement("form");
+    formulario.id = "formulario-verificar-recuperacion";
+
+    const etiquetaUsuario = document.createElement("label");
+    etiquetaUsuario.htmlFor = "recuperacion-usuario";
+    etiquetaUsuario.textContent = "Nombre de usuario:";
+    const entradaUsuario = document.createElement("input");
+    entradaUsuario.id = "recuperacion-usuario";
+    entradaUsuario.name = "usuario";
+    entradaUsuario.type = "text";
+    entradaUsuario.maxLength = 100;
+    entradaUsuario.autocomplete = "username";
+    entradaUsuario.required = true;
+
+    const pregunta = document.createElement("p");
+    pregunta.className = "pregunta-recuperacion";
+    pregunta.hidden = true;
+    const etiquetaRespuesta = document.createElement("label");
+    etiquetaRespuesta.htmlFor = "recuperacion-respuesta";
+    etiquetaRespuesta.textContent = "Respuesta de seguridad:";
+    etiquetaRespuesta.hidden = true;
+    const entradaRespuesta = document.createElement("input");
+    entradaRespuesta.id = "recuperacion-respuesta";
+    entradaRespuesta.name = "respuesta";
+    entradaRespuesta.type = "password";
+    entradaRespuesta.maxLength = 512;
+    entradaRespuesta.autocomplete = "off";
+    entradaRespuesta.required = false;
+    entradaRespuesta.hidden = true;
+    const error = document.createElement("p");
+    error.className = "error-recuperacion";
+    error.setAttribute("role", "alert");
+    error.hidden = true;
+
+    const enviar = document.createElement("button");
+    enviar.type = "submit";
+    enviar.className = "btn";
+    enviar.textContent = "Mostrar pregunta";
+
+    formulario.append(etiquetaUsuario, entradaUsuario, pregunta, etiquetaRespuesta, entradaRespuesta, error, enviar);
+    ventanaRecuperacion.replaceChildren(botonCerrar, titulo, descripcion, formulario);
+    ventanaRecuperacion.classList.remove("oculto");
+    entradaUsuario.focus();
+
+    let preguntaMostrada = false;
+    const obtenerTokenSesion = () => {
+        if (tokenSesion) {
+            return Promise.resolve(tokenSesion);
+        }
+
+        return fetch("./php/estadoSesion.php")
+            .then(async respuesta => {
+                const estado = await respuesta.json();
+                if (!respuesta.ok || typeof estado.token !== "string") {
+                    throw new Error("No se pudo validar la solicitud. Recarga la página e inténtalo de nuevo.");
+                }
+                tokenSesion = estado.token;
+                return tokenSesion;
+            });
+    };
+
+    formulario.addEventListener("submit", evento => {
+        evento.preventDefault();
+        error.hidden = true;
+        enviar.disabled = true;
+
+        obtenerTokenSesion()
+            .then(token => {
+                if (!preguntaMostrada) {
+                    return fetch("./php/cambioPass.php", {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            fase: "pregunta",
+                            usuario: entradaUsuario.value.trim(),
+                            token
+                        })
+                    }).then(async respuesta => {
+                        const datos = await respuesta.json();
+                        if (!respuesta.ok) {
+                            throw new Error(datos.error || `No se pudo obtener la pregunta: ${respuesta.status}`);
+                        }
+
+                        pregunta.textContent = datos.pregunta;
+                        pregunta.hidden = false;
+                        entradaRespuesta.hidden = false;
+                        entradaRespuesta.required = true;
+                        etiquetaRespuesta.hidden = false;
+                        preguntaMostrada = true;
+                        enviar.textContent = "Comprobar respuesta";
+                        enviar.disabled = false;
+                        entradaRespuesta.focus();
+                        return null;
+                    });
+                }
+
+                return fetch("./php/cambioPass.php", {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        fase: "verificar",
+                        usuario: entradaUsuario.value.trim(),
+                        respuesta: entradaRespuesta.value.trim(),
+                        token
+                    })
+                }).then(async respuesta => {
+                    const datos = await respuesta.json();
+                    if (!respuesta.ok) {
+                        throw new Error(datos.error || `No se pudo verificar la respuesta: ${respuesta.status}`);
+                    }
+                    if (typeof datos.token !== "string" || datos.verificado !== true) {
+                        throw new TypeError("El servidor no confirmó la verificación de seguridad.");
+                    }
+
+                    ventanaRecuperacion.classList.add("oculto");
+                    abrirDialogoNuevaContraseña(datos.token);
+                    return null;
+                });
+            })
+            .catch(errorSolicitud => {
+                console.error("No se pudo verificar la respuesta de seguridad.", errorSolicitud);
+                error.textContent = errorSolicitud.message;
+                error.hidden = false;
+                enviar.disabled = false;
+            });
+    });
+}
+
+function abrirDialogoNuevaContraseña(token) {
+    const dialogo = document.createElement("dialog");
+    dialogo.className = "dialogo-recuperacion";
+    dialogo.setAttribute("aria-labelledby", "titulo-nueva-contrasena");
+
+    const formulario = document.createElement("form");
+    const titulo = document.createElement("h2");
+    titulo.id = "titulo-nueva-contrasena";
+    titulo.textContent = "Elige una nueva contraseña";
+
+    const crearCampo = (id, texto, autocomplete) => {
+        const etiqueta = document.createElement("label");
+        etiqueta.htmlFor = id;
+        etiqueta.textContent = texto;
+        const entrada = document.createElement("input");
+        entrada.id = id;
+        entrada.type = "password";
+        entrada.minLength = 12;
+        entrada.maxLength = 1024;
+        entrada.autocomplete = autocomplete;
+        entrada.required = true;
+        return [etiqueta, entrada];
+    };
+
+    const [etiquetaNueva, nueva] = crearCampo(
+        "nueva-contrasena-recuperada",
+        "Nueva contraseña (mínimo 12 caracteres):",
+        "new-password"
+    );
+    const [etiquetaConfirmar, confirmar] = crearCampo(
+        "confirmar-contrasena-recuperada",
+        "Confirma la nueva contraseña:",
+        "new-password"
+    );
+
+    const error = document.createElement("p");
+    error.className = "error-recuperacion";
+    error.setAttribute("role", "alert");
+    error.hidden = true;
+
+    const acciones = document.createElement("div");
+    acciones.className = "acciones-formulario";
+    const guardar = document.createElement("button");
+    guardar.type = "submit";
+    guardar.className = "btn";
+    guardar.textContent = "Guardar contraseña";
+    const cancelar = document.createElement("button");
+    cancelar.type = "button";
+    cancelar.className = "boton-secundario";
+    cancelar.textContent = "Cancelar";
+    acciones.append(guardar, cancelar);
+    formulario.append(titulo, etiquetaNueva, nueva, etiquetaConfirmar, confirmar, error, acciones);
+    dialogo.appendChild(formulario);
+    document.body.appendChild(dialogo);
+
+    const eliminarDialogo = () => {
+        if (dialogo.open) {
+            dialogo.close();
+        }
+        dialogo.remove();
+    };
+    cancelar.addEventListener("click", eliminarDialogo);
+    dialogo.addEventListener("close", () => dialogo.remove(), { once: true });
+
+    formulario.addEventListener("submit", evento => {
+        evento.preventDefault();
+        error.hidden = true;
+        if (nueva.value !== confirmar.value) {
+            error.textContent = "Las contraseñas no coinciden.";
+            error.hidden = false;
+            confirmar.focus();
+            return;
+        }
+
+        guardar.disabled = true;
+        fetch("./php/cambioPass.php", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                fase: "cambiar",
+                token,
+                nueva_contrasena: nueva.value,
+                confirmar_contrasena: confirmar.value
+            })
+        })
+            .then(async respuesta => {
+                const datos = await respuesta.json();
+                if (!respuesta.ok) {
+                    throw new Error(datos.error || `No se pudo cambiar la contraseña: ${respuesta.status}`);
+                }
+
+                formulario.replaceChildren();
+                const mensaje = document.createElement("p");
+                mensaje.setAttribute("role", "status");
+                mensaje.textContent = datos.mensaje || "La contraseña se ha cambiado correctamente.";
+                const cerrar = document.createElement("button");
+                cerrar.type = "button";
+                cerrar.className = "btn";
+                cerrar.textContent = "Cerrar";
+                cerrar.addEventListener("click", eliminarDialogo);
+                formulario.append(mensaje, cerrar);
+            })
+            .catch(errorSolicitud => {
+                console.error("No se pudo actualizar la contraseña.", errorSolicitud);
+                error.textContent = errorSolicitud.message;
+                error.hidden = false;
+                guardar.disabled = false;
+            });
+    });
+
+    dialogo.showModal();
+    nueva.focus();
+}
+
+if (botonesRecuperarContraseña.length > 0 && ventanaRecuperacion) {
+    botonesRecuperarContraseña.forEach(boton => {
+        boton.addEventListener("click", () => {
         ventanaRegistro?.classList.add("oculto");
         ventanaLogin?.classList.add("oculto");
-        ventanaRecuperacion.classList.remove("oculto");
+            abrirRecuperacionContraseña();
+        });
     });
 }
 
@@ -270,4 +545,8 @@ if (document.getElementById("lugares")) {
     mostrarLugares(granada);
 
     cerrarMapa();
+}
+
+if (document.getElementById("datos")) {
+    inicializarMiCuenta();
 }

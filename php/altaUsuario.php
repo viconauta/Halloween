@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-session_start();
-include __DIR__ . '/VarGlobales.php';
+include __DIR__ . '/varGlobales.php';
 
 $errores = [];
 $mensaje = '';
@@ -73,13 +72,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nuevoUser['Respuesta'] = $respuesta;
         }
 
-        AltaUsuario($nuevoUser);
-        $mensaje = 'El usuario se ha registrado correctamente.';
-        $_SESSION['mensaje_flash'] = $mensaje;
-        $nombre = '';
-        $email = '';
-        $pregunta = '';
-        $respuesta = '';
+        if (AltaUsuario($nuevoUser)) {
+            $mensaje = 'El usuario se ha registrado correctamente.';
+            $_SESSION['mensaje_flash'] = $mensaje;
+            $nombre = '';
+            $email = '';
+            $pregunta = '';
+            $respuesta = '';
+        } else {
+            $errores[] = 'Ya existe una cuenta con ese nombre de usuario.';
+        }
     }
 } elseif ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);

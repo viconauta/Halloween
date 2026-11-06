@@ -33,6 +33,7 @@
                 <div class="formulario-correo">
                     <h2>Envia un email a Jack Skellington</h2>
                     <form action="./php/correo.php" method="post">
+                        <input type="hidden" name="csrf_token" value="">
                         <label for="asunto">Asunto</label>
                         <input type="text" name="asunto" id="asunto" placeholder="Aqui el asunto" required>
 
