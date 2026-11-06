@@ -8,7 +8,8 @@ import {
     recetasSaladas,
     recetasDulces,
     mostrarLugares,
-    cerrarMapa
+    cerrarMapa,
+    inicializarMiCuenta
 } from "./funciones.js";
 
 /* ==============================================================================
@@ -202,3 +203,9 @@ if (document.getElementById("lugares")) {
 
     cerrarMapa();
 }
+
+/* ==============================================================================
+MI CUENTA
+================================================================================*/
+
+inicializarMiCuenta();
