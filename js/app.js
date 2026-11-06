@@ -25,6 +25,76 @@ const btnRegistro = document.querySelector(".registro");
 const ventanaRegistro = document.getElementById("ventana-registro");
 const btnRecuperarContraseña = document.querySelector(".recuperar-contraseña");
 const ventanaRecuperacion = document.getElementById("ventana-recuperacion");
+const enlaceCuenta = document.querySelector(".enlace-cuenta");
+let sesionIniciada = false;
+
+function mostrarMensajeSesion(mensaje) {
+    if (!mensaje) {
+        return;
+    }
+
+    let aviso = document.querySelector(".mensaje-sesion");
+    if (!aviso) {
+        aviso = document.createElement("p");
+        aviso.className = "mensaje-sesion";
+        aviso.setAttribute("role", "status");
+        document.querySelector("header")?.insertAdjacentElement("afterend", aviso);
+    }
+
+    if (aviso) {
+        aviso.textContent = mensaje;
+    }
+}
+
+function actualizarInterfazSesion() {
+    if (btnLogin) {
+        btnLogin.textContent = sesionIniciada ? "Cerrar sesión" : "Iniciar Sesion";
+        btnLogin.setAttribute("aria-label", btnLogin.textContent);
+    }
+
+    enlaceCuenta?.classList.toggle("oculto", !sesionIniciada);
+}
+
+async function cargarEstadoSesion() {
+    const respuesta = await fetch("./php/estadoSesion.php", {
+        headers: { Accept: "application/json" },
+        credentials: "same-origin"
+    });
+
+    if (!respuesta.ok) {
+        throw new Error(`No se pudo consultar la sesión (HTTP ${respuesta.status}).`);
+    }
+
+    const estado = await respuesta.json();
+    if (typeof estado.sesionIniciada !== "boolean" || typeof estado.mensaje !== "string") {
+        throw new Error("La respuesta del estado de sesión no tiene un formato válido.");
+    }
+
+    sesionIniciada = estado.sesionIniciada;
+    actualizarInterfazSesion();
+    mostrarMensajeSesion(estado.mensaje);
+}
+
+async function cerrarSesion() {
+    const respuesta = await fetch("./php/estadoSesion.php", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        credentials: "same-origin"
+    });
+
+    if (!respuesta.ok) {
+        throw new Error(`No se pudo cerrar la sesión (HTTP ${respuesta.status}).`);
+    }
+
+    const estado = await respuesta.json();
+    if (estado.sesionIniciada !== false || typeof estado.mensaje !== "string") {
+        throw new Error("La respuesta al cerrar sesión no tiene un formato válido.");
+    }
+
+    sesionIniciada = false;
+    actualizarInterfazSesion();
+    mostrarMensajeSesion(estado.mensaje);
+}
 
 if (btnMenuLateral && menuDesplegable) {
     btnMenuLateral.addEventListener("click", () => {
@@ -33,10 +103,26 @@ if (btnMenuLateral && menuDesplegable) {
 }
 
 if (btnLogin && ventanaLogin) {
-    btnLogin.addEventListener("click", () => {
+    btnLogin.addEventListener("click", async () => {
+        if (sesionIniciada) {
+            try {
+                await cerrarSesion();
+            } catch (error) {
+                console.error("No se pudo cerrar la sesión.", error);
+                mostrarMensajeSesion("No se pudo cerrar la sesión. Inténtalo de nuevo.");
+            }
+            return;
+        }
+
         ventanaRegistro?.classList.add("oculto");
         ventanaRecuperacion?.classList.add("oculto");
         ventanaLogin.classList.remove("oculto");
+    });
+}
+
+if (btnLogin) {
+    cargarEstadoSesion().catch((error) => {
+        console.error("No se pudo consultar el estado de la sesión.", error);
     });
 }
 

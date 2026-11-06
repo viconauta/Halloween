@@ -103,6 +103,16 @@ ESTILO COMUN
     transform: translateY(-1px);
 }
 
+.page .mensaje-sesion{
+    margin: 1rem auto 0;
+    width: min(100% - 2rem, 1200px);
+    padding: .8rem 1rem;
+    border: 1px solid rgba(184, 242, 58, .55);
+    border-radius: 6px;
+    color: var(--terror-text);
+    background: var(--terror-surface);
+}
+
 .page #menu-desplegable{
     position: absolute;
     top: 100%;
@@ -124,6 +134,10 @@ ESTILO COMUN
     padding: .7rem;
     color: var(--terror-text);
     text-decoration: none;
+}
+
+.page #menu-desplegable a.oculto{
+    display: none;
 }
 
 .page #menu-desplegable a:hover{
