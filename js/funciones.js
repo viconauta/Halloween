@@ -5,7 +5,7 @@ export function cargarHistoria(historia, num) {
     const contenedorVideo = document.querySelector(".video");
     if(contenedorVideo){
         const contenidoVideo = `
-        <iframe width="560" height="315" src=${historia[num].enlace} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe id="video-historia" width="560" height="315" data-src="${historia[num].enlace}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         `;
         
         const contenedorDesc = document.querySelector(".descripcion");
@@ -14,8 +14,8 @@ export function cargarHistoria(historia, num) {
             <p>${historia[num].descripcion}</p>
         `;
 
-        contenedorVideo.innerHTML += contenidoVideo;
-        contenedorDesc.innerHTML += contenidoDesc;
+        contenedorVideo.insertAdjacentHTML("beforeend", contenidoVideo);
+        contenedorDesc.insertAdjacentHTML("beforeend", contenidoDesc);
     }
 }
 
