@@ -170,6 +170,7 @@ ESTILO COMUN
     border-radius: 12px;
     background: var(--terror-surface);
     box-shadow: 0 20px 70px rgba(0, 0, 0, .8);
+    line-height: 1.5;
     transform: translate(-50%, -50%);
 }
 
@@ -179,6 +180,20 @@ ESTILO COMUN
     display: flex;
     flex-direction: column;
     gap: .7rem;
+}
+
+.page .registro,
+.page .recuperar-contraseña{
+    padding: 0;
+    border: 0 solid #e5e7eb;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+}
+
+.page #ventana-recuperacion > p{
+    margin: 0;
 }
 
 .page #ventana-login input,
@@ -200,6 +215,7 @@ ESTILO COMUN
     border: 0;
     color: var(--terror-toxic);
     background: transparent;
+    font: inherit;
     font-size: 1.25rem;
     cursor: pointer;
 }

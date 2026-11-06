@@ -9,39 +9,42 @@ DESPLEGABLES
 const btnMenuLateral = document.querySelector(".hamburger");
 const menuDesplegable = document.getElementById("menu-desplegable");
 
-btnMenuLateral.addEventListener("click", () => {
-    menuDesplegable.classList.toggle("oculto");
-});
-
-//para que aparezca la ventana del inicio de sesion
 const btnLogin = document.querySelector(".login");
 const ventanaLogin = document.getElementById("ventana-login");
-
-btnLogin.addEventListener("click", () => {
-    ventanaRegistro.classList.add("oculto");
-    ventanaRecuperacion.classList.add("oculto");
-    ventanaLogin.classList.remove("oculto");
-});
-
-//aparece la ventana de registro de nuevo usuario
 const btnRegistro = document.querySelector(".registro");
 const ventanaRegistro = document.getElementById("ventana-registro");
-
-btnRegistro.addEventListener("click", () => {
-    ventanaLogin.classList.add("oculto");
-    ventanaRecuperacion.classList.add("oculto");
-    ventanaRegistro.classList.remove("oculto");
-});
-
-//aparece la ventana de recuperar contraseña
 const btnRecuperarContraseña = document.querySelector(".recuperar-contraseña");
 const ventanaRecuperacion = document.getElementById("ventana-recuperacion");
 
-btnRecuperarContraseña.addEventListener("click", () => {
-    ventanaRegistro.classList.add("oculto");
-    ventanaLogin.classList.add("oculto");
-    ventanaRecuperacion.classList.remove("oculto");
-});
+if (btnMenuLateral && menuDesplegable) {
+    btnMenuLateral.addEventListener("click", () => {
+        menuDesplegable.classList.toggle("oculto");
+    });
+}
+
+if (btnLogin && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
+    btnLogin.addEventListener("click", () => {
+        ventanaRegistro.classList.add("oculto");
+        ventanaRecuperacion.classList.add("oculto");
+        ventanaLogin.classList.remove("oculto");
+    });
+}
+
+if (btnRegistro && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
+    btnRegistro.addEventListener("click", () => {
+        ventanaLogin.classList.add("oculto");
+        ventanaRecuperacion.classList.add("oculto");
+        ventanaRegistro.classList.remove("oculto");
+    });
+}
+
+if (btnRecuperarContraseña && ventanaLogin && ventanaRegistro && ventanaRecuperacion) {
+    btnRecuperarContraseña.addEventListener("click", () => {
+        ventanaRegistro.classList.add("oculto");
+        ventanaLogin.classList.add("oculto");
+        ventanaRecuperacion.classList.remove("oculto");
+    });
+}
 
 /* ==============================================================================
 SUSTO DEL INICIO
@@ -95,9 +98,9 @@ if (inicio && imagenSusto && sonidoSusto) {
 //cerrar ventanas
 document.querySelectorAll(".cerrar-ventana").forEach((btn) => {
     btn.addEventListener("click", () => {
-        ventanaRegistro.classList.add("oculto");
-        ventanaLogin.classList.add("oculto");
-        ventanaRecuperacion.classList.add("oculto");
+        [ventanaRegistro, ventanaLogin, ventanaRecuperacion].forEach((ventana) => {
+            ventana?.classList.add("oculto");
+        });
     });
 });
 
@@ -119,7 +122,7 @@ if (teatroHistoria) {
     const videoHistoria = document.getElementById("video-historia");
 
     botonAbrirHistoria.addEventListener("click", () => {
-        const urlVideo = new URL(videoHistoria.src);
+        const urlVideo = new URL(videoHistoria.dataset.src);
         urlVideo.searchParams.set("autoplay", "1");
         urlVideo.searchParams.set("playsinline", "1");
         videoHistoria.src = urlVideo.toString();
