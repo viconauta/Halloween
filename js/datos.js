@@ -243,25 +243,7 @@ export const audios = [
     nombre: "Mommy",
     imagen: "./img/imgAudios/mommy.jpeg",
     audio: "./audios/efectos/mamiMami.mp3"
-  },
-  {
-    descripcion: "Efecto de sonido",
-    nombre: "",
-    imagen: "./img/imgAudios/",
-    audio: "./audios/efectos/"
-  },
-  {
-    descripcion: "Efecto de sonido",
-    nombre: "",
-    imagen: "./img/imgAudios/",
-    audio: "./audios/efectos/"
-  },
-  {
-    descripcion: "Efecto de sonido",
-    nombre: "",
-    imagen: "./img/imgAudios/",
-    audio: "./audios/efectos/"
-  },
+  },  
   {
     descripcion: "Tema musical de Película",
     nombre: "HalloWeen",

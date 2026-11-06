@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/styles.css">
-    <title>Mi cuenta</title>
+    <title>Mi cuenta | GranaWeen</title>
 </head>
-<body class="page">
+<body class="page mi-cuenta-page">
     <header>
-        <button class="hamburger" aria-label="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
+        <button class="hamburger" type="button" aria-label="Abrir menú" aria-controls="menu-desplegable">
+            <span class="barMenu"></span>
+            <span class="barMenu"></span>
+            <span class="barMenu"></span>
         </button>
         <a class="logo" href="./index.html">GranaWeen</a>
-        <button class="login btn">Iniciar Sesion</button>
+        <button class="login btn" type="button">Iniciar sesión</button>
         <nav id="menu-desplegable" class="oculto">
             <ul>
                 <li><a href="./index.html">Inicio</a></li>
@@ -27,20 +27,57 @@
             </ul>
         </nav>
     </header>
+
     <main>
         <div class="titulo">
-            <h1>Mis Datos</h1>
+            <p class="sobretitulo">Tu rincón personal</p>
+            <h1>Mis datos</h1>
+            <p class="introduccion">Consulta y actualiza la información de tu cuenta.</p>
         </div>
-        <section id="datos">
 
-        </section>
-        <section id="editar-datos">
-             
-        </section>
+        <div class="cuenta-contenido">
+            <section id="datos" aria-labelledby="titulo-datos">
+                <h2 id="titulo-datos">Información personal</h2>
+                <dl class="lista-datos">
+                    <div class="dato">
+                        <dt>Nombre</dt>
+                        <dd id="nombre">No indicado</dd>
+                    </div>
+                    <div class="dato">
+                        <dt>Fecha de nacimiento</dt>
+                        <dd id="fecha">No indicada</dd>
+                    </div>
+                    <div class="dato">
+                        <dt>Correo electrónico</dt>
+                        <dd id="email">No indicado</dd>
+                    </div>
+                    <div class="dato">
+                        <dt>Pregunta de seguridad</dt>
+                        <dd id="seguridad">No configurada</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <section id="editar-datos" aria-labelledby="titulo-editar">
+                <h2 id="titulo-editar">Editar perfil</h2>
+                <p class="ayuda-edicion">Elige el dato que quieras actualizar.</p>
+                <div class="acciones-edicion">
+                    <button type="button" data-campo="nombre">Cambiar nombre</button>
+                    <button type="button" data-campo="fecha">Cambiar fecha de nacimiento</button>
+                    <button type="button" data-campo="email">Cambiar correo electrónico</button>
+                    <button type="button" data-campo="seguridad">Cambiar pregunta de seguridad</button>
+                </div>
+                <p class="aviso-seguridad">El cambio de contraseña requiere un servicio conectado al servidor.</p>
+            </section>
+        </div>
+
+        <div id="formulario-edicion" aria-live="polite"></div>
+        <p id="estado-cuenta" class="estado-cuenta" role="status" aria-live="polite"></p>
     </main>
+
     <footer>
         <div>
-            <a href="./index.html" class="logo">GranaWeed</a>
+            <a href="./index.html" class="logo">GranaWeen</a>
         </div>
         <div class="us">
             <a href="./sobreNosotros.html">Sobre nosotros</a>
@@ -48,58 +85,55 @@
         <div class="contacto">
             <h2>Contacto</h2>
             <p>Tel: 691264860</p>
-            <p>emai: granaween@gmail.es</p>
-            <p>Direccion: Avda. Halloween, Granada</p> 
+            <p>Email: granaween@gmail.es</p>
+            <p>Dirección: Avda. Halloween, Granada</p>
         </div>
-        <script type="module" src="./js/app.js"></script>
     </footer>
 
     <div id="ventana-login" class="oculto">
-        <button class="cerrar-ventana">X</button>
+        <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
         <form action="./php/login.php" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre aqui" required>
+            <label for="login-nombre">Nombre:</label>
+            <input type="text" name="nombre" id="login-nombre" placeholder="Escribe tu nombre aquí" required>
 
-            <label for="password">Contraseña:</label>
-            <input type="password" name="password" id="password" placeholder="Escribe aqui tu contraseña" required>
+            <label for="login-password">Contraseña:</label>
+            <input type="password" name="password" id="login-password" placeholder="Escribe aquí tu contraseña" required>
 
-            <button type="submit" class="btn">Iniciar sesion</button>
-            <button type="button" class="registro">¿No tienes cuenta? | Registrate</button>
+            <button type="submit" class="btn">Iniciar sesión</button>
+            <button type="button" class="registro">¿No tienes cuenta? | Regístrate</button>
             <button type="button" class="recuperar-contraseña">He olvidado mi contraseña</button>
         </form>
     </div>
 
     <div id="ventana-registro" class="oculto">
-        <button class="cerrar-ventana">X</button>
+        <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
         <form action="./php/altaUsuario.php" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre aqui" required>
+            <label for="registro-nombre">Nombre:</label>
+            <input type="text" name="nombre" id="registro-nombre" placeholder="Escribe tu nombre aquí" required>
 
-            <label for="password">Contraseña:</label>
-            <input type="password" name="password" id="password" placeholder="Escribe aqui tu contraseña" required>
+            <label for="registro-password">Contraseña:</label>
+            <input type="password" name="password" id="registro-password" placeholder="Escribe aquí tu contraseña" required>
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" placeholder="tuEmail@ejemplo.com" required>
+            <label for="registro-email">Email:</label>
+            <input type="email" name="email" id="registro-email" placeholder="tuEmail@ejemplo.com" required>
 
-            <label for="pregunta">Pregunta de seguridad:</label>
-            <input type="text" name="pregunta" id="pregunta" placeholder="¿Nombre de mi primera mascota?" required>
+            <label for="registro-pregunta">Pregunta de seguridad:</label>
+            <input type="text" name="pregunta" id="registro-pregunta" placeholder="¿Nombre de mi primera mascota?" required>
 
-            <label for="respuesta">Respuesta</label>
-            <input type="text" name="respuesta" id="respuesta" placeholder="Firulais" required>
+            <label for="registro-respuesta">Respuesta:</label>
+            <input type="text" name="respuesta" id="registro-respuesta" placeholder="Firulais" required>
 
             <button type="submit" class="btn">Registrarse</button>
         </form>
     </div>
 
     <div id="ventana-recuperacion" class="oculto">
-        <button class="cerrar-ventana">X</button>
+        <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
         <p>PREGUNTA DE SEGURIDAD</p>
-        <form action="./php/cambioPass.php">
-            <label for="respuesta">Respuesta</label>
-            <input type="text" name="respuesta" id="respuesta">
-
-            <button type="submit" class="btn">Enviar respuesta</button>
-        </form>
+        <p>Continúa para verificar tu respuesta de seguridad y establecer una nueva contraseña.</p>
+        <a class="btn" href="./php/cambioPass.php">Recuperar contraseña</a>
     </div>
+
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>
