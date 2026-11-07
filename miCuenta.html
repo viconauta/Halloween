@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/styles.css">
     <title>Mi cuenta | GranaWeen</title>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body class="page mi-cuenta-page">
     <header>
@@ -20,7 +20,7 @@
                 <li><a href="./index.html">Inicio</a></li>
                 <li><a href="./recetas.html">Recetas</a></li>
                 <li><a href="./historia.html">Historias de miedo</a></li>
-                <li><a href="./sonidos.html">Musica y tonos</a></li>
+                <li><a href="./sonidos.html">Música y tonos</a></li>
                 <li><a href="./enGranada.html">Granada</a></li>
                 <li><a href="./juego.html">Juego</a></li>
                 <li><a class="enlace-cuenta oculto" href="./miCuenta.html">Mi cuenta</a></li>
@@ -28,14 +28,12 @@
         </nav>
     </header>
 
-
     <main>
         <div class="titulo">
             <p class="sobretitulo">Tu rincón personal</p>
             <h1>Mis datos</h1>
             <p class="introduccion">Consulta y actualiza la información de tu cuenta.</p>
         </div>
-
 
         <div class="cuenta-contenido">
             <section id="datos" aria-labelledby="titulo-datos">
@@ -60,7 +58,6 @@
                 </dl>
             </section>
 
-
             <section id="editar-datos" aria-labelledby="titulo-editar">
                 <h2 id="titulo-editar">Editar perfil</h2>
                 <p class="ayuda-edicion">Elige el dato que quieras actualizar.</p>
@@ -75,11 +72,9 @@
             </section>
         </div>
 
-
         <div id="formulario-edicion" aria-live="polite"></div>
         <p id="estado-cuenta" class="estado-cuenta" role="status" aria-live="polite"></p>
     </main>
-
 
     <footer>
         <div>
@@ -96,17 +91,16 @@
         </div>
     </footer>
 
-
+    <!-- Ventana emergente de login -->
     <div id="ventana-login" class="oculto">
         <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
+        <h2>Iniciar sesión</h2>
         <form action="./php/login.php" method="post">
             <label for="login-nombre">Nombre:</label>
             <input type="text" name="nombre" id="login-nombre" placeholder="Escribe tu nombre aquí" required>
 
-
             <label for="login-password">Contraseña:</label>
             <input type="password" name="password" id="login-password" placeholder="Escribe aquí tu contraseña" required>
-
 
             <button type="submit" class="btn">Iniciar sesión</button>
             <button type="button" class="registro">¿No tienes cuenta? | Regístrate</button>
@@ -114,44 +108,36 @@
         </form>
     </div>
 
-
+    <!-- Ventana emergente de registro -->
     <div id="ventana-registro" class="oculto">
         <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
+        <h2>Crear cuenta</h2>
         <form action="./php/altaUsuario.php" method="post">
             <label for="registro-nombre">Nombre:</label>
             <input type="text" name="nombre" id="registro-nombre" placeholder="Escribe tu nombre aquí" required>
 
-
             <label for="registro-password">Contraseña:</label>
             <input type="password" name="password" id="registro-password" placeholder="Escribe aquí tu contraseña" required>
-
 
             <label for="registro-email">Email:</label>
             <input type="email" name="email" id="registro-email" placeholder="tuEmail@ejemplo.com" required>
 
-
             <label for="registro-pregunta">Pregunta de seguridad:</label>
-            <input type="text" name="pregunta" id="registro-pregunta" placeholder="¿Nombre de mi primera mascota?" required>
-
+            <input type="text" name="pregunta" id="registro-pregunta" placeholder="¿Nombre de mi primera mascota?">
 
             <label for="registro-respuesta">Respuesta:</label>
-            <input type="text" name="respuesta" id="registro-respuesta" placeholder="Firulais" required>
-
+            <input type="text" name="respuesta" id="registro-respuesta" placeholder="Firulais">
 
             <button type="submit" class="btn">Registrarse</button>
         </form>
     </div>
 
-
+    <!-- Ventana emergente de recuperación -->
     <div id="ventana-recuperacion" class="oculto">
         <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
-        <p>PREGUNTA DE SEGURIDAD</p>
-        <p>Continúa para verificar tu respuesta de seguridad y establecer una nueva contraseña.</p>
-        <a class="btn" href="./php/cambioPass.php">Recuperar contraseña</a>
+        <h2>Recuperar contraseña</h2>
     </div>
-
 
     <script type="module" src="./js/app.js"></script>
 </body>
 </html>
-

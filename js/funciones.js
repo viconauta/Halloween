@@ -1,544 +1,405 @@
 /* ==============================================================================
-HISTORIA
-================================================================================*/
+ * 1. SECCIÓN DE HISTORIAS DE TERROR
+ * ============================================================================== */
+
+/* Carga el vídeo y la descripción de una historia aleatoria en la página. */
 export function cargarHistoria(historia, num) {
     const contenedorVideo = document.querySelector(".video");
-    if(contenedorVideo){
-        const contenidoVideo = `
-        <iframe id="video-historia" width="560" height="315" data-src="${historia[num].enlace}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        `;
-        
-        const contenedorDesc = document.querySelector(".descripcion");
-        const contenidoDesc = `
-            <h3>${historia[num].titulo}</h3>
-            <p>${historia[num].descripcion}</p>
-        `;
+    const contenedorDesc = document.querySelector(".descripcion");
 
-        contenedorVideo.insertAdjacentHTML("beforeend", contenidoVideo);
-        contenedorDesc.insertAdjacentHTML("beforeend", contenidoDesc);
+    if (!contenedorVideo || !contenedorDesc || !historia[num]) {
+        return;
     }
+
+    const item = historia[num];
+
+    contenedorVideo.innerHTML = `
+        <div class="teatro-historia" id="teatro-historia" aria-label="Telón de la historia">
+            <div class="telon telon-izquierdo" aria-hidden="true"></div>
+            <div class="telon telon-derecho" aria-hidden="true"></div>
+            <button class="btn boton-telon" id="abrir-historia" type="button">Abrir el telón</button>
+        </div>
+        <iframe id="video-historia"
+            width="560" height="315"
+            data-src="${item.enlace}"
+            title="${item.titulo}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    `;
+
+    contenedorDesc.innerHTML = `
+        <h3>${item.titulo}</h3>
+        <p>${item.descripcion}</p>
+    `;
 }
 
-export function numeroAleatorio(num) {
-    return Math.floor(Math.random() * num);
+/* Devuelve un número entero aleatorio entre 0 y (max - 1). */
+export function numeroAleatorio(max) {
+    return Math.floor(Math.random() * max);
 }
-
 
 /* ==============================================================================
-RECETAS
-================================================================================*/
-//mostrar tarjeta para las recetas
-function mostrarTarjeta(a) {
+ * 2. SECCIÓN DE RECETAS
+ * ============================================================================== */
+
+/**
+ * Genera la estructura HTML de una tarjeta de receta reversible.
+ */
+function generarTarjetaReceta(receta) {
+    const ingredientesHtml = receta.ingredientes
+        .map(ing => `<p>• ${ing}</p>`)
+        .join("");
+
     return `
         <article class="contenedor-tarjeta">
             <div class="front tarjeta">
                 <div class="contenedor-img">
-                    <img src="${a.imagen}" alt="${a.nombre}">
+                    <img src="${receta.imagen}" alt="${receta.nombre}" loading="lazy">
                 </div>
                 <div class="contenedor-datos">
-                    <h3>${a.nombre}</h3>
-                    <p>${a.descripcion}</p>
+                    <h3>${receta.nombre}</h3>
+                    <p>${receta.descripcion}</p>
                 </div>
             </div>
             <div class="back tarjeta">
                 <h3>Ingredientes</h3>
-                ${a.ingredientes.map(ingrediente => `<p>${ingrediente}</p>`).join("")}
+                ${ingredientesHtml}
             </div>
-        </article>`;
+        </article>
+    `;
 }
 
-//funcion para mostrar las recetas top
+/**
+ * Muestra las 3 recetas con mayor puntuación en el contenedor de populares.
+ */
 export function recetasTop(recetas) {
-    const seccionTop = document.querySelector(".recetas-populares");
-    if(seccionTop) {
-        const recetasPopulares = [...recetas].sort((a, b) => b.puntuacion - a.puntuacion).slice(0, 3);
-        const contenido = recetasPopulares.map((a) => mostrarTarjeta(a)).join("");
-        seccionTop.innerHTML += contenido;
-    }
+    const seccion = document.querySelector(".recetas-populares");
+    if (!seccion) return;
+
+    const top = [...recetas]
+        .sort((a, b) => b.puntuacion - a.puntuacion)
+        .slice(0, 3);
+
+    seccion.innerHTML = top.map(generarTarjetaReceta).join("");
 }
 
-//funcion para mostrar las recetas saladas
-export function recetasSaladas(recetas, tipo) {
-    const seccionSalada = document.querySelector(".salados");
-    if(seccionSalada) {
-        const recetaSalada = recetas.filter(a => a.tipo === tipo);
-        const contenido = recetaSalada.map(a => mostrarTarjeta(a)).join("");
-        seccionSalada.innerHTML += contenido;
-    }
+/**
+ * Muestra las recetas saladas.
+ */
+export function recetasSaladas(recetas, tipo = "salado") {
+    const seccion = document.querySelector(".salados");
+    if (!seccion) return;
+
+    const filtradas = recetas.filter(r => r.tipo === tipo);
+    seccion.innerHTML = `<h2>Aperitivos Salados</h2>` + filtradas.map(generarTarjetaReceta).join("");
 }
 
-//funcion para mostrar las recetas de pasteles
-export function recetasDulces(recetas, tipo) {
-    const seccionDulce = document.querySelector(".dulces");
-    if(seccionDulce) {
-        const recetaDulce = recetas.filter(a => a.tipo === tipo);
-        const contenido = recetaDulce.map(a => mostrarTarjeta(a)).join("");
-        seccionDulce.innerHTML += contenido;
-    }
+/**
+ * Muestra los postres y dulces de Halloween.
+ */
+export function recetasDulces(recetas, tipo = "dulce") {
+    const seccion = document.querySelector(".dulces");
+    if (!seccion) return;
+
+    const filtradas = recetas.filter(r => r.tipo === tipo);
+    seccion.innerHTML = `<h2>Dulces y Pasteles</h2>` + filtradas.map(generarTarjetaReceta).join("");
 }
 
-/* ========================================================================
-AUDIOS DE TERROR
-=========================================================================== */
+/* ==============================================================================
+ * 3. REPRODUCTOR DE AUDIOS Y EFECTOS DE TERROR
+ * ============================================================================== */
 
+let audioActivo = null;
+let botonActivo = null;
 
-// Variables para controlar el audio actual
-let audioActual = null;
-let btnActual = null;
+/**
+ * Crea botones interactivos con imagen para reproducir efectos y bandas sonoras.
+ */
+export function crearBtn(listaSonidos, contenedor) {
+    if (!contenedor) return;
 
-export function crearBtn(datos, contenedor) {
-
-    datos.forEach(sonido => {
-
+    listaSonidos.forEach(sonido => {
         const btn = document.createElement("button");
-
         btn.type = "button";
-        btn.classList.add("circulo-sonido");
+        btn.className = "circulo-sonido";
         btn.title = sonido.nombre;
         btn.setAttribute("aria-label", sonido.nombre);
 
-        const imagen = document.createElement("img");
-        imagen.src = sonido.imagen;
-        imagen.alt = "";
-        imagen.setAttribute("aria-hidden", "true");
-        btn.appendChild(imagen);
+        const img = document.createElement("img");
+        img.src = sonido.imagen;
+        img.alt = sonido.nombre;
+        btn.appendChild(img);
 
         btn.addEventListener("click", () => {
-
-            if (btnActual === btn && audioActual) {
-                if (audioActual.paused) {
-                    reproducirAudio(audioActual, btn);
+            // Si el mismo botón ya está activo, alternar pausa y reproducción
+            if (botonActivo === btn && audioActivo) {
+                if (audioActivo.paused) {
+                    audioActivo.play();
+                    btn.classList.add("sonando");
                 } else {
-                    audioActual.pause();
+                    audioActivo.pause();
                     btn.classList.remove("sonando");
                 }
                 return;
             }
 
-            if (audioActual) {
-                audioActual.pause();
-                audioActual.currentTime = 0;
-                btnActual.classList.remove("sonando");
+            // Si hay otro audio sonando, detenerlo
+            if (audioActivo) {
+                audioActivo.pause();
+                audioActivo.currentTime = 0;
+                botonActivo?.classList.remove("sonando");
             }
 
-            const audio = new Audio(sonido.audio);
-            audioActual = audio;
-            btnActual = btn;
+            // Reproducir nuevo sonido
+            const nuevoAudio = new Audio(sonido.audio);
+            audioActivo = nuevoAudio;
+            botonActivo = btn;
 
-            audio.addEventListener("ended", () => {
+            nuevoAudio.play()
+                .then(() => btn.classList.add("sonando"))
+                .catch(err => console.warn("No se pudo reproducir el audio:", err));
+
+            nuevoAudio.addEventListener("ended", () => {
                 btn.classList.remove("sonando");
-                if (audioActual === audio) {
-                    audioActual = null;
-                    btnActual = null;
+                if (audioActivo === nuevoAudio) {
+                    audioActivo = null;
+                    botonActivo = null;
                 }
             });
-
-            reproducirAudio(audio, btn);
         });
 
         contenedor.appendChild(btn);
-
     });
-}
-
-function reproducirAudio(audio, btn) {
-    audio.play()
-        .then(() => {
-            if (audioActual === audio) {
-                btn.classList.add("sonando");
-            }
-        })
-        .catch(error => {
-            if (audioActual !== audio) {
-                return;
-            }
-
-            if (error.name === "AbortError" && audio.paused) {
-                return;
-            }
-
-            btn.classList.remove("sonando");
-            audioActual = null;
-            btnActual = null;
-            alert("No se ha podido reproducir el audio.");
-        });
 }
 
 /* ==============================================================================
-LUGARES DE GRANADA
-================================================================================*/
+ * 4. LUGARES MISTERIOSOS EN GRANADA (GOOGLE MAPS MODAL)
+ * ============================================================================== */
 
-// Mostrar las tarjetas de los lugares
-export function mostrarLugares(granada) {
-
+/**
+ * Renderiza los lugares de terror de Granada y gestiona el modal del mapa.
+ */
+export function mostrarLugares(lugares) {
     const contenedor = document.getElementById("lugares");
+    if (!contenedor) return;
 
-    if (!contenedor) {
-        return;
-    }
-
-    const contenido = granada.map((lugar, indice) => `
+    contenedor.innerHTML = lugares.map((lugar, i) => `
         <article class="tarjeta-lugar">
-
             <div class="imagen-lugar">
-
                 <img src="${lugar.imagen}" alt="${lugar.nombre}" loading="lazy">
-
                 <button
                     type="button"
                     class="boton-mapa"
-                    data-indice="${indice}"
+                    data-indice="${i}"
                     title="Ver ubicación en Google Maps"
-                    aria-label="Ver ubicación de ${lugar.nombre}"
-                    aria-haspopup="dialog"
-                    aria-expanded="false">
+                    aria-label="Ver ubicación de ${lugar.nombre}">
                     <span aria-hidden="true">⌖</span>
                     <span>Ver mapa</span>
                 </button>
-
             </div>
-
             <div class="informacion-lugar">
-
                 <h2>${lugar.nombre}</h2>
-
                 <p>${lugar.descripcion}</p>
-
             </div>
-
         </article>
     `).join("");
 
-    contenedor.innerHTML = contenido;
-
-    // Eventos de los botones del mapa
+    // Asignar evento para abrir el mapa
     contenedor.querySelectorAll(".boton-mapa").forEach(boton => {
-
         boton.addEventListener("click", () => {
-
-            const indice = boton.dataset.indice;
-            const lugar = granada[indice];
-
-            abrirMapa(lugar, boton);
-
+            const index = Number(boton.dataset.indice);
+            abrirMapa(lugares[index]);
         });
-
     });
-
 }
 
-
-// Abrir la ventana del mapa
-function abrirMapa(lugar, botonOrigen) {
-
+/**
+ * Muestra el iframe de Google Maps dentro del modal interactivo.
+ */
+function abrirMapa(lugar) {
     const modal = document.getElementById("modal-mapa");
     const iframe = document.getElementById("iframe-mapa");
     const titulo = document.getElementById("titulo-mapa");
-    const ampliar = document.getElementById("ampliar-mapa");
+    const enlaceAmpliar = document.getElementById("ampliar-mapa");
 
-    if (!modal || !iframe || !titulo || !ampliar) {
-        console.error("No se puede abrir el mapa: faltan elementos del modal.");
-        return;
-    }
+    if (!modal || !iframe || !titulo) return;
 
     const busqueda = `${lugar.nombre}, Granada`;
-    let urlMapa = `https://www.google.com/maps?q=${encodeURIComponent(busqueda)}&output=embed`;
-    let urlAmpliar = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(busqueda)}`;
+    let urlEmbed = `https://www.google.com/maps?q=${encodeURIComponent(busqueda)}&output=embed`;
 
-    try {
-        const enlace = new URL(lugar.enlace);
-        const esGoogleMaps = enlace.hostname === "google.com" || enlace.hostname.endsWith(".google.com");
-
-        if (esGoogleMaps && enlace.pathname === "/maps/search/") {
-            const consulta = enlace.searchParams.get("query") || busqueda;
-            urlMapa = `https://www.google.com/maps?q=${encodeURIComponent(consulta)}&output=embed`;
-            urlAmpliar = lugar.enlace;
-        } else if (esGoogleMaps && enlace.pathname === "/maps/embed" && enlace.searchParams.has("pb")) {
-            urlMapa = lugar.enlace;
-            urlAmpliar = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(busqueda)}`;
-        }
-    } catch (error) {
-        console.error(`Enlace de Google Maps no válido para "${lugar.nombre}".`, error);
+    if (lugar.enlace.includes("/maps/embed")) {
+        urlEmbed = lugar.enlace;
     }
 
-    iframe.src = urlMapa;
+    iframe.src = urlEmbed;
     titulo.textContent = lugar.nombre;
-    ampliar.href = urlAmpliar;
-    modal.setAttribute("aria-hidden", "false");
+    if (enlaceAmpliar) {
+        enlaceAmpliar.href = lugar.enlace;
+    }
+
     modal.classList.add("activo");
-    document.getElementById("cerrar-mapa")?.focus();
-    botonOrigen.setAttribute("aria-expanded", "true");
-
-    modal.dataset.botonOrigen = botonOrigen.dataset.indice;
-
 }
 
-
-// Cerrar la ventana del mapa
+/**
+ * Asigna los eventos de cierre del modal del mapa (botón, clic fuera o Escape).
+ */
 export function cerrarMapa() {
-
     const modal = document.getElementById("modal-mapa");
-    const iframe = document.getElementById("iframe-mapa");
     const botonCerrar = document.getElementById("cerrar-mapa");
+    const iframe = document.getElementById("iframe-mapa");
 
-    if (!modal || !iframe || !botonCerrar) {
-        return;
-    }
+    if (!modal) return;
 
-    const cerrar = () => {
-        if (!modal.classList.contains("activo")) {
-            return;
-        }
-
+    const ocultar = () => {
         modal.classList.remove("activo");
-        modal.setAttribute("aria-hidden", "true");
-        iframe.src = "";
-        const botonOrigen = modal.dataset.botonOrigen;
-        if (botonOrigen !== undefined) {
-            const botonMapa = document.querySelector(`.boton-mapa[data-indice="${botonOrigen}"]`);
-            botonMapa?.setAttribute("aria-expanded", "false");
-            botonMapa?.focus();
-        }
+        if (iframe) iframe.src = "";
     };
 
-    botonCerrar.addEventListener("click", () => {
-        cerrar();
+    botonCerrar?.addEventListener("click", ocultar);
+
+    modal.addEventListener("click", e => {
+        if (e.target === modal) ocultar();
     });
 
-    // Cerrar al pulsar fuera del mapa
-    modal.addEventListener("click", evento => {
-
-        if (evento.target === modal) {
-            cerrar();
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape" && modal.classList.contains("activo")) {
+            ocultar();
         }
-
     });
-
-    // Cerrar pulsando Escape
-    document.addEventListener("keydown", evento => {
-
-        if (evento.key === "Escape") {
-            cerrar();
-        }
-
-    });
-
 }
 
-/*=====================================================
-MI CUENTA
-=======================================================*/
+/* ==============================================================================
+ * 5. SECCIÓN MI CUENTA (PERFIL DE USUARIO)
+ * ============================================================================== */
 
-export function inicializarMiCuenta() {
+/**
+ * Inicializa la consulta y edición de datos del usuario en miCuenta.html.
+ */
+export async function inicializarMiCuenta() {
     const contenedorDatos = document.getElementById("datos");
-    const contenedorFormulario = document.getElementById("formulario-edicion");
     const estado = document.getElementById("estado-cuenta");
+    const formularioContenedor = document.getElementById("formulario-edicion");
     const botonesEdicion = document.querySelectorAll("#editar-datos [data-campo]");
 
-    if (!contenedorDatos || !contenedorFormulario || !estado || botonesEdicion.length === 0) {
-        return;
-    }
+    if (!contenedorDatos || !estado) return;
 
-    const campos = {
-        nombre: {
-            titulo: "Cambiar nombre",
-            etiqueta: "Nuevo nombre",
-            tipo: "text",
-            placeholder: "Introduce tu nombre",
-            autocomplete: "name"
-        },
-        fecha: {
-            titulo: "Cambiar fecha de nacimiento",
-            etiqueta: "Nueva fecha de nacimiento",
-            tipo: "date",
-            placeholder: "",
-            autocomplete: "bday"
-        },
-        email: {
-            titulo: "Cambiar correo electrónico",
-            etiqueta: "Nuevo correo electrónico",
-            tipo: "email",
-            placeholder: "nombre@ejemplo.com",
-            autocomplete: "email"
-        },
-        seguridad: {
-            titulo: "Cambiar pregunta de seguridad",
-            etiqueta: "Nueva pregunta de seguridad",
-            tipo: "text",
-            placeholder: "Escribe tu pregunta",
-            autocomplete: "off"
-        }
-    };
-
-    const valoresPorDefecto = {
+    let perfil = {
         nombre: "No indicado",
         fecha: "",
         email: "No indicado",
         seguridad: "No configurada"
     };
-    const perfil = { ...valoresPorDefecto };
-    let tokenPerfil = "";
-    botonesEdicion.forEach(boton => {
-        boton.disabled = true;
-    });
 
-    function mostrarValor(campo) {
-        const elemento = document.getElementById(campo);
-        if (!elemento) {
-            return;
+    // Actualiza los elementos del DOM con los valores en memoria
+    function renderizarPerfil() {
+        document.getElementById("nombre").textContent = perfil.nombre || "No indicado";
+        document.getElementById("email").textContent = perfil.email || "No indicado";
+        document.getElementById("seguridad").textContent = perfil.seguridad || "No configurada";
+
+        const elemFecha = document.getElementById("fecha");
+        if (elemFecha) {
+            if (perfil.fecha) {
+                const f = new Date(`${perfil.fecha}T00:00:00`);
+                elemFecha.textContent = !isNaN(f.getTime())
+                    ? f.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })
+                    : perfil.fecha;
+            } else {
+                elemFecha.textContent = "No indicada";
+            }
         }
-
-        const valor = perfil[campo];
-        if (campo === "fecha" && valor) {
-            const fecha = new Date(`${valor}T00:00:00`);
-            elemento.textContent = Number.isNaN(fecha.getTime())
-                ? valor
-                : fecha.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
-            return;
-        }
-
-        elemento.textContent = valor || (campo === "fecha" ? "No indicada" : valoresPorDefecto[campo]);
     }
 
-    Object.keys(campos).forEach(mostrarValor);
-
-    fetch("./php/perfilCuenta.php", { headers: { Accept: "application/json" } })
-        .then(async respuesta => {
-            const datos = await respuesta.json();
-            if (!respuesta.ok) {
-                throw new Error(datos.error || `Error al cargar los datos de cuenta: ${respuesta.status}`);
-            }
-            if (typeof datos.perfil !== "object" || datos.perfil === null || typeof datos.token !== "string") {
-                throw new TypeError("El servidor devolvió datos de cuenta no válidos.");
-            }
-
-            Object.keys(campos).forEach(campo => {
-                if (typeof datos.perfil[campo] === "string") {
-                    perfil[campo] = datos.perfil[campo];
-                }
-                mostrarValor(campo);
-            });
-            tokenPerfil = datos.token;
-            botonesEdicion.forEach(boton => {
-                boton.disabled = false;
-            });
-        })
-        .catch(error => {
-            console.error("No se pudieron cargar los datos actuales de la cuenta.", error);
-            estado.textContent = error.message.includes("Inicia sesión")
-                ? "Inicia sesión para consultar y modificar los datos de tu cuenta."
-                : "No se pudieron cargar los datos de tu cuenta.";
+    // Cargar datos actuales desde el servidor
+    try {
+        const respuesta = await fetch("./php/perfilCuenta.php", {
+            headers: { Accept: "application/json" }
         });
 
-    function cerrarFormulario() {
-        contenedorFormulario.replaceChildren();
+        if (!respuesta.ok) {
+            throw new Error("Inicia sesión para consultar o modificar tu perfil.");
+        }
+
+        const data = await respuesta.json();
+        if (data.perfil) {
+            perfil = { ...perfil, ...data.perfil };
+            renderizarPerfil();
+        }
+    } catch (err) {
+        estado.textContent = err.message;
+        botonesEdicion.forEach(b => (b.disabled = true));
+        return;
     }
 
-    function abrirFormulario(campo) {
-        const configuracion = campos[campo];
-        if (!configuracion) {
-            return;
-        }
+    // Configuración de los campos editables
+    const configCampos = {
+        nombre: { titulo: "Cambiar nombre", tipo: "text", etiqueta: "Nuevo nombre:" },
+        fecha: { titulo: "Cambiar fecha de nacimiento", tipo: "date", etiqueta: "Nueva fecha de nacimiento:" },
+        email: { titulo: "Cambiar correo electrónico", tipo: "email", etiqueta: "Nuevo correo electrónico:" },
+        seguridad: { titulo: "Cambiar pregunta de seguridad", tipo: "text", etiqueta: "Nueva pregunta de seguridad:" }
+    };
+
+    // Abrir formulario para un campo específico
+    function abrirEdicion(campo) {
+        const config = configCampos[campo];
+        if (!config || !formularioContenedor) return;
 
         estado.textContent = "";
-        contenedorFormulario.replaceChildren();
+        formularioContenedor.innerHTML = `
+            <form id="form-edicion">
+                <h3>${config.titulo}</h3>
+                <label for="input-editar">${config.etiqueta}</label>
+                <input type="${config.tipo}" id="input-editar" name="${campo}" value="${perfil[campo] || ''}" required>
+                <div class="acciones-formulario">
+                    <button type="submit" class="btn">Guardar cambios</button>
+                    <button type="button" id="btn-cancelar" class="boton-secundario">Cancelar</button>
+                </div>
+            </form>
+        `;
 
-        const titulo = document.createElement("h3");
-        titulo.textContent = configuracion.titulo;
+        const form = document.getElementById("form-edicion");
+        const input = document.getElementById("input-editar");
+        const btnCancelar = document.getElementById("btn-cancelar");
 
-        const formulario = document.createElement("form");
-        formulario.id = "form-edicion";
-
-        const etiqueta = document.createElement("label");
-        etiqueta.htmlFor = "nuevo-valor";
-        etiqueta.textContent = configuracion.etiqueta;
-
-        const entrada = document.createElement("input");
-        entrada.type = configuracion.tipo;
-        entrada.id = "nuevo-valor";
-        entrada.name = campo;
-        entrada.placeholder = configuracion.placeholder;
-        entrada.autocomplete = configuracion.autocomplete;
-        entrada.required = campo === "nombre";
-        if (configuracion.tipo === "date") {
-            entrada.value = perfil[campo];
-        } else {
-            entrada.maxLength = campo === "nombre" ? 100 : campo === "email" ? 254 : 200;
-            entrada.value = perfil[campo] === valoresPorDefecto[campo] ? "" : perfil[campo];
-        }
-
-        const acciones = document.createElement("div");
-        acciones.className = "acciones-formulario";
-
-        const botonGuardar = document.createElement("button");
-        botonGuardar.type = "submit";
-        botonGuardar.textContent = "Guardar cambios";
-
-        const botonCancelar = document.createElement("button");
-        botonCancelar.type = "button";
-        botonCancelar.className = "boton-secundario";
-        botonCancelar.textContent = "Cancelar";
-
-        acciones.append(botonGuardar, botonCancelar);
-        formulario.append(titulo, etiqueta, entrada, acciones);
-        contenedorFormulario.appendChild(formulario);
-        entrada.focus();
-
-        formulario.addEventListener("submit", evento => {
-            evento.preventDefault();
-            const nuevoValor = entrada.value.trim();
-
-            if (!nuevoValor) {
-                if (campo !== "fecha" && campo !== "email" && campo !== "seguridad") {
-                    entrada.focus();
-                    return;
-                }
-            }
-
-            const perfilActualizado = { ...perfil, [campo]: nuevoValor };
-            botonGuardar.disabled = true;
-            estado.textContent = "Guardando cambios…";
-
-            fetch("./php/perfilCuenta.php", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ ...perfilActualizado, token: tokenPerfil })
-            })
-                .then(async respuesta => {
-                    const datos = await respuesta.json();
-                    if (!respuesta.ok) {
-                        throw new Error(datos.error || `No se pudieron guardar los cambios: ${respuesta.status}`);
-                    }
-                    if (typeof datos.perfil !== "object" || datos.perfil === null) {
-                        throw new TypeError("El servidor devolvió un perfil no válido.");
-                    }
-
-                    Object.keys(campos).forEach(nombreCampo => {
-                        if (typeof datos.perfil[nombreCampo] === "string") {
-                            perfil[nombreCampo] = datos.perfil[nombreCampo];
-                        }
-                        mostrarValor(nombreCampo);
-                    });
-                    estado.textContent = datos.mensaje || "Cambios guardados correctamente.";
-                    cerrarFormulario();
-                })
-                .catch(error => {
-                    console.error("No se pudieron guardar los cambios del perfil.", error);
-                    estado.textContent = error.message;
-                    botonGuardar.disabled = false;
-                });
+        btnCancelar.addEventListener("click", () => {
+            formularioContenedor.innerHTML = "";
+            estado.textContent = "Edición cancelada.";
         });
 
-        botonCancelar.addEventListener("click", () => {
-            cerrarFormulario();
-            estado.textContent = "Edición cancelada.";
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+            const nuevoValor = input.value.trim();
+            if (!nuevoValor && campo === "nombre") return;
+
+            const perfilActualizado = { ...perfil, [campo]: nuevoValor };
+            estado.textContent = "Guardando cambios...";
+
+            try {
+                const resp = await fetch("./php/perfilCuenta.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(perfilActualizado)
+                });
+
+                const resultado = await resp.json();
+                if (!resp.ok) {
+                    throw new Error(resultado.error || "No se pudieron guardar los cambios.");
+                }
+
+                if (resultado.perfil) {
+                    perfil = { ...perfil, ...resultado.perfil };
+                    renderizarPerfil();
+                }
+
+                estado.textContent = resultado.mensaje || "¡Perfil actualizado con éxito!";
+                formularioContenedor.innerHTML = "";
+            } catch (errorGuardar) {
+                estado.textContent = errorGuardar.message;
+            }
         });
     }
 
-    botonesEdicion.forEach(boton => {
-        boton.addEventListener("click", () => abrirFormulario(boton.dataset.campo));
+    botonesEdicion.forEach(b => {
+        b.addEventListener("click", () => abrirEdicion(b.dataset.campo));
     });
 }

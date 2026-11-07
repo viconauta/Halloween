@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GranaWeen - Inicio</title>
     <link rel="stylesheet" href="./css/styles.css">
-    <title>GranaWeen</title>
 </head>
 <body class="page" id="pagina-inicio">
     <header>
-        <button class="hamburger" aria-label="Menu">
+        <button class="hamburger" type="button" aria-label="Abrir menú">
             <span class="barMenu"></span>
             <span class="barMenu"></span>
             <span class="barMenu"></span>
@@ -18,76 +18,80 @@
                 <li><a href="./index.html">Inicio</a></li>
                 <li><a href="./recetas.html">Recetas</a></li>
                 <li><a href="./historia.html">Historias de miedo</a></li>
-                <li><a href="./sonidos.html">Musica y tonos</a></li>
+                <li><a href="./sonidos.html">Música y tonos</a></li>
                 <li><a href="./enGranada.html">Granada</a></li>
                 <li><a href="./juego.html">Juego</a></li>
                 <li><a class="enlace-cuenta oculto" href="./miCuenta.html">Mi cuenta</a></li>
             </ul>
         </nav>
         <a class="logo" href="./index.html">GranaWeen</a>
-        <button class="login btn">Iniciar Sesion</button>
+        <button class="login btn" type="button">Iniciar sesión</button>
     </header>
 
-        <main id="main-index">
-            <section id="correo-jack" aria-label="Secciones de GranaWeen">
-                <div class="formulario-correo">
-                    <h2>Envia un email a Jack Skellington</h2>
-                    <form action="./php/correo.php" method="post">
-                        <input type="hidden" name="csrf_token" value="">
-                        <label for="asunto">Asunto</label>
-                        <input type="text" name="asunto" id="asunto" placeholder="Aqui el asunto" required>
+    <main id="main-index">
+        <!-- Sección Escribir a Jack Skellington -->
+        <section id="correo-jack" aria-label="Escribir a Jack Skellington">
+            <div class="formulario-correo">
+                <h2>Envía un email a Jack Skellington</h2>
+                <form action="./php/correo.php" method="post">
+                    <label for="asunto">Asunto:</label>
+                    <input type="text" name="asunto" id="asunto" placeholder="Asunto de tu mensaje" required>
 
-                        <label for="tuEmail">Escribe tu email</label>
-                        <input type="email" name="email" id="email" placeholder="email@ejemplo.com" required>
+                    <label for="email">Escribe tu email:</label>
+                    <input type="email" name="email" id="email" placeholder="email@ejemplo.com" required>
 
-                        <label for="mensaje">Tus pesadillas</label>
-                        <textarea name="mensaje" id="mensaje" rows="4" cols="40" placeholder="Escribe aqui a Jack tus peores pesadillas" required></textarea>
+                    <label for="mensaje">Tus pesadillas:</label>
+                    <textarea name="mensaje" id="mensaje" rows="4" placeholder="Escribe aquí a Jack tus peores pesadillas..." required></textarea>
 
-                        <button type="submit" class="btn-mensaje">Enviar mensaje</button>
-                    </form>
-                </div>
-            </section>
-            <section>
-                <a class="enlace-pagina" href="./juego.html">
-                    <img src="./img/index/snake.png" alt="Juego serpiente">
-                    <h2>Juega al mitico juego de la serpiente</h2>
-                    <p>Comete las calabazas de Halloween que apareceran por el mapa sin chocarte con las paredes ni contigo mismo.</p>
-                </a>
-                <a class="enlace-pagina" href="./enGranada.html">
-                    <img src="./img/index/lugares.webp" alt="Imagen de casa abandonada">
-                    <h2>Halloween en Granada</h2>
-                    <p>Lugares que puedes visitar en Halloween.</p>
-                </a>
-                <a class="enlace-pagina" href="./historia.html">
-                    <img src="./img/index/historia.jpeg" alt="Imagen terror">
-                    <h2>Historias de miedo</h2>
-                    <span>Una historia de miedo cada vez.</span>
-                </a>
-                <a class="enlace-pagina" href="./recetas.html">
-                    <img src="./img/index/recetas.jpg" alt="Tarta de cerebro">
-                    <h2>Recetas de Halloween</h2>
-                    <p>Recetas de dulces, pasteles y salados con tematica de Halloween</p>
-                </a>
-                <a class="enlace-pagina" href="./sonidos.html">
-                    <img src="./img/index/sonidos.jpg" alt="Imagen de calabaza con cascos de musica">
-                    <h2>Sonidos</h2>
-                    <p>Efectos de sonido y temas musicales con tematica Halloween.</p>
-                </a>
-                <a class="enlace-pagina" href="./sobreNosotros.html">
-                    <img src="./img/index/desarrolladores.jpg" alt="Desarrolladores">
-                    <h2>Sobre Nosotros</h2>
-                    <p>Informacion sobre los desarrolladores del proyecto.</p>
-                </a>
-            </section>
-        </main>
-    </div>
-    <button class="susto-pantalla" id="susto-pantalla" type="button" aria-label="Cerrar la imagen de terror" hidden>
+                    <button type="submit" class="btn-mensaje">Enviar mensaje</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Secciones de navegación rápida -->
+        <section>
+            <a class="enlace-pagina" href="./juego.html">
+                <img src="./img/index/snake.png" alt="Juego de la serpiente">
+                <h2>Juega al mítico juego de la serpiente</h2>
+                <p>Cómete las calabazas de Halloween que aparecerán por el mapa sin chocarte con las paredes ni contigo mismo.</p>
+            </a>
+            <a class="enlace-pagina" href="./enGranada.html">
+                <img src="./img/index/lugares.webp" alt="Lugares de miedo en Granada">
+                <h2>Halloween en Granada</h2>
+                <p>Lugares que puedes visitar en Halloween.</p>
+            </a>
+            <a class="enlace-pagina" href="./historia.html">
+                <img src="./img/index/historia.jpeg" alt="Historias de terror">
+                <h2>Historias de miedo</h2>
+                <span>Una historia de miedo cada vez.</span>
+            </a>
+            <a class="enlace-pagina" href="./recetas.html">
+                <img src="./img/index/recetas.jpg" alt="Recetas de Halloween">
+                <h2>Recetas de Halloween</h2>
+                <p>Recetas de dulces, pasteles y salados con temática de Halloween.</p>
+            </a>
+            <a class="enlace-pagina" href="./sonidos.html">
+                <img src="./img/index/sonidos.jpg" alt="Sonidos de Halloween">
+                <h2>Sonidos</h2>
+                <p>Efectos de sonido y temas musicales con temática Halloween.</p>
+            </a>
+            <a class="enlace-pagina" href="./sobreNosotros.html">
+                <img src="./img/index/desarrolladores.jpg" alt="Desarrolladores">
+                <h2>Sobre Nosotros</h2>
+                <p>Información sobre los desarrolladores del proyecto.</p>
+            </a>
+        </section>
+    </main>
+
+    <!-- Susto jumpscare pantalla -->
+    <button class="susto-pantalla" id="susto-pantalla" type="button" aria-label="Cerrar susto" hidden>
         <img src="./img/nun.png" alt="La monja de terror">
-        <span>Pulsa para continuar</span>
+        <span>Pulsa en cualquier parte para continuar</span>
     </button>
     <audio id="sonido-susto" preload="auto">
         <source src="./img/Grito%20de%20terror%20-%20%20Efecto%20de%20sonido%20-%20Scary%20Sound%20Effects.mp3" type="audio/mpeg">
     </audio>
+
     <footer>
         <div>
             <a href="./index.html" class="logo">GranaWeen</a>
@@ -98,61 +102,58 @@
         <div class="contacto">
             <h2>Contacto</h2>
             <p>Tel: 691264860</p>
-            <p>emai: granaween@gmail.es</p>
-            <p>Direccion: Avda. Halloween, Granada</p> 
+            <p>Email: granaween@gmail.es</p>
+            <p>Dirección: Avda. Halloween, Granada</p>
         </div>
-        <script type="module" src="./js/app.js"></script>
     </footer>
 
-    <!-- ventana emergente de login -->
+    <!-- Ventana emergente de login -->
     <div id="ventana-login" class="oculto">
-        <button class="cerrar-ventana">X</button>
+        <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
+        <h2>Iniciar sesión</h2>
         <form action="./php/login.php" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre aqui" required>
+            <label for="nombre">Nombre de usuario:</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Escribe tu usuario" required>
 
             <label for="password">Contraseña:</label>
-            <input type="password" name="password" id="password" placeholder="Escribe aqui tu contraseña" required>
+            <input type="password" name="password" id="password" placeholder="Escribe tu contraseña" required>
 
-            <button type="submit" class="btn">Iniciar sesion</button>
-            <button type="button" class="registro">¿No tienes cuenta? | Registrate</button>
+            <button type="submit" class="btn">Iniciar sesión</button>
+            <button type="button" class="registro">¿No tienes cuenta? | Regístrate</button>
             <button type="button" class="recuperar-contraseña">He olvidado mi contraseña</button>
         </form>
     </div>
 
-    <!-- ventana emergente de registro -->
+    <!-- Ventana emergente de registro -->
     <div id="ventana-registro" class="oculto">
-        <button class="cerrar-ventana">X</button>
+        <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
+        <h2>Crear cuenta</h2>
         <form action="./php/altaUsuario.php" method="post">
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre aqui" required>
+            <label for="reg-nombre">Nombre de usuario:</label>
+            <input type="text" name="nombre" id="reg-nombre" placeholder="Escribe tu usuario" required>
 
-            <label for="password">Contraseña:</label>
-            <input type="password" name="password" id="password" placeholder="Escribe aqui tu contraseña" required>
+            <label for="reg-password">Contraseña:</label>
+            <input type="password" name="password" id="reg-password" placeholder="Tu contraseña" required>
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" placeholder="tuEmail@ejemplo.com" required>
+            <label for="reg-email">Email:</label>
+            <input type="email" name="email" id="reg-email" placeholder="tuEmail@ejemplo.com" required>
 
-            <label for="pregunta">Pregunta de seguridad:</label>
-            <input type="text" name="pregunta" id="pregunta" placeholder="¿Nombre de mi primera mascota?" required></input>
+            <label for="reg-pregunta">Pregunta de seguridad:</label>
+            <input type="text" name="pregunta" id="reg-pregunta" placeholder="Ej: ¿Nombre de mi primera mascota?">
 
-            <label for="respuesta">Respuesta</label>
-            <input type="text" name="respuesta" id="respuesta" placeholder="Firulais" required>
+            <label for="reg-respuesta">Respuesta:</label>
+            <input type="text" name="respuesta" id="reg-respuesta" placeholder="Tu respuesta secreta">
 
             <button type="submit" class="btn">Registrarse</button>
         </form>
     </div>
 
-    <!-- ventana emergente de recuperar contraseña -->
+    <!-- Ventana emergente de recuperar contraseña -->
     <div id="ventana-recuperacion" class="oculto">
-            <button class="cerrar-ventana">X</button>
-            <p>PREGUNTA DE SEGURIDAD</p>
-            <form action="./php/cambioPass.php">
-                <label for="respuesta">Respuesta</label>
-                <input type="text" name="respuesta" id="respuesta">
+        <button class="cerrar-ventana" type="button" aria-label="Cerrar">×</button>
+        <h2>Recuperar contraseña</h2>
+    </div>
 
-                <button type="submit" class="btn">Enviar respuesta</button>
-            </form>
-        </div>
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>
