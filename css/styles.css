@@ -1,0 +1,1321 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+
+/* ==============================================================================
+ * 1. RESET Y VARIABLES GLOBALES
+ * ============================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --terror-bg: #100b18;
+    --terror-surface: #1b1225;
+    --terror-purple: #a77be8;
+    --terror-toxic: #b8f23a;
+    --terror-red: #7d263b;
+    --terror-text: #f2eaf7;
+}
+
+img {
+    max-width: 100%;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* ==============================================================================
+ * 2. ESTRUCTURA BASE DE PÁGINA (TEMA OSCURO HALLOWEEN)
+ * ============================================================================== */
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--terror-text);
+    background:
+        radial-gradient(ellipse at 50% 20%, rgba(101, 55, 144, 0.3), transparent 55%),
+        var(--terror-bg);
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.page main {
+    width: min(100% - 2rem, 900px);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vh, 5rem) 0;
+    flex: 1;
+}
+
+.page main section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.page .titulo {
+    text-align: center;
+}
+
+.page .titulo h1 {
+    color: var(--terror-toxic);
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.1;
+    text-shadow: 2px 2px 10px var(--terror-toxic);
+}
+
+/* ==============================================================================
+ * 3. ENCABEZADO Y MENÚ DE NAVEGACIÓN
+ * ============================================================================== */
+.page header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem clamp(1rem, 5vw, 4rem);
+    border-bottom: 1px solid rgba(167, 123, 232, 0.35);
+    background: rgba(16, 11, 24, 0.92);
+    backdrop-filter: blur(6px);
+    transition: transform 0.25s ease;
+}
+
+.page header.header-oculto {
+    transform: translateY(-100%);
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.barMenu {
+    width: 30px;
+    height: 3px;
+    background-color: var(--terror-toxic);
+    border-radius: 10px;
+}
+
+.page .logo {
+    color: var(--terror-text);
+    font-size: 1.35rem;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-shadow: 2px 2px 10px var(--terror-text);
+}
+
+.page .login,
+.page .btn {
+    border: 1px solid var(--terror-toxic);
+    border-radius: 6px;
+    padding: 0.65rem 1rem;
+    color: #fff;
+    background: var(--terror-red);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.page .login {
+    margin-left: auto;
+}
+
+.page .login:hover,
+.page .btn:hover {
+    background: #542044;
+    transform: translateY(-1px);
+}
+
+#menu-desplegable {
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    min-width: 13rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(167, 123, 232, 0.55);
+    border-radius: 8px;
+    background: var(--terror-surface);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+}
+
+#menu-desplegable ul {
+    list-style: none;
+}
+
+#menu-desplegable a {
+    display: block;
+    padding: 0.7rem;
+    color: var(--terror-text);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+}
+
+#menu-desplegable a:hover {
+    color: var(--terror-toxic);
+    background: rgba(167, 123, 232, 0.1);
+}
+
+/* ==============================================================================
+ * 4. VENTANAS MODALES EMERGENTES (LOGIN, REGISTRO, RECUPERACIÓN)
+ * ============================================================================== */
+#ventana-login,
+#ventana-registro,
+#ventana-recuperacion {
+    position: fixed;
+    z-index: 50;
+    top: 50%;
+    left: 50%;
+    width: min(90vw, 420px);
+    padding: 2rem;
+    border: 1px solid var(--terror-purple);
+    border-radius: 12px;
+    background: var(--terror-surface);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.85);
+    line-height: 1.5;
+    transform: translate(-50%, -50%);
+}
+
+#ventana-login form,
+#ventana-registro form,
+#ventana-recuperacion form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 0.8rem;
+}
+
+#ventana-login input,
+#ventana-registro input,
+#ventana-recuperacion input {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #684b83;
+    border-radius: 5px;
+    color: var(--terror-text);
+    background: var(--terror-bg);
+    font: inherit;
+}
+
+.cerrar-ventana {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.75rem;
+    border: 0;
+    color: var(--terror-toxic);
+    background: transparent;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.registro,
+.recuperar-contraseña {
+    border: none;
+    color: var(--terror-purple);
+    background: transparent;
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 0.4rem;
+    text-align: center;
+}
+
+.registro:hover,
+.recuperar-contraseña:hover {
+    color: var(--terror-toxic);
+}
+
+/* ==============================================================================
+ * 5. PÁGINA DE INICIO (INDEX) Y CORREO A JACK
+ * ============================================================================== */
+#main-index {
+    width: min(100% - 2rem, 1180px);
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 4rem) 0;
+}
+
+#correo-jack {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    align-items: center;
+    width: 100%;
+    min-height: 540px;
+    margin-bottom: clamp(2.5rem, 6vw, 5rem);
+    padding: clamp(1.25rem, 5vw, 4rem);
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, 0.5);
+    border-radius: 24px;
+    background:
+        linear-gradient(90deg, rgba(10, 7, 15, 0.12) 0%, rgba(16, 11, 24, 0.5) 44%, rgba(16, 11, 24, 0.96) 68%),
+        url("../img/index/jack.jpg") center 35% / cover no-repeat;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+.formulario-correo {
+    grid-column: 2;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid rgba(167, 123, 232, 0.55);
+    border-radius: 18px;
+    background: rgba(16, 11, 24, 0.85);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+}
+
+.formulario-correo h2 {
+    margin-bottom: 1.25rem;
+    color: var(--terror-toxic);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.2;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+}
+
+.formulario-correo form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.formulario-correo label {
+    color: #e4d8ed;
+    font-size: 0.95rem;
+}
+
+.formulario-correo input,
+.formulario-correo textarea {
+    width: 100%;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid #684b83;
+    border-radius: 8px;
+    color: var(--terror-text);
+    background: rgba(10, 7, 15, 0.9);
+    font: inherit;
+}
+
+.formulario-correo textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.btn-mensaje {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.2rem;
+    border: 1px solid var(--terror-toxic);
+    border-radius: 8px;
+    color: #fff;
+    background: var(--terror-red);
+    font: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-mensaje:hover {
+    transform: translateY(-2px);
+    background: #542044;
+}
+
+#main-index > section:not(#correo-jack) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.enlace-pagina {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, 0.42);
+    border-radius: 14px;
+    color: var(--terror-text);
+    background: linear-gradient(145deg, rgba(38, 25, 50, 0.98), rgba(20, 14, 28, 0.98));
+    text-decoration: none;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.enlace-pagina:hover {
+    transform: translateY(-6px);
+    border-color: var(--terror-toxic);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.4), 0 0 20px rgba(184, 242, 58, 0.12);
+}
+
+.enlace-pagina img {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.enlace-pagina:hover img {
+    transform: scale(1.04);
+}
+
+.enlace-pagina h2 {
+    margin: 1.15rem 1.2rem 0.55rem;
+    color: var(--terror-toxic);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+}
+
+.enlace-pagina p,
+.enlace-pagina span {
+    margin: 0 1.2rem 1.25rem;
+    color: #d3c7dc;
+    line-height: 1.6;
+}
+
+.enlace-pagina:nth-child(1) {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    border-color: rgba(184, 242, 58, 0.45);
+}
+
+.enlace-pagina:nth-child(1) img {
+    width: 46%;
+    height: 100%;
+    min-height: 240px;
+}
+
+.enlace-pagina:nth-child(6) {
+    grid-column: 2 / span 2;
+    flex-direction: row;
+    align-items: center;
+    border-color: rgba(167, 123, 232, 0.65);
+}
+
+.enlace-pagina:nth-child(6) img {
+    width: 42%;
+    height: 100%;
+    min-height: 190px;
+}
+
+/* ==============================================================================
+ * 6. SUSTO DE PANTALLA (JUMPSCARE)
+ * ============================================================================== */
+.susto-pantalla {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100vh;
+    border: 0;
+    background: #000;
+    cursor: pointer;
+}
+
+.susto-pantalla[hidden] {
+    display: none;
+}
+
+.susto-pantalla img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transform: scale(0.08);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.susto-pantalla.visible img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.susto-pantalla.cerrando img {
+    opacity: 0;
+    transform: scale(0.08);
+}
+
+.susto-pantalla span {
+    position: absolute;
+    bottom: 1.5rem;
+    color: #fff;
+    font-size: 1.3rem;
+    text-shadow: 0 2px 10px #000;
+}
+
+.susto-activo {
+    overflow: hidden;
+}
+
+/* ==============================================================================
+ * 7. SECCIÓN HISTORIAS DE MIEDO Y TELÓN DE TEATRO
+ * ============================================================================== */
+.page .video {
+    position: relative;
+    width: min(100%, 800px);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, 0.75);
+    border-radius: 12px;
+    background: #050404;
+    box-shadow: 0 0 0 6px rgba(125, 38, 59, 0.25), 0 18px 45px rgba(0, 0, 0, 0.65);
+}
+
+.page .video iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.teatro-historia {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(ellipse at center, #32101f, #09060d 72%);
+}
+
+.teatro-historia[hidden] {
+    display: none;
+}
+
+.telon {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    width: 52%;
+    background-color: #541322;
+    background-image:
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(0, 0, 0, 0.22) 27px 34px, rgba(255, 190, 130, 0.08) 37px 43px),
+        linear-gradient(90deg, #260811, #8b2635 22%, #631522 70%, #310a14);
+    box-shadow: inset 0 0 38px rgba(0, 0, 0, 0.7);
+    transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.telon-izquierdo {
+    left: 0;
+    border-right: 5px solid #bd7950;
+    border-radius: 0 0 38% 0 / 0 0 8% 0;
+}
+
+.telon-derecho {
+    right: 0;
+    border-left: 5px solid #bd7950;
+    border-radius: 0 0 0 38% / 0 0 0 8%;
+}
+
+.boton-telon {
+    position: relative;
+    z-index: 2;
+    padding: 0.9rem 1.4rem;
+}
+
+.teatro-historia.abierto .telon-izquierdo {
+    transform: translateX(-100%);
+}
+
+.teatro-historia.abierto .telon-derecho {
+    transform: translateX(100%);
+}
+
+.teatro-historia.abierto .boton-telon {
+    visibility: hidden;
+}
+
+.page .descripcion {
+    width: min(100%, 720px);
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border-left: 3px solid var(--terror-red);
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(110deg, rgba(73, 38, 100, 0.48), rgba(27, 18, 37, 0.88));
+    text-align: center;
+}
+
+.page .descripcion h3 {
+    margin-bottom: 0.75rem;
+    color: var(--terror-toxic);
+    font-size: clamp(1.35rem, 4vw, 1.8rem);
+}
+
+.page .descripcion p {
+    color: #ded2e8;
+    line-height: 1.7;
+}
+
+/* ==============================================================================
+ * 8. SECCIÓN RECETAS (TARJETAS REVERSIBLES)
+ * ============================================================================== */
+.recetas-populares,
+.dulces {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.recetas-populares {
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--terror-surface);
+}
+
+.dulces h2,
+.salados h2 {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    color: var(--terror-toxic);
+}
+
+.salados {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.contenedor-tarjeta {
+    width: min(100%, 250px);
+    overflow: hidden;
+    border: 1px solid var(--terror-purple);
+    border-radius: 10px;
+    background: var(--terror-surface);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.contenedor-tarjeta:hover {
+    transform: translateY(-3px);
+}
+
+.salados .contenedor-tarjeta {
+    display: flex;
+    width: 100%;
+}
+
+.salados .front {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.salados .contenedor-img {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.salados .contenedor-datos {
+    flex: 1;
+}
+
+.contenedor-img img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.contenedor-datos,
+.contenedor-tarjeta > .back {
+    padding: 15px;
+}
+
+.contenedor-tarjeta > .back {
+    display: none;
+}
+
+.contenedor-tarjeta.back > .front {
+    display: none;
+}
+
+.contenedor-tarjeta.back > .back {
+    display: block;
+}
+
+.contenedor-tarjeta h3 {
+    margin-bottom: 10px;
+    color: var(--terror-toxic);
+}
+
+/* ==============================================================================
+ * 9. BOTONES DE AUDIOS Y EFECTOS
+ * ============================================================================== */
+#efectos-sonido,
+#temas-musicales {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 70px);
+    justify-content: center;
+    gap: 24px;
+    margin: 20px 0;
+}
+
+.circulo-sonido {
+    width: 70px;
+    height: 70px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background-color: #2a1b38;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.circulo-sonido img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.circulo-sonido:hover {
+    transform: scale(1.1);
+    border-color: var(--terror-purple);
+}
+
+.circulo-sonido.sonando {
+    box-shadow: 0 0 0 3px #00e676, 0 0 15px #00e676;
+    border-color: #00e676;
+    animation: pulsarAudio 1.5s infinite alternate;
+}
+
+@keyframes pulsarAudio {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+}
+
+/* ==============================================================================
+ * 10. LUGARES DE GRANADA (enGranada.html)
+ * ============================================================================== */
+.granada-page main {
+    width: min(100% - 2rem, 1200px);
+}
+
+.granada-page #lugares {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+    align-items: stretch;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.granada-page .tarjeta-lugar {
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, 0.55);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(38, 25, 51, 0.98), var(--terror-surface));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.granada-page .tarjeta-lugar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.48);
+}
+
+.granada-page .imagen-lugar {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #08060b;
+}
+
+.granada-page .imagen-lugar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.granada-page .tarjeta-lugar:hover .imagen-lugar img {
+    transform: scale(1.04);
+}
+
+.granada-page .boton-mapa {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(184, 242, 58, 0.75);
+    border-radius: 999px;
+    color: #fff;
+    background: rgba(16, 11, 24, 0.88);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.granada-page .boton-mapa span:first-child {
+    color: var(--terror-toxic);
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.granada-page .boton-mapa:hover,
+.granada-page .boton-mapa:focus-visible {
+    color: var(--terror-bg);
+    background: var(--terror-toxic);
+    transform: translateY(-1px);
+}
+
+.granada-page .boton-mapa:hover span:first-child,
+.granada-page .boton-mapa:focus-visible span:first-child {
+    color: var(--terror-bg);
+}
+
+.granada-page .informacion-lugar {
+    padding: 1.1rem 1.2rem 1.3rem;
+}
+
+.granada-page .informacion-lugar h2 {
+    margin-bottom: 0.65rem;
+    color: var(--terror-toxic);
+    font-size: 1.3rem;
+    line-height: 1.25;
+}
+
+.granada-page .informacion-lugar p {
+    color: #ded2e8;
+    line-height: 1.6;
+}
+
+.modal-mapa {
+    position: fixed;
+    z-index: 50;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(5, 3, 8, 0.82);
+}
+
+.modal-mapa.activo {
+    display: flex;
+}
+
+.contenido-mapa {
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 960px);
+    max-height: min(90vh, 820px);
+    overflow: hidden;
+    border: 1px solid var(--terror-purple);
+    border-radius: 12px;
+    background: var(--terror-surface);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.75);
+}
+
+.cabecera-mapa,
+.pie-mapa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+}
+
+.cabecera-mapa h2 {
+    color: var(--terror-toxic);
+    font-size: 1.15rem;
+}
+
+#cerrar-mapa {
+    border: 0;
+    color: var(--terror-text);
+    background: transparent;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+#iframe-mapa {
+    display: block;
+    width: 100%;
+    min-height: 55vh;
+    flex: 1;
+    border: 0;
+    background: #08060b;
+}
+
+.pie-mapa {
+    justify-content: flex-end;
+}
+
+#ampliar-mapa {
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--terror-toxic);
+    border-radius: 6px;
+    color: #fff;
+    background: var(--terror-red);
+    text-decoration: none;
+}
+
+#ampliar-mapa:hover,
+#ampliar-mapa:focus-visible {
+    background: #542044;
+}
+
+@media (max-width: 600px) {
+    #iframe-mapa {
+        min-height: 60vh;
+    }
+}
+
+/* ==============================================================================
+ * 11. SOBRE NOSOTROS (sobreNosotros.html)
+ * ============================================================================== */
+.sobre-nosotros-page main {
+    width: min(100% - 2rem, 1000px);
+}
+
+.sobre-nosotros-page .sobre-nosotros {
+    align-items: stretch;
+    gap: 2rem;
+}
+
+.sobre-nosotros-page .titulo h1 {
+    color: var(--terror-toxic);
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.1;
+    text-shadow: 0 0 24px rgba(167, 123, 232, 0.55);
+}
+
+.sobre-nosotros-page .introduccion {
+    margin-top: 0.8rem;
+    color: #ded2e8;
+    font-size: 1.1rem;
+}
+
+.sobre-nosotros-page .equipo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.sobre-nosotros-page .tarjeta-persona {
+    overflow: hidden;
+    border: 1px solid rgba(167, 123, 232, 0.55);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(38, 25, 51, 0.98), var(--terror-surface));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.sobre-nosotros-page .foto-persona {
+    display: grid;
+    min-height: 200px;
+    place-items: center;
+    border-bottom: 1px solid rgba(167, 123, 232, 0.35);
+    color: #c9bbd3;
+    background:
+        radial-gradient(ellipse at center, rgba(101, 55, 144, 0.32), transparent 68%),
+        #100b18;
+}
+
+.sobre-nosotros-page .foto-persona img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.sobre-nosotros-page .datos-persona {
+    padding: 1.2rem;
+}
+
+.sobre-nosotros-page .datos-persona h2,
+.sobre-nosotros-page .descripcion-equipo h2 {
+    margin-bottom: 0.65rem;
+    color: var(--terror-toxic);
+    font-size: 1.35rem;
+}
+
+.sobre-nosotros-page .datos-persona p,
+.sobre-nosotros-page .descripcion-equipo p {
+    color: #ded2e8;
+    line-height: 1.7;
+}
+
+.sobre-nosotros-page .descripcion-equipo {
+    width: min(100%, 800px);
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border-left: 3px solid var(--terror-red);
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(110deg, rgba(73, 38, 100, 0.48), rgba(27, 18, 37, 0.88));
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.24);
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .sobre-nosotros-page .equipo {
+        grid-template-columns: 1fr;
+    }
+
+    .sobre-nosotros-page .foto-persona {
+        min-height: 190px;
+    }
+}
+
+/* ==============================================================================
+ * 12. MINIJUEGO SNAKE
+ * ============================================================================== */
+.font-retro {
+    font-family: 'Press Start 2P', monospace;
+}
+
+#gameCanvas {
+    background-color: #0f172a;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+    touch-action: none;
+    max-width: 100%;
+}
+
+.retro-container {
+    border: 4px solid #334155;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.touch-btn {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ==============================================================================
+ * 13. SECCIÓN MI CUENTA (miCuenta.html)
+ * ============================================================================== */
+.mi-cuenta-page main {
+    width: min(100% - 2rem, 1000px);
+    margin: 0 auto;
+    padding: clamp(3rem, 9vh, 6rem) 0;
+    flex: 1;
+}
+
+.mi-cuenta-page .titulo {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.mi-cuenta-page .titulo h1 {
+    color: var(--terror-toxic);
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.1;
+    text-shadow: 0 0 24px rgba(167, 123, 232, 0.55);
+}
+
+.mi-cuenta-page .sobretitulo {
+    margin-bottom: 0.6rem;
+    color: var(--terror-purple);
+    font-size: 0.9rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.mi-cuenta-page .introduccion {
+    margin-top: 0.8rem;
+    color: #ded2e8;
+    font-size: 1.05rem;
+}
+
+.mi-cuenta-page .cuenta-contenido {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.mi-cuenta-page #datos,
+.mi-cuenta-page #editar-datos {
+    display: block;
+    min-width: 0;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid rgba(167, 123, 232, 0.45);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(38, 25, 51, 0.98), var(--terror-surface));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.mi-cuenta-page #datos h2,
+.mi-cuenta-page #editar-datos h2 {
+    margin-bottom: 1.2rem;
+    color: var(--terror-toxic);
+    font-size: 1.4rem;
+}
+
+.mi-cuenta-page .lista-datos {
+    display: grid;
+    gap: 1rem;
+}
+
+.mi-cuenta-page .dato {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(167, 123, 232, 0.22);
+}
+
+.mi-cuenta-page .dato:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.mi-cuenta-page .dato dt {
+    margin-bottom: 0.25rem;
+    color: #c9bbd3;
+    font-size: 0.9rem;
+}
+
+.mi-cuenta-page .dato dd {
+    overflow-wrap: anywhere;
+    color: var(--terror-text);
+    font-size: 1.05rem;
+}
+
+.mi-cuenta-page .ayuda-edicion,
+.mi-cuenta-page .aviso-seguridad {
+    color: #ded2e8;
+    line-height: 1.6;
+}
+
+.mi-cuenta-page .acciones-edicion {
+    display: grid;
+    gap: 0.65rem;
+    margin: 1rem 0 1.25rem;
+}
+
+.mi-cuenta-page .acciones-edicion button {
+    border: 1px solid var(--terror-toxic);
+    border-radius: 6px;
+    padding: 0.65rem 1rem;
+    color: #fff;
+    background: var(--terror-red);
+    font: inherit;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.mi-cuenta-page .acciones-edicion button:hover {
+    background: #542044;
+    transform: translateY(-1px);
+}
+
+.mi-cuenta-page .aviso-seguridad {
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--terror-red);
+    font-size: 0.9rem;
+}
+
+.mi-cuenta-page #editar-datos .recuperar-contraseña {
+    display: inline-block;
+    width: 100%;
+    margin-top: 1rem;
+    border: 1px solid var(--terror-toxic);
+    border-radius: 6px;
+    padding: 0.65rem 1rem;
+    color: #fff;
+    background: var(--terror-red);
+    font: inherit;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.mi-cuenta-page #editar-datos .recuperar-contraseña:hover {
+    background: #542044;
+    transform: translateY(-1px);
+}
+
+.mi-cuenta-page #formulario-edicion {
+    width: min(100%, 650px);
+    margin: 1.5rem auto 0;
+}
+
+.mi-cuenta-page #formulario-edicion:empty {
+    display: none;
+}
+
+.mi-cuenta-page #formulario-edicion form {
+    display: grid;
+    gap: 0.8rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid rgba(167, 123, 232, 0.55);
+    border-radius: 12px;
+    color: var(--terror-text);
+    background: var(--terror-surface);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.mi-cuenta-page #formulario-edicion h3 {
+    color: var(--terror-toxic);
+    font-size: 1.25rem;
+}
+
+.mi-cuenta-page #formulario-edicion label {
+    color: #ded2e8;
+}
+
+.mi-cuenta-page #formulario-edicion input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgba(167, 123, 232, 0.65);
+    border-radius: 6px;
+    color: #1b1225;
+    background: #f2eaf7;
+    font: inherit;
+}
+
+.mi-cuenta-page #formulario-edicion input:focus-visible,
+.mi-cuenta-page button:focus-visible {
+    outline: 3px solid var(--terror-toxic);
+    outline-offset: 3px;
+}
+
+.mi-cuenta-page .acciones-formulario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.mi-cuenta-page #formulario-edicion button {
+    border: 1px solid var(--terror-toxic);
+    border-radius: 6px;
+    padding: 0.65rem 1rem;
+    color: #fff;
+    background: var(--terror-red);
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.mi-cuenta-page #formulario-edicion button:hover {
+    background: #542044;
+    transform: translateY(-1px);
+}
+
+.mi-cuenta-page #formulario-edicion .boton-secundario {
+    border-color: rgba(167, 123, 232, 0.65);
+    background: transparent;
+    color: var(--terror-text);
+}
+
+.mi-cuenta-page #formulario-edicion .boton-secundario:hover {
+    background: rgba(167, 123, 232, 0.15);
+}
+
+.mi-cuenta-page .estado-cuenta {
+    min-height: 1.5em;
+    margin-top: 1rem;
+    color: var(--terror-toxic);
+    text-align: center;
+}
+
+@media (max-width: 650px) {
+    .mi-cuenta-page .cuenta-contenido {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==============================================================================
+ * 14. PIE DE PÁGINA (FOOTER)
+ * ============================================================================== */
+.page footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 2rem clamp(1rem, 5vw, 4rem);
+    border-top: 1px solid rgba(167, 123, 232, 0.35);
+    background: #0b0810;
+    margin-top: auto;
+}
+
+.page footer a {
+    color: var(--terror-toxic);
+}
+
+.page footer h2 {
+    margin-bottom: 0.5rem;
+    color: var(--terror-purple);
+    font-size: 1.1rem;
+}
+
+.page footer p {
+    margin-top: 0.35rem;
+    color: #c9bbd3;
+}
+
+/* ==============================================================================
+ * 15. ADAPTACIÓN RESPONSIVA GENERAL (MEDIA QUERIES)
+ * ============================================================================== */
+@media (max-width: 800px) {
+    #correo-jack {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .formulario-correo {
+        grid-column: 1;
+        width: 100%;
+    }
+
+    #main-index > section:not(#correo-jack) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .enlace-pagina:nth-child(1),
+    .enlace-pagina:nth-child(6) {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .page header {
+        gap: 0.8rem;
+        padding-inline: 1rem;
+    }
+
+    .page .logo {
+        font-size: 1.1rem;
+    }
+
+    #main-index > section:not(#correo-jack) {
+        grid-template-columns: 1fr;
+    }
+
+    .enlace-pagina:nth-child(1),
+    .enlace-pagina:nth-child(6) {
+        grid-column: auto;
+        flex-direction: column;
+    }
+
+    .enlace-pagina:nth-child(1) img,
+    .enlace-pagina:nth-child(6) img {
+        width: 100%;
+        min-height: 180px;
+    }
+
+    .salados .contenedor-tarjeta,
+    .salados .front {
+        flex-direction: column;
+    }
+
+    .salados .contenedor-img {
+        width: 100%;
+    }
+
+    .page footer {
+        flex-direction: column;
+    }
+}
