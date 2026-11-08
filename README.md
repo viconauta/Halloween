@@ -21,5 +21,6 @@ Proyecto de halloween de 2ºdaw
 | Nueva contraseña | Formulario donde introduces una nueva contraseña |
 | Registrarse | Página para crear un usuario nuevo. Enlace que se encuentra en la página de iniciar sesión. Contiene un formulario en el que tienes que introducir tu nombre, email, contraseña y pregunta de seguridad |
 | Mi cuenta | Pagina donde estan los datos introducidos del usuario y además se pueden editar |
-|
-|||
+
+ ## Diseño Lo - Fi
+ [Ver diseño en Figma](https://www.figma.com/design/Uzvuu7TSRe4FtHqG0tAU6Q/GranaWeen-%E2%80%94-dise%C3%B1o-web?node-id=0-1&t=p36BfR8yMKP3eB8k-1)
